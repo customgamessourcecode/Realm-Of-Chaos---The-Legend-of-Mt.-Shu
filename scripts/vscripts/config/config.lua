@@ -1,0 +1,23 @@
+
+autoload({
+	'gamerules',
+	'gamemode',
+	'itemconfig',
+	'item_attributes',
+	'currencies',
+	'shops',
+	'abilities_table',
+	'dropped',
+	'suit_table',
+	'compose_table',
+	'treasure',
+	'wings_config',
+	'fuse_item_config',
+	'fate_config',
+	'collect_ore_config',
+	'mixing_weapon_config',
+	'attached_soul_config',
+	'learn_extra_abilities_config',
+	'vote_config',
+	'gambling',
+},'config')

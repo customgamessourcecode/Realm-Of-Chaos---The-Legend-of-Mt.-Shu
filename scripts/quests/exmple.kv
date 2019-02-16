@@ -1,0 +1,314 @@
+
+"Quests"
+{
+	"quest_example"
+	{
+		"AcceptNPC"							"npc_task_0001"		//接受任务和提交任务的NPC
+		"SubmitNPC"							"npc_task_0002"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+
+		//与逻辑公式写法一样，接受任务的失败条件，失败之后会给予AcceptFailRewards，不会触发AcceptRewards
+		//失败后任务处于QUEST_STATE_FAILED状态，此状态的任务无法再接受
+		"AcceptFailRequire"				"RandomFloat(0.0,1.0) <= 0.1" 
+		"OnAcceptFail"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"Function"		"QuestExampleAcceptFail"
+			"param1"		"123"
+			"test"			"qwe"
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level<10" 		//逻辑公式，结果为真才能接受任务
+		}
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_0002"
+			}
+			"2"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"npc_dota_lesser_eidolon" 	//击杀单位
+				"MaxCount"				"3" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0001" 			//收集的物品
+				"MaxCount"				"5" 					//收集的个数
+				"SubmitRewards"									//提交物品获得奖励
+				{
+					"RequireCount"		"5"						//达到提交数量才给予奖励，默认提交一个物品给予一次奖励
+					"Fixed"
+					{
+						"item_0010"			"1"
+					}
+				}
+				"SubmitNPC"			"npc_task_0002" 		//如果缺省将在提交任务的时候删除物品，非缺省的情况下需要手动提交到指定NPC
+			}
+			"4"
+			{
+				"Type"					"CUSTOM" 			//任务类型：自定义
+				"Function"				"buy_items"			//方法名
+				"Target"				"item_0001"
+				"NPC"					"npc_task_0001"
+				"MaxCount"				"3"
+				"Count"					"0"
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"1000"
+			}
+			"Random" 										//随机奖励（N选1）
+			{
+				"1"
+				{
+					"Gold"				"1000"
+					"EXP"				"200"
+				}
+				"2"
+				{
+					"item_0002"			"1"
+				}
+				"3"
+				{
+					"MAX_HP"			"200"
+				}
+			}
+			"Chance" 										//概率奖励
+			{
+				"Limit"					"1" 				//一次最多奖励个数
+				"1"
+				{
+					"Chance"			"50" 				//奖励概率，去掉此项则几率为0
+					"item_0003"			"2" 				//物品名称     物品个数 （物品名称必须[item_]前缀）
+				}
+				"2"
+				{
+					"Chance"			"50" 				//奖励概率，去掉此项则几率为0
+					"Wood"				"10" 				//物品名称     物品个数 （物品名称必须[item_]前缀）
+					"YuanHui"			"1" 				//物品名称     物品个数 （物品名称必须[item_]前缀）
+				}
+			}
+			"Extra"											//额外奖励
+			{
+				"1"
+				{
+					"LogicalFormula"			"$level>=2"	//需要逻辑公式结果为真，才会奖励；样例为每完成10次则额外奖励
+					"MAX_HP"					"1000"
+				}
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+			}
+		}
+	}
+
+	"questgroup_example"
+	{
+		"IsQuestGroup"					"1" 						//同一时间只能接受任务组中的一个子任务
+		"AcceptNPC"						"npc_task_0001"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_0001"
+		"IsMainQuest"					"0"
+		"Infinity"						"1"
+		"Precondition" 												//任务条件
+		{
+			"PreQuests" 											//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_example"	"1"
+			}
+			"LogicalFormula"			"$level>2" 				//逻辑公式，结果为真才能接受任务
+		}
+		"Quests" 													//任务集合
+		{
+			"RequestMissionCount"		"3"
+			"1"
+			{
+				"AcceptNPC"						"npc_task_0001"
+				"SubmitNPC"						"npc_task_0001"
+				"SubQuests"
+				{
+					"1"
+					{
+						"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+						"Target"				"npc_task_0001"
+					}
+					"2"
+					{
+						"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+						"Target"				"npc_dota_lesser_eidolon" 	//击杀单位
+						"MaxCount"					"3" 						//击杀个数
+					}
+					"3"
+					{
+						"Type"					"FIND_ITEM" 			//任务类型：收集物品
+						"Target"				"item_0001" 			//收集的物品
+						"MaxCount"				"5" 					//收集的个数
+						"SubmitNPC"				"npc_task_0002" 		//如果缺省将在提交任务的时候删除物品，非缺省的情况下需要手动提交到指定NPC
+					}
+				}
+				"SubmitRewards"
+				{
+					"Fixed" 										//固定奖励
+					{
+						"EXP"					"200"
+					}
+				}
+			}
+		}
+		"SubmitRewards" 											//任务奖励
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"500"
+			}
+			"Random" 										//随机奖励（N选1）
+			{
+				"1"
+				{
+					"Gold"				"1000"
+				}
+			}
+			"Chance" 										//概率奖励
+			{
+				"Limit"					"1" 				//一次最多奖励个数
+				"1"
+				{
+					"Chance"			"50" 				//奖励概率，去掉此项则几率为0
+					"item_0001"			"1" 				//物品名称     物品个数 （物品名称必须[item_]前缀）
+				}
+			}
+			"Extra"
+			{
+				"1" 										//固定奖励
+				{
+					"LogicalFormula"	"$FinCnt%3==0"
+					"Level"				"1"
+				}
+			}
+		}
+	}
+
+	"quest_shared_example_good"	//共享任务实例 - 善举
+	{
+		"AcceptNPC"							"npc_task_0001"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_example"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level<10" 		//逻辑公式，结果为真才能接受任务
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"npc_dota_lesser_eidolon" 	//击杀单位
+				"MaxCount"					"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"ATTRIBUTE_MOVE_SPEED"	"100"
+			}
+		}
+	}
+
+	"quest_shared_example_bad"	//共享任务实例 - 恶举
+	{
+		"AcceptNPC"							"npc_task_0001"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_example"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level<10" 		//逻辑公式，结果为真才能接受任务
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"npc_dota_lesser_eidolon" 	//击杀单位
+				"MaxCount"					"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+			}
+		}
+	}
+
+	"quest_shared_example_none"	//共享任务实例 - 无为
+	{
+		"AcceptNPC"							"npc_task_0001"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_example"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level<10" 		//逻辑公式，结果为真才能接受任务
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"npc_dota_lesser_eidolon" 	//击杀单位
+				"MaxCount"					"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+			}
+		}
+	}
+}

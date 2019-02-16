@@ -1,0 +1,33 @@
+"DOTAAbilities"
+{
+	"Creature09Ability"
+	{
+        "ID"    "5199"
+		"BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+        	"modifier_creature09_ability"
+        	{
+        		"Passive"			"1"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        
+        		"Properties"
+                {
+                    "MODIFIER_PROPERTY_OVERRIDE_ANIMATION" "1500"
+                }
+
+                "OnAttackStart"
+                {
+                	"RunScript"
+                	{
+                		"ScriptFile"	"abilities/creature.lua"
+                		"Function"		"FixedAttackAnimation"
+                	}
+                }
+        	}
+        }
+	}
+}

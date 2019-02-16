@@ -1,0 +1,238 @@
+"DOTAAbilities"
+{
+	//////////////////////
+	/////////信使技能-闪烁
+	"ability_courier_blink"
+	{
+		"ID"    "5200"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"antimage_blink"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0.1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"blink"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////信使技能-自动拾取物品
+	"ability_courier_auto_pickup"
+	{
+		"ID"    "5201"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"omniknight_degen_aura"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0.1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"AutoPickUp"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精技能-采集-等级1
+	"ability_ore_spirit_collect_lv1"
+	{
+		"ID"    "5202"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+		"ScriptFile"                	"abilities/lua/ability_ore_spirit_collect.lua"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"collect_speed"		"50"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"next_level_exp"	"20000"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精技能-采集-等级2
+	"ability_ore_spirit_collect_lv2"
+	{
+		"ID"    "5203"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+		"ScriptFile"                	"abilities/lua/ability_ore_spirit_collect.lua"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"collect_speed"		"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"next_level_exp"	"80000"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精技能-采集-等级3
+	"ability_ore_spirit_collect_lv3"
+	{
+		"ID"    "5204"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+		"ScriptFile"                	"abilities/lua/ability_ore_spirit_collect.lua"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"collect_speed"		"200"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"next_level_exp"	"320000"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精技能-采集-等级4
+	"ability_ore_spirit_collect_lv4"
+	{
+		"ID"    "5205"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+		"ScriptFile"                	"abilities/lua/ability_ore_spirit_collect.lua"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"collect_speed"		"500"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"next_level_exp"	"1240000"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精技能-采集-等级5
+	"ability_ore_spirit_collect_lv5"
+	{
+		"ID"    "5206"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_IDLE"
+		"ScriptFile"                	"abilities/lua/ability_ore_spirit_collect.lua"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"collect_speed"		"1000"
+			}
+		}
+	}
+
+	//////////////////////
+	/////////矿精-闪烁
+	"ability_ore_spirit_blink"
+	{
+		"ID"    "5207"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"abyssal_underlord_cancel_dark_rift"
+		"AbilityBehavior"			    "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0.1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"BlinkToOre"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_ability_ore_spirit_blink"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+		
+				"ThinkInterval"  "10.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"BlinkToOreThink"
+					}
+				}
+			}
+		}
+	}
+}

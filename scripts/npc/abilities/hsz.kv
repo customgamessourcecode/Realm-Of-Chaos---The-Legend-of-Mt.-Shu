@@ -1,0 +1,1939 @@
+"DOTAAbilities"
+{
+	"ability_dummy_unit"
+    {
+    	"ID"    "5402"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+    
+        "Modifiers"
+	    {
+	    	"dummy_unit"
+            {
+                "Passive"                         "1"
+                "IsHidden"                        "1"    
+                "States"
+                {
+                    "MODIFIER_STATE_UNSELECTABLE"         "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_INVULNERABLE"         "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NOT_ON_MINIMAP"       "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_HEALTH_BAR"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION"    "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+		}
+    }
+    
+	"ability_hsj_lixinning01"
+    {
+    	"ID"    "5403"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning01"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_1"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"10"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "15"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+
+		"precache"
+		{
+			"particle"					"particles/heroes/liningxin/ability_liningxin_sword.vpcf"
+			"particle"					"particles/heroes/lixinning/ability_lixinning01_swords_base_attack.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_Lixinning.AbilityLixinning01vo"
+				"Target" 			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_lixinning.Abilitylixinning011"
+				"Target" 			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilitylixinning.lua"
+				"Function"          "Onlixinning01SpellStart"
+				"AbilityDuration"   "%ability_duration"
+				"AttributeDamageIncrease"		"%attribute_damage_increase"			
+				"AttributeBaseDamage"			"%attribute_base_damage"
+				"BaseDamage"					"%base_damage"
+				"AttributeType"					"%attribute_type"	
+				"Caster"            "CASTER"	
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_duration"				"10"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"1"
+			}
+			"06"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+        
+    }
+
+    "ability_hsj_lixinning01_dealdamage"
+	{
+		"ID"    "5404"
+		"BaseClass"				 	"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_hsj_lixinning01"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+		"MaxLevel"				  	"10"
+		"NotShow"					"1"
+
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+
+		"precache"
+		{
+			"particle"					"particles/heroes/liningxin/ability_liningxin_sword.vpcf"
+		}		
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"true"
+
+			"RunScript"					
+	    	{
+				"ScriptFile"			"scripts/vscripts/abilities/abilityLixinning.lua"
+			    "Function"		  		"Onlixinning01DealDamage"
+		    }
+		}
+
+		"Modifiers"
+	    {
+			"passive_hsj_lixinning_damaged"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"ThinkInterval"     	"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"					
+	    	        {
+						"ScriptFile"			"scripts/vscripts/abilities/abilityLixinning.lua"
+			            "Function"		  		"Onlixinning01CreateTracking"
+		            }
+				}
+			}
+		}
+	}
+
+	"ability_hsj_lixinning02"
+	{
+		"ID"    "5405"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning02"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_2"
+		"MaxLevel"				  	"10"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityCooldown"           "15"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastPoint"          "0.1"
+
+		"precache"
+		{
+			"particle"				"particles/heroes/wenjian/wenjian_02_effect.vpcf"
+			"particle"				"particles/heroes/wenjian/wenjian_01_effect_explosion.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaBreak"
+				"Target" 			"CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"          "CASTER"
+				"ModifierName"    "modifier_hsj_lixinning02"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"passive_lixinning02_attack"
+            {
+			    "Passive"              	"1"
+                "OnAttackLanded"
+		        {
+		            "Random"
+			        {
+			            "Chance"        "%ability_chance_base"
+				        "OnSuccess"
+				        {
+		                	"RunScript"					
+	    	            	{
+			                	"Target"
+								{
+									"Center"		    "CASTER"
+									"Radius"		    "%radius"
+									"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+								}
+		            	        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+		            	        "AttributeBaseDamage"			"%attribute_base_damage"
+		            	        "BaseDamage"					"%base_damage"
+		            	        "AttributeType"					"%attribute_type"
+		    	            	"ScriptFile"					"scripts/vscripts/abilities/abilityLixinning.lua"
+			                	"Function"		  				"OnLixinning2DealDamage"
+			                	"DamagePercent" 				"%damage_percent"
+		                 	}
+				        }
+			        }
+	        	}
+            }
+
+			"modifier_hsj_lixinning02"
+			{
+				"Duration"				"%ability_duration"
+				"EffectName"			"particles/heroes/wenjian/wenjian_02_effect.vpcf"
+				"EffectAttachType" 		"follow_origin"
+				"OnCreated"
+				{
+					"RunScript"					
+			    	{
+					    "Target"		     	"TARGET"
+				    	"ScriptFile"			"scripts/vscripts/abilities/abilityLixinning.lua"
+					    "Function"		  		"OnLixinning2SpellStart"
+					    "Duration"				"%ability_duration"
+					    "EquipMulti"			"%equip_multi"
+				    }
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_duration"				"10"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"equip_multi"					"30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_chance_base"			"20"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"radius"						"300"
+			}
+			"08"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"1"
+			}
+			"09"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+	}
+
+	"ability_hsj_lixinning03"
+    {
+    	"ID"    "5406"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning03"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_3"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "25"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+
+		"precache"
+		{
+			"particle"					"particles/heroes/liningxin/ability_liningxin_sword.vpcf"
+			"particle"					"particles/heroes/lixining/ability_lixinning03_explosion.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Ability.Windrunner"
+				"Target" 			"CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"          "CASTER"
+				"ModifierName"    "modifier_hsj_lixinning03_avoid"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"true"
+
+			"RunScript"					
+	    	{
+				"ScriptFile"					"scripts/vscripts/abilities/abilityLixinning.lua"
+			    "Function"		  				"Onlixinning03DealDamage"
+				"AttributeDamageIncrease"		"%attribute_damage_increase"		
+		        "AttributeBaseDamage"			"%attribute_base_damage"
+		        "BaseDamage"					"%base_damage"
+		        "AttributeType"					"%attribute_type"
+		        "DamagePercent" 				"%damage_percent"
+		    }
+		}
+		
+		"Modifiers"
+		{
+			"modifier_hsj_lixinning03_avoid"
+			{
+				"RemoveOnDeath"     "0"
+				"IsHidden"          "0"
+				"Duration"          "%ability_duration"
+				"OnAttacked"
+				{
+					"RunScript"					
+			    	{
+					    "Target"		     			"TARGET"
+				    	"ScriptFile"					"scripts/vscripts/abilities/abilityLixinning.lua"
+					    "Function"		  				"Onlixinning03CreateTracking"
+				    }
+
+				    "FireSound"
+					{
+						"EffectName"		"Voice_Hsj_lixinning.Abilitylixinning032"
+						"Target" 			"CASTER"
+					}
+				}
+
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_AVOID_CONSTANT"				"%avoid_constant"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%move_speed"
+			    }
+			}
+
+			"passive_lixinning03_attack"
+            {
+			    "Passive"              	"1"
+                "OnAttackLanded"
+		        {
+                	"RunScript"					
+	            	{
+	                	"Target"						"TARGET"
+    	            	"ScriptFile"					"scripts/vscripts/abilities/abilityLixinning.lua"
+	                	"Function"		  				"Onlixinning03AttackLanded"
+                 	}
+	        	}
+            }
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_duration"				"5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"1"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"avoid_constant"				"100"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"move_speed"					"522"
+			}
+			"08"
+            {
+                "var_type"          			"FIELD_INTEGER"
+                "damage_percent"        		"0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+        
+    }
+
+    "ability_hsj_humei01"
+    {
+    	"ID"    "5407"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_hsj_humei01"
+    	"AbilityCastAnimation"     "Act_DOTA_CAST_ABILITY_1"
+		"AOERadius"                "%damage_radius"
+
+        // Stats 
+        //----------------------------------------------------------------
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "600"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.2"
+		"AbilityCooldown"           "10"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+
+		"precache"
+		{
+			"particle"						"particles/heroes/humei/ability_humei_01_effect.vpcf"
+			"particle"						"particles/heroes/sanae/ability_sanea_02_effect.vpcf"
+		}
+
+        "OnSpellStart"
+        {
+        	"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei01FireEffect"
+				"Target"			"TARGET"
+			}
+
+            "DelayedAction"
+			{
+				"Delay"   "0.5"
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Voice_Hsj_humei.Abilityhumei01"
+						"Target"			"CASTER"
+					}
+
+                    "RunScript"
+					{
+						"ScriptFile"        			"scripts/vscripts/abilities/abilityHumei.lua"
+						"Function"          			"OnHumei01SpellStart"
+						"Target"            			"TARGET"
+						"Radius"						"%damage_radius"
+						"AttributeDamageIncrease"		"%attribute_damage_increase"			
+		                "AttributeBaseDamage"			"%attribute_base_damage"
+		            	"BaseDamage"					"%base_damage"
+		            	"AttributeType"					"%attribute_type"
+		            	"DamagePercent" 				"%damage_percent"
+					}
+				}
+			}
+        }
+	
+	    "AbilitySpecial"
+	    {
+			"01"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"damage_radius"			    	"400"  
+		    }
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"2"
+			}
+			"06"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+	    }
+    }
+
+    "ability_hsj_humei02"
+    {
+    	"ID"    "5408"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET "
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_hsj_humei02"
+    	"AbilityCastAnimation"     "Act_DOTA_CAST_ABILITY_2"
+
+        // Stats 
+        //----------------------------------------------------------------
+	    "AbilityCastRange"          "400"
+		"AbilityManaCost"           "0"
+		"AbilityCooldown"           "10"
+		"AbilityCastPoint"          "0.2"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+
+	    "precache"
+		{
+			"particle"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_02_effect.vpcf"
+		}
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_humei.Abilityhumei02"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"					
+	    	{
+			    "Target"						"TARGET"
+		    	"ScriptFile"					"scripts/vscripts/abilities/abilityHumei.lua"
+			    "Function"		  				"OnHumei02SpellStart"
+		    }
+
+			"ApplyModifier"
+			{
+				"Target"          		"TARGET"
+				"ModifierName"   		"modifier_thdots_Humei02_fire_damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_thdots_Humei02_fire_damage"
+			{
+				"ThinkInterval"					"0.2"
+				"Duration"            			"%duration"
+				"EffectName"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+				"EffectAttachType" 				"follow_origin"
+				"Attributes"					"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"					
+			    	{
+					    "Target"						"TARGET"
+				    	"ScriptFile"					"scripts/vscripts/abilities/abilityHumei.lua"
+					    "Function"		  				"OnHumei02FireDamage"
+						"AttributeDamageIncrease"		"%attribute_damage_increase"			
+		                "AttributeBaseDamage"			"%attribute_base_damage"
+		            	"BaseDamage"					"%base_damage"
+		            	"AttributeType"					"%attribute_type"
+		            	"DamagePercent" 				"%damage_percent"
+				    }
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"2.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"2"
+			}
+			"06"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}
+	}
+
+	"ability_hsj_humei03"
+	{
+		"ID"    "5409"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_humei03"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_3"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.2"
+		"AbilityCooldown"           "40"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+		
+		"precache"
+		{
+			"particle"					"particles/neutral_fx/black_dragon_attack.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_03_attack.vpcf"
+			"particle"					"particles/heroes/humei/ability_minamitsu_03_body.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_luodu.AbilityHumei03vo"
+				"Target" 			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.IcarusDive.Cast"
+				"Target" 			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei03SpellStart"
+				"Caster"            "CASTER"
+				"Duration"			"%duration"
+				"MagicStateMulti"	"%magic_state_multi"
+			}	
+			"ApplyModifier"
+			{
+				"ModifierName" 		"modifier_hsj_humei_03"
+				"Target"	   		"CASTER"	
+			}	
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"true"
+
+			"RunScript"					
+	    	{
+				"ScriptFile"			"scripts/vscripts/abilities/abilityHumei.lua"
+			    "Function"		  		"OnHumei03ProjectileHit"
+				"AttributeDamageIncrease"		"%attribute_damage_increase"			
+		        "AttributeBaseDamage"			"%attribute_base_damage"
+		        "BaseDamage"					"%base_damage"
+		        "AttributeType"					"%attribute_type"
+		        "DamagePercent" 				"%damage_percent"
+		    }
+		}
+
+		"Modifiers"
+		{
+			"modifier_hsj_humei_03"
+			{
+				"Duration"         	 "%duration"
+
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Voice_Hsj_humei.Abilityhumei03"
+						"Target"			"CASTER"
+					}
+
+					"RunScript"					
+	    	        {
+						"ScriptFile"			"scripts/vscripts/abilities/abilityHumei.lua"
+			            "Function"		  		"OnHumei03CreateTracking"
+		            }
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"   		"%move_speed"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"move_speed"					"300"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"2"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"duration"						"30"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"magic_state_multi"				"2.0"
+			}
+			"08"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+	}
+
+	"ability_hsj_humei04"
+    {
+    	"ID"    "5410"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_hsj_humei04"
+    	"AbilityCastAnimation"     "Act_DOTA_CAST_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "900"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.3"
+        "AbilityCooldown"           "30"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"AbilityChannelTime"		"3.0"
+		"MaxLevel"				  	"10"
+
+		"precache"
+		{
+			"particle"					"particles/thd2/heroes/marisa/marisa_04_spark.vpcf"
+			"particle"					"particles/thd2/heroes/marisa/marisa_04_spark_wind_b.vpcf"
+			"particle"					"particles/heroes/marisa/marisa_04_spark_circle.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_04.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_04_spark_wind_b.vpcf"
+		}
+
+        "OnSpellStart"
+        {    
+        	"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Cast"
+				"Target" 			"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Beam"
+				"Target" 			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei04SpellStart"
+				"Caster"            "CASTER"
+				"Target"            "POINT"
+			}
+			
+            "CreateThinker"
+			{
+				"ModifierName"		"modifier_thdots_humei04_think_interval"
+				"Target"			"POINT"
+			}
+        }
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"Target"		    "CASTER"
+				"ModifierName"		"modifier_thdots_humei04_think_interval"
+			}
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei04SpellRemove"
+				"Caster"            "CASTER"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei04SpellRemove"
+				"Caster"            "CASTER"
+			}
+		}
+        "Modifiers"
+        {
+			"modifier_thdots_humei04_think_interval"
+			{
+				"Duration"          "3.1"
+				"ThinkInterval"     "0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SunRay.Loop"
+						"Target" 			"TARGET"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SunRay.Stop"
+						"Target" 			"TARGET"
+					}
+				}
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+						"Function"          "OnHumei04SpellThink"
+						"Caster"            "CASTER"
+						"Target"            "TARGET"
+						"DamageWidth"       "%damage_width"
+						"DamageLenth"       "%damage_lenth"
+						"AttributeDamageIncrease"		"%attribute_damage_increase"			
+		                "AttributeBaseDamage"			"%attribute_base_damage"
+		            	"BaseDamage"					"%base_damage"
+		            	"AttributeType"					"%attribute_type"
+		            	"DamagePercent" 				"%damage_percent"
+					}
+				}
+			}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+			"01"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"damage_width"			   	 	"300"  
+		    }
+			"02"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"damage_lenth"			    	"900"  
+		    }
+		    "03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"move_speed"					"150"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.4"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"2"
+			}
+			"08"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+	    }
+    }
+
+    "ability_hsj_moluo01"
+	{
+		"ID"    "5411"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET "
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_hsj_moluo01"
+    	"AbilityCastAnimation"     "Act_DOTA_CAST_ABILITY_1"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "300"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+	    "MaxLevel"				  	"10"
+
+	    "precache"
+		{
+			"particle"				"particles/heroes/moluo/ability_moluo01_explosion.vpcf"
+		}
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_LifeStealer.Consume"
+				"Target" 			"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_luodu.AbilityMoluo01"
+				"Target" 			"CASTER"
+			}
+			
+			"RunScript"					
+			{
+				"Target"		     			"TARGET"
+				"ScriptFile"					"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"		  				"OnMoluo01SpellStart"
+		        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+		        "AttributeBaseDamage"			"%attribute_base_damage"
+		        "BaseDamage"					"%base_damage"
+		        "AttributeType"					"%attribute_type"
+		        "HealthPercent"					"%health_percent"
+		        "DamagePercent" 				"%damage_percent"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ability_hsj_moluo01"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_ability_hsj_moluo01"
+			{
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"0"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"health_percent"				"0.2"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_INTEGER"
+				"bonus_attack_speed"			"-50"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_INTEGER"
+				"bonus_movement_speed"			"-30"
+			}
+			"08"
+			{
+				"var_type"		  				"FIELD_INTEGER"
+				"duration"						"2"
+			}
+			"09"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+	}
+
+	"ability_hsj_moluo02"
+	{
+		"ID"    "5412"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	   	"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityTextureName"	    "custom_game/ability_hsj_moluo02"
+
+		"AbilityCastPoint"          "0.0 0.0 0.0 0.0"
+		"AbilityManaCost"			"0"
+		"AbilityCooldown"           "0"
+		"AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+
+		"precache" //缓存特效
+        {
+            "particle"       		"particles/heroes/moluo/ability_moluo02_effect_on.vpcf"
+            "particle"				"particles/heroes/moluo/ability_moluo02_effect_on_vip.vpcf"
+        }
+
+		"OnToggleOn"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_luodu.AbilityMoluo02"
+				"Target" 			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_LifeStealer.OpenWounds"
+				"Target" 			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"Target"          		"CASTER"
+				"ModifierName"   		"modifier_hsj_moluo02_damage"
+			}
+			"RunScript"
+			{
+				"Target"						"CASTER"
+				"ScriptFile" 					"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"						"OnMoluo02Start"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"Target"          		"CASTER"
+				"ModifierName"   		"modifier_hsj_moluo02_damage"
+			}
+			"RunScript"
+			{
+				"Target"						"CASTER"
+				"ScriptFile" 					"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"						"OffMoluo02Toggle"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_hsj_moluo02_damage"
+			{
+				"ThinkInterval"					"0.2"
+				"Attributes"					"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"Target"
+				        {
+				        	"Center"    				"TARGET"
+				        	"Radius"   					"%damage_radius"
+						  	"Types"     				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						    "Teams"     				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						    "Flags"    					"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"	
+						}
+						"ScriptFile" 					"scripts/vscripts/abilities/abilityMoluo.lua"
+						"Function"						"OnMoluo02Toggle"
+				        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+				        "AttributeBaseDamage"			"%attribute_base_damage"
+				        "BaseDamage"					"%base_damage"
+				        "AttributeType"					"%attribute_type"
+				        "HealthDecrease"				"%health_decrease"
+				        "DamagePercent" 				"%damage_percent"
+					}
+
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%incoming_damage"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"0"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"health_decrease"				"1"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"damage_radius"					"300"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_INTEGER"
+				"incoming_damage"				"-10"
+			}
+			"08"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}	
+	}
+
+	"ability_hsj_moluo03"
+	{
+		"ID"    "5413"
+		"BaseClass"				 	"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_hsj_moluo03"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"				  	"10"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+
+	    "precache"
+		{
+			"particle"				"particles/heroes/moluo/ability_moluo03_explosion.vpcf"
+			"particle"				"particles/heroes/moluo/ability_moluo_03_sword.vpcf"
+		}
+		
+		"Modifiers"
+	    {
+			"passive_moluo03_attack"
+            {
+			    "Passive"              	"1"
+                "OnAttackLanded"
+		        {
+		            "Random"
+			        {
+			            "Chance"        "%ability_chance_base"
+				        "OnSuccess"
+				        {
+				        	"FireSound"
+							{
+								"EffectName"		"Hero_LifeStealer.Infest"
+								"Target" 			"CASTER"
+							}
+		                	"RunScript"					
+	    	            	{
+			                	"Target"
+								{
+									"Center"		    "CASTER"
+									"Radius"		    "%radius"
+									"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+								}
+		            	        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+		            	        "AttributeBaseDamage"			"%attribute_base_damage"
+		            	        "BaseDamage"					"%base_damage"
+		            	        "AttributeType"					"%attribute_type"
+		    	            	"ScriptFile"					"scripts/vscripts/abilities/abilityMoluo.lua"
+			                	"Function"		  				"OnMoluo03SpellStart"
+			                	"DamagePercent" 				"%damage_percent"
+		                 	}
+				        }
+			        }
+	        	}
+            }
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_chance_base"			"50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.8"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"radius"						"1000"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"1"
+			}
+			"07"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+		}
+	}
+
+	"ability_hsj_moluo04"
+	{
+		"ID"    "5415"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_moluo04"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_4"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.2"
+		"AbilityCooldown"           "70"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"10"
+		
+		"precache"
+		{
+			"particle"			"particles/heroes/moluo/ability_moluo_03_weapon.vpcf"
+			"particle"			"particles/heroes/minamitsu/ability_minamitsu_03_body.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_LifeStealer.Rage"
+				"Target" 			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"          "OnMoluo04SpellStart"
+				"Caster"            "CASTER"
+				"Duration"			"%duration"
+				"HeroStateMulti"	"%hero_state_multi"
+				"AttributeMulti"	"%attribute_multi"
+			}	
+			"ApplyModifier"
+			{
+				"ModifierName" 		"modifier_hsj_moluo_04"
+				"Target"	   		"CASTER"	
+			}	
+		}
+
+		"Modifiers"
+		{
+			"modifier_hsj_moluo_04"
+			{
+				"Duration"         	 "%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" 		"%health_regen"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"   		"%move_speed"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_regen"			"0.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attribute_multi"		"1.8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"30.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_state_multi"		"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"move_speed"			"150"
+			}
+		}	
+	}
+
+	"ability_hsj_luodu02"
+	{
+		"ID"    "5414"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_luodu02"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_2"
+		"MaxLevel"				  	"10"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityCooldown"           "10"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastPoint"          "0.1"
+
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+			"particle"				"particles/heroes/luodu/ability_luodu_01.vpcf"
+			"particle"				"particles/heroes/luodu/ability_luodu_01_vip.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Voice_Hsj_luodu.Abilityluodu02"
+				"Target" 			"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+
+		    "ApplyModifier"
+			{
+				"ModifierName"		"modifier_hsj_luodu02_miss"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"Radius"		    "%radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_hsj_luodu02_miss"
+			{
+				"Duration"         	 "%miss_duration"
+				"ThinkInterval"      "0.1"
+
+				"OnCreated"
+				{
+					"RunScript"					
+			    	{
+					    "Target"						"TARGET"
+				    	"ScriptFile"					"scripts/vscripts/abilities/abilityLuodu.lua"
+					    "Function"		  				"OnLuodu02SpellStart"
+				    }
+				}
+
+				"OnIntervalThink"
+				{
+					"RunScript"					
+			    	{
+					    "Target"						"TARGET"
+				        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+				        "AttributeBaseDamage"			"%attribute_base_damage"
+				        "BaseDamage"					"%base_damage"
+				        "AttributeType"					"%attribute_type"
+				    	"ScriptFile"					"scripts/vscripts/abilities/abilityLuodu.lua"
+					    "Function"		  				"OnLuodu02DealDamage"
+				    }
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_miss_percent"
+				}
+
+				"States"
+                {
+                	"MODIFIER_STATE_ROOTED"					"MODIFIER_STATE_VALUE_ENABLED"
+                }
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"miss_duration"					"3.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"radius"						"500"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"0"
+			}
+			"07"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"blind_miss_percent"			"100"
+			}
+		}	
+	}
+
+	"ability_hsj_luodu03"
+	{
+		"ID"    "5416"
+		"BaseClass"				 	"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_hsj_luodu03"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"				  	"10"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+
+	    "precache"
+		{
+			"particle"				"particles/heroes/byakuren/ability_byakuren_02.vpcf"
+			"particle"				"particles/heroes/byakuren/ability_byakuren_02_vip.vpcf"
+		}
+		
+		"Modifiers"
+	    {
+			"passive_luodu03_attack"
+            {
+			    "Passive"              	"1"
+                "OnAttackLanded"
+		        {
+		        	"Random"
+			        {
+			            "Chance"        "%ability_chance_base"
+				        "OnSuccess"
+				        {
+				        	"RunScript"					
+					    	{
+							    "Target"		     			"TARGET"
+						    	"ScriptFile"					"scripts/vscripts/abilities/abilityLuodu.lua"
+							    "Function"		  				"OnLuodu03AttackLanded"
+				            	"AttributeDamageIncrease"		"%attribute_damage_increase"			
+				            	"AttributeBaseDamage"			"%attribute_base_damage"
+				            	"BaseDamage"					"%base_damage"
+				            	"AttributeType"					"%attribute_type"
+						    }
+						}
+					}
+	        	}
+	        	"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_miss_percent"
+				}
+            }
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ability_chance_base"			"20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"2.4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"0"
+			}
+		}
+	}
+
+	"ability_hsj_luodu04"
+	{
+		"ID"    "5417"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_luodu04"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_4"
+		"AbilityCastPoint"          "0.3"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"10"
+		"AbilityCooldown"           "30"
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+
+		"precache"
+		{
+			"particle"				"particles/heroes/luodu/ability_luodu_04.vpcf"
+			"particle"				"particles/units/heroes/hero_omniknight/omniknight_purification_b.vpcf"
+			"particle"				"particles/heroes/luodu/ability_luodu_04_vip.vpcf"
+			"particle"				"particles/heroes/luodu/ability_luodu_04_thunder_b4.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"DelayedAction"
+			{
+				"Delay"   "0"
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Voice_Hsj_luodu.Abilityluodu04"
+						"Target" 			"CASTER"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Voice_Hsj_luodu.Abilityluodu04vo"
+						"Target" 			"CASTER"
+					}
+					"ApplyModifier"
+					{
+						"Target"          "CASTER"
+						"ModifierName"    "modifier_hsj_luodu04_think_interval"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_hsj_luodu04_think_interval"
+			{
+				"RemoveOnDeath"     "1"
+				"IsHidden"          "0"
+				"Duration"          "%ability_duration"
+				"ThinkInterval"     "0.1"
+
+				"OnCreated"
+				{
+			        "RunScript"
+					{
+						"Target"						"CASTER"
+		    	        "ScriptFile"					"scripts/vscripts/abilities/abilityLuodu.lua"
+			            "Function"		  				"OnLuodu04SpellStart"
+					}
+				}
+        		
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"Target"
+						{
+							"Center"		    "CASTER"
+							"Radius"		    "%radius"
+							"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+		    	        "ScriptFile"					"scripts/vscripts/abilities/abilityLuodu.lua"
+			            "Function"		  				"OnLuodu04Think"
+				        "AttributeDamageIncrease"		"%attribute_damage_increase"			
+				        "AttributeBaseDamage"			"%attribute_base_damage"
+				        "BaseDamage"					"%base_damage"
+				        "AttributeType"					"%attribute_type"
+					}
+				}
+			}
+
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.6"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"0"
+			}
+			"05"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"radius"						"300"
+			}
+			"06"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"ability_duration"			    "10"
+			}
+		}	
+	}
+
+	"ability_hsj_liluan02"
+    {
+    	"ID"    "5418"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_liluan02"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_2"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "45"
+
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_abaddon/abaddon_spawn.vpcf"
+			"particle"				"particles/units/heroes/hero_phoenix/phoenix_ambient.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityLiluan.lua"
+				"Function"          "OnLiluan02KillSpawn"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Lycan.SummonWolves"
+				"Target"			"CASTER"
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"liluan_spawn_unit"
+				"UnitCount"				"1"
+				"UnitLimit"				"0"
+				"SpawnRadius"			"100"
+				"Duration"				"45"
+
+				"OnSpawn"
+				{
+					"FireEffect"
+					{
+						"EffectName"			"particles/units/heroes/hero_abaddon/abaddon_spawn.vpcf"
+						"EffectAttachType" 		"follow_origin"
+						"Target"				"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"        			"scripts/vscripts/abilities/abilityLiluan.lua"
+						"Function"          			"OnLiluan02Spawn"
+						"AttributeDamageIncrease"		"%attribute_damage_increase"			
+						"AttributeBaseDamage"			"%attribute_base_damage"
+						"BaseDamage"					"%base_damage"
+						"AttributeType"					"%attribute_type"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ability_liluan_02"
+			{
+				"IsHidden"          	"1"	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_ambient.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target" 			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_neck"
+							"TARGET"		"attach_tailbase"
+							"TARGET"		"attach_tailbase"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+		    "01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_damage_increase"		"0.2"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attribute_base_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"base_damage"					"1000"
+			}
+			"04"
+			{
+				"var_type"		  				"FIELD_FLOAT"
+				"attribute_type"				"1"
+			}
+		}	
+    }
+
+    ///////////////////
+	///离鸾凤凰
+	////////////////////
+
+	"ability_hsj_liluan_phoenix"
+	{
+		"ID"    "5419"
+		"BaseClass"				 	"ability_datadriven"
+		"AbilityTextureName"		"ability_hsj_liluan_phoenix"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+		"MaxLevel"				  	"10"
+		"NotShow"					"1"
+
+		"AbilityUnitDamageType"   	"DAMAGE_TYPE_PHYSICAL"
+
+		"precache"
+		{
+			"particle" 				"particles/thd2/heroes/mouko/ability_mokou_01_boom.vpcf"
+		}
+
+		"Modifiers"
+	    {
+			"passive_hsj_liluan_phoenix_attack"
+			{
+				"Passive"              	"1"
+				"IsHidden"          	"1"
+
+				"OnAttackLanded"
+		        {
+		            "RunScript"					
+	    	        {
+		    	        "ScriptFile"					"scripts/vscripts/abilities/abilityLiluan.lua"
+			            "Function"		  				"hsj_OnLiluanPhoenixAttackLanded"
+		            }
+	        	}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+		}
+	}
+}

@@ -1,0 +1,3589 @@
+// Dota Heroes File
+
+#base "abilities/custom_item_spell_system.kv"
+#base "abilities/courier.kv"
+#base "abilities/fort.kv"
+#base "abilities/hsz.kv"
+#base "abilities/fb_units.kv"
+#base "abilities/extra_abilities.kv"
+#base "abilities/attacking_boss.kv"
+#base "abilities/attacking_creature.kv"
+
+"DOTAAbilities"
+{
+	// 快速回城
+	"ability_shushan_teleport_to_fort"
+	{
+		"ID"						"5000"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityChannelTime"		"0.1"
+		"AbilityTextureName"		"custom_game/ability_shushan_teleport_to_fort"
+		"MaxLevel"					"1"
+		"AbilityCastAnimation"		"ACT_DOTA_IDLE"
+
+		"precache"
+		{
+			"particle"  "particles/items2_fx/teleport_start.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ability_shushan_teleport_to_fort"
+				"Target" 		"CASTER"
+				"Duration"		"2"
+			}
+		}
+
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_ability_shushan_teleport_to_fort"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_ability_shushan_teleport_to_fort"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/fort.lua"
+				"Function"		"TeleportToFort"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.TeleportToFort"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_ability_shushan_teleport_to_fort"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+		
+				"EffectName"		"particles/items2_fx/teleport_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+
+	// 传送技能
+	"ability_shushan_teleport"
+	{
+		"ID"						"5001"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"		"custom_game/ability_shushan_teleport"
+		"MaxLevel"					"1"
+		"AbilityCastAnimation"		"ACT_DOTA_IDLE"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"Teleport"
+				"Target"		"POINT"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.Teleport"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"ability_shushan_teleport"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+		
+				"EffectName"		"particles/items2_fx/teleport_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+
+	// 买活
+	"ability_shushan_buyback"
+	{
+		"ID"						"5002"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"		"abaddon_borrowed_time"
+		"AbilityCooldown"			"420.0"
+		"MaxLevel"					"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"ShuShanBuyback"
+			}
+		}
+	}
+
+	// 跳跃技能
+	"ability_shushan_jump"
+	{
+		"ID"						"5003"
+		"BaseClass"					"ability_lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"		"custom_game/ability_shushan_jump"
+		"ScriptFile"				"abilities/lua/ability_shushan_jump.lua"
+		"MaxLevel"					"1"
+	}
+
+	// 闪避技能
+	"ability_shushan_evade"
+	{
+		"ID"						"5004"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"		"custom_game/ability_shushan_evade"
+		"AbilityCooldown"			"3.0"
+		"MaxLevel"					"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/common.lua"
+				"Function"		"ShushanEvade"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.Evade"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_ability_shushan_evade"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"50"
+				    "MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS" "high" 
+				}
+
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ability_shushan_evade"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+		}
+	}
+
+	// 空技能
+	"ability_shushan_null_1"
+	{
+		"ID"						"5005"
+		"BaseClass" 						"ability_datadriven"
+		"AbilityTextureName" 				""
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"							"1"
+	}
+	"ability_shushan_null_2"
+	{
+		"ID"						"5006"
+		"BaseClass" 						"ability_datadriven"
+		"AbilityTextureName" 				""
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"							"1"
+	}
+	"ability_shushan_null_3"
+	{
+		"ID"	"5007"
+		"BaseClass" 						"ability_datadriven"
+		"AbilityTextureName" 				""
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"							"1"
+	}
+	"ability_shushan_null_daoshu"
+	{
+		"ID"	"5008"
+		"BaseClass" 						"ability_datadriven"
+		"AbilityTextureName" 				""
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"							"1"
+	}
+	"ability_shushan_null_xinfa"
+	{
+		"ID"	"5009"
+		"BaseClass" 						"ability_datadriven"
+		"AbilityTextureName" 				""
+		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"							"1"
+	}
+
+	"ability_shushan_tianchen011"
+    {
+    	"ID"	"5010"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_tianchen011"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "1000"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.3"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		}
+
+        "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"TARGET"
+				"Function"			"OnTianchen011Hit"
+			}
+		}
+
+        "OnSpellStart"
+        {    
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"POINT"
+				"Function"			"OnTianchen011SpellStart"
+			}
+        }
+
+        "Modifiers"
+        {
+        	"modifier_ability_shushan_tianchen011"
+        	{
+        		"Passive"			"1"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        	
+        		"OnAttackLanded"
+        		{
+        			"Random"
+        			{
+        				"Chance"			"50"
+        				"OnSuccess"
+        				{
+        					"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+								"Function"			"OnTianchen011SpellStartForJueXing"
+							}
+        				}
+        			}
+        		}
+        	}
+        }
+    }
+
+    "ability_shushan_tianchen012"
+    {
+    	"ID"	"5011"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_tianchen012"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_2"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "600"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+			"particle"					"particles/heroes/tianchen/ability_tianchen_011.vpcf"
+		}
+
+        "OnSpellStart"
+        {    
+        	"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"TARGET"
+				"Function"			"OnTianchen012SpellStart"
+			}
+			"LinearProjectile"
+			{	
+				"EffectName"		"particles/heroes/tianchen/ability_tianchen_011.vpcf"
+				"MoveSpeed"			"1500"
+				"StartRadius"		"300"
+				"EndRadius"			"300"
+				"FixedDistance"		"600"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				"HasFrontalCone"	"0"
+				"ProvidesVision"	"1"
+				"VisionRadius"		"300"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.TianChen.A012"
+				"Target" 		"CASTER"
+			}
+        }
+
+        "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"TARGET"
+				"Function"			"OnTianchen012Hit"
+			}
+		}
+
+        "Modifiers"
+        {
+			"modifier_ability_tianchen_012_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"40"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+								"Target"			"TARGET"
+								"Function"			"OnTianchen012SpellStart"
+							}
+						}
+					}
+				}
+			}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    }
+    }
+
+    "ability_shushan_tianchen013"
+	{
+		"ID"						"5012"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_tianchen013"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastAnimation"		"ACT_DOTA_CHANNEL_ABILITY_3"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "600"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+		"AbilityChannelTime"		"2"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/tianchen/ability_tianchen_013.vpcf"
+			"particle"	"particles/heroes/tianchen/ability_tianchen_013_attack.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Function"		"OnTianchen013SpellStart"
+				"Caster"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.TianChen.A013"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Function"		"OnTianchen013SpellRemove"
+				"Caster"		"CASTER"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Function"		"OnTianchen013SpellRemove"
+				"Caster"		"CASTER"
+			}
+			"LinearProjectile"
+			{	
+				"EffectName"		"particles/heroes/tianchen/ability_tianchen_013_attack.vpcf"
+				"MoveSpeed"			"1500"
+				"StartRadius"		"800"
+				"EndRadius"			"800"
+				"FixedDistance"		"1000"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				"HasFrontalCone"	"0"
+				"ProvidesVision"	"1"
+				"VisionRadius"		"300"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.TianChen.A013.Finish"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tianchen03_slow"
+				"Target"			"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"TARGET"
+				"Function"			"OnTianchen013Hit"
+				"BaseDamage"		"%base_damage"
+				"AbilityIncrease"	"%ability_damage_increase"			
+				"AttributeType"		"%attribute_type"
+				"WeaponType"		"%weapon_type"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_tianchen03_slow"
+			{
+				"Duration"		"2"
+				"IsDebuff"		"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-10"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+		}
+	}
+
+	"ability_shushan_tianchen014"
+	{
+		"ID"	"5013"
+		"BaseClass"	"ability_datadriven"
+		"AbilityTextureName"	"custom_game/ability_shushan_tianchen014"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastAnimation"	"ACT_DOTA_CHANNEL_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "1000"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/tianchen/ability_tianchen_014.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{	
+				"EffectName"		"particles/heroes/tianchen/ability_tianchen_014.vpcf"
+				"MoveSpeed"			"1500"
+				"StartRadius"		"800"
+				"EndRadius"			"800"
+				"FixedDistance"		"1000"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				"HasFrontalCone"	"0"
+				"ProvidesVision"	"1"
+				"VisionRadius"		"300"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Function"		"OnTianchen014SpellStart"
+				"Target"		"POINT"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Target"			"TARGET"
+				"Function"			"OnTianchen014Hit"
+				"BaseDamage"		"%base_damage"
+				"AbilityIncrease"	"%ability_damage_increase"			
+				"AttributeType"		"%attribute_type"
+				"WeaponType"		"%weapon_type"
+			}
+		}
+		"Modifiers"
+		{
+		}
+		"AbilitySpecial"
+		{
+		}
+	}
+	"ability_shushan_tianchen0142"
+	{
+		"ID"	"5014"
+		"BaseClass"	"ability_datadriven"
+		"AbilityTextureName"	"custom_game/ability_shushan_tianchen014"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastAnimation"	"ACT_DOTA_CHANNEL_END_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "1"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/tianchen/ability_tianchen_0142.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{	
+				"EffectName"		"particles/heroes/tianchen/ability_tianchen_0142.vpcf"
+				"MoveSpeed"			"1500"
+				"StartRadius"		"800"
+				"EndRadius"			"800"
+				"FixedDistance"		"1000"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+				"HasFrontalCone"	"0"
+				"ProvidesVision"	"1"
+				"VisionRadius"		"300"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+				"Function"		"OnTianchen0142SpellStart"
+				"Caster"		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+		"AbilitySpecial"
+		{
+		}
+	}
+
+	"ability_shushan_tianchen015"
+	{
+		"ID"	"5015"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_tianchen015"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+		"AbilityCooldown"			"1"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/tianchen/ability_tianchen_015.vpcf"
+		}
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_ability_tianchen_015"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.TianChen.A014"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_ability_tianchen_015"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_ability_tianchen_015"
+			{
+				"IsHidden"		"0"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_5"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/abilities/abilityTianchen.lua"
+						"Function"		"OnTianchenAttackStart"
+					}
+				}
+				"Properties"
+				{
+					// 攻击速度
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"400"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"300"
+					"MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS"	"cast5"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+		}
+	}
+
+
+	"ability_shushan_lingcai011"
+	{
+		"ID"	"5016"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"custom_game/ability_shushan_lingcai011"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"		"0.2"
+		"AbilityCastAnimation"	"Act_DOTA_CAST_ABILITY_3"
+		"AbilityCooldown"		"5"
+		// Stats
+		// ----------------------------------------------------------------
+		"AbilityCastRange"		"800"
+		"AbilityManaCost"		"0"
+		"MaxLevel"				"1"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityType"			"DOTA_ABILITY_TYPE_HIDDEN"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011_a.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"	"OnLingcai03SpellStart"
+				"Target"	"POINT"
+				"Caster"	"CASTER"
+				"length"	"%length"
+				"width"	"%width"
+				"speed"	"%speed"
+				"tick_interval"	"%tick_interval"
+				"debuff_name"	"modifier_shushan_lingcai03_slowdown"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_shushan_lingcai03_slowdown"
+			{
+				"IsHidden"	"0"
+				"Duration"	"%slow_duration"
+				"IsDebuff"	"1"
+				"IsPurgable"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_pct"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_duration"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_movement_pct"	"-30"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"length"	"800"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"width"	"400"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"speed"	"1500"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"tick_interval"	"0.1"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai012"
+	{
+		"ID"	"5018"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"ability_shushan_lingcai012"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"		"0.2"
+		"AbilityCooldown"		"5"
+		// Stats
+		// ----------------------------------------------------------------
+		"AbilityManaCost"		"0"
+		"MaxLevel"				"1"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityType"			"DOTA_ABILITY_TYPE_HIDDEN"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011_a.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"	"OnLingcai02SpellStart"
+				"Caster"	"CASTER"
+				"radius"	"%radius"
+				"stun_self_duration"	"%stun_self_duration"
+				"stun_enemy_duration"	"%stun_enemy_duration"
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_lingcai02_bonus_action"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_lingcai02_bonus_action"
+			{
+				"Duration"	"0.3"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+						"Function"	"OnLingcai02ActionDestroy"
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"stun_self_duration"	"1.0"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"stun_enemy_duration"	"1.0"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"radius"	"250"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai013"
+	{
+		"ID"	"5019"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"custom_game/ability_shushan_lingcai013"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"		"0.2"
+		"AbilityCastAnimation"	"Act_DOTA_CAST_ABILITY_1"
+		"AbilityCooldown"		"5"
+
+		// Stats
+		// ----------------------------------------------------------------
+		"AbilityManaCost"		"0"
+		"MaxLevel"				"10"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityType"			"DOTA_ABILITY_TYPE_HIDDEN"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/lingcai/ability_lingcai_013.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011_a.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"	"OnLingcai01SpellStart"
+				"Caster"	"CASTER"
+				"radius"	"%radius"
+				"icebound_duration"	"%icebound_duration"
+				"debuff_name"	"modifier_shushan_lingcai01_slowdown"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_shushan_lingcai01_slowdown"
+			{
+				"IsHidden"	"0"
+				"Duration"	"%slow_duration"
+				"IsDebuff"	"1"
+				"IsPurgable"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attackspeed"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"radius"	"400"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_duration"	"3"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_movement_pct"	"-50"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_attackspeed"	"-20"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"icebound_duration"	"11"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai014"
+	{
+		"ID"	"5020"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"ability_shushan_lingcai014"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastPoint"		"0.2"
+		"AbilityCooldown"		"5"
+		// Stats
+		// ----------------------------------------------------------------
+		"AbilityManaCost"		"0"
+		"MaxLevel"				"1"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityType"			"DOTA_ABILITY_TYPE_HIDDEN"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011_a.vpcf"
+			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"	"OnLingcai04SpellStart"
+				"Caster"	"CASTER"
+				"radius"	"%radius"
+				"duration"	"%duration"
+				"tick_interval"	"%tick_interval"
+				"stack_slow_max"	"%stack_slow_max"
+				"stun_self_duration"	"%stun_self_duration"
+				"stun_enemy_duration"	"%stun_enemy_duration"
+				"debuff_slowdown_name"	"modifier_shushan_lingcai04_slowdown"
+				"debuff_freeze_name"	"modifier_shushan_lingcai04_freeze"
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_shushan_lingcai04_icon"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_lingcai04_bonus_action"
+			{
+				"Duration"	"0.3"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/abilities/abilitylingcai.lua"
+						"Function"		"OnLingcai04ActionDestroy"
+					}
+				}
+			}
+			"modifier_shushan_lingcai04_icon"
+			{
+				"Duration"	"%duration"
+				"IsHidden"	"0"
+				"IsPurgable"	"0"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_4"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+						"Function"	"OnLingcai04IconDestroy"
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_shushan_lingcai04_slowdown"
+			{
+				// "Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsHidden"	"0"
+				"Duration"	"%slow_duration"
+				"IsDebuff"	"1"
+				"IsPurgable"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_pct"
+				}
+			}
+			"modifier_shushan_lingcai04_freeze"
+			{
+				"IsHidden"	"0"
+				"IsDebuff"	"1"
+				"IsPurgable"	"1"
+				"States"
+				{
+					// "MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-100"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"radius"	"300"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"duration"	"7"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"tick_interval"	"0.5"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_duration"	"6"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_movement_pct"	"-20"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"stack_slow_max"	"5"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"stun_self_duration"	"1.0"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"stun_enemy_duration"	"1.0"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai021"
+	{
+		"ID"	"5021"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"custom_game/ability_shushan_lingcai021"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"		"0.2"
+		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCooldown"		"1"
+		// Stats
+		// ----------------------------------------------------------------
+		"AbilityCastRange"		"800"
+		"AbilityManaCost"		"0"
+		"MaxLevel"				"1"
+		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityType"			"DOTA_ABILITY_TYPE_HIDDEN"
+		"AOERadius"             "%radius"
+
+		"precache"
+		{
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_011_a.vpcf"
+			"particle"	"particles/heroes/lingcai/ability_lingcai_021_fire.vpcf"
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"	"OnLingcai021SpellStart"
+				"Target"
+				{
+				   	"Center"    		"POINT"
+					"Radius"		    "%radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"				"OnLingcai021FireEffect"
+				"Target"				"POINT"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"
+				{
+				   	"Center"    		"POINT"
+					"Radius"		    "%radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"	"modifier_shushan_lingcai021_slowdown"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.SunStrike.Ignite"
+				"Target" 		"POINT"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_shushan_lingcai021_slowdown"
+			{
+				"IsHidden"	"0"
+				"Duration"	"%slow_duration"
+				"IsDebuff"	"1"
+				"IsPurgable"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_pct"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_duration"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"slow_movement_pct"	"-30"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"radius"		"300"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai022"
+    {
+    	"ID"	"5022"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_lingcai022"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_2"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "600"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+        	"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Target"			"TARGET"
+				"Function"			"OnLingcai022SpellStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.LingCai.A022"
+				"Target" 		"TARGET"
+			}
+        }
+
+        "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Target"			"TARGET"
+				"Function"			"OnLingcai022HitUnit"
+			}
+		}
+
+        "Modifiers"
+        {
+			
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    }
+    }
+
+    "ability_shushan_lingcai023"
+	{
+		"ID"	"5023"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_lingcai023"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+		"AbilityCooldown"			"10"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"		"CASTER"
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"		"OnLingcai023Effect"
+			}
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_ability_lingcai_023"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_ability_lingcai_023"
+			{
+				"IsHidden"				"0"
+				"Duration"				"%duration"
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"ShuShanAbility.LingCai.A023"
+						"Target" 		"CASTER"
+					}
+				}
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+						"Function"		"OnLingcai023AttackStart"
+					}
+				}
+				"Properties"
+				{
+					// 攻击速度
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"600"
+				}
+			}
+
+			"modifier_ability_lingcai_023_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"20"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+								"Function"		"OnLingcai023AttackStart"
+							}
+						}
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"duration"		"5.0"
+			}
+		}
+	}
+
+	"ability_shushan_lingcai024"
+    {
+    	"ID"	"5024"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_lingcai024"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "1000"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.0"
+        "AbilityCooldown"           "10"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Function"		"OnLingcai024PhaseStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.LingCai.A024.Cast"
+				"Target" 		"CASTER"
+			}
+		}
+
+        "OnSpellStart"
+        {    
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLingcai.lua"
+				"Target"			"POINT"
+				"Function"			"OnLingcai024SpellStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.LingCai.A024.Fire"
+				"Target" 		"CASTER"
+			}
+        }
+
+        "Modifiers"
+        {
+        	"modifier_ability_shushan_lingcai024"
+        	{
+        		"Passive"			"1"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        	
+        		"OnAttackLanded"
+        		{
+        			"Random"
+        			{
+        				"Chance"			"20"
+        				"OnSuccess"
+        				{
+        					"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/abilities/abilityLingcai.lua"
+								"Function"			"OnLingcai024SpellStartForJueXing"
+							}
+        				}
+        			}
+        		}
+        	}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    }
+    }
+
+	"ability_shushan_juexin011"
+    {
+    	"ID"	"5025"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_juexin011"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+        	"FireEffect"
+			{
+				"EffectName"			"particles/heroes/juexin/ability_juexin_011_invi.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"ability_shushan_juexin011_effect"
+			}
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"Duration"			"%ability_duration"
+				"ModifierName"		"modifier_invisible_level"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.GhostWalk"
+				"Target" 		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Function"			"OnJuexin011EffectDestroy"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Target"			"TARGET"
+				"Function"			"OnJuexin011Effect"
+			}
+        }
+
+        "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Target"			"TARGET"
+				"Function"			"OnJuexin011Hit"
+			}
+		}
+
+        "Modifiers"
+        {
+        	"ability_shushan_juexin011_effect"
+			{
+				"Duration"				"%ability_duration"
+				"EffectName"			"particles/heroes/juexin/ability_juexin_011_invi_effect.vpcf"
+				"EffectAttachType"		"attach_hitloc"
+
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"Target"
+						{
+						   	"Center"    		"CASTER"
+							"Radius"		    "%radius"
+							"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"ScriptFile"	"scripts/vscripts/abilities/abilityJuexin.lua"
+						"Function"		"OnJuexin011AttackStart"
+						"Radius"		"%radius"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible_level"
+						"Target" 		"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"ability_shushan_juexin011_effect"
+						"Target" 		"CASTER"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+						"Function"			"OnJuexin011EffectDestroy"
+					}
+				}
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%move_speed"
+			    }
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"    "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    	"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ability_duration"		"10.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"1000.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"move_speed"			"200.0"
+			}
+	    }
+    }
+
+    "ability_shushan_juexin012"
+	{
+		"ID"	"5026"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_juexin012"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"Modifiers"
+		{
+			"modifier_ability_juexin_012_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"20"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilityJuexin.lua"
+								"Function"		"OnJuexin012AttackStart"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	"ability_shushan_juexin013"
+    {
+    	"ID"	"5027"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_juexin013"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_3"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "10"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Target"			"TARGET"
+				"Function"			"OnJuexin013SpellStart"
+			}
+        }
+    }
+
+    "ability_shushan_juexin014"
+    {
+    	"ID"	"5028"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_juexin014"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "600"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "30"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"precache"
+		{
+		}
+
+        "OnSpellStart"
+        {    
+        	"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Target"			"TARGET"
+				"Function"			"OnJuexin014SpellStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.JueXin.A014"
+				"Target" 		"TARGET"
+			}
+        }
+
+        "OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityJuexin.lua"
+				"Target"			"TARGET"
+				"Function"			"OnJuexin014Hit"
+			}
+		}
+
+        "Modifiers"
+        {
+			
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    }
+    }
+
+    "ability_shushan_luxiao011"
+    {
+    	"ID"	"5029"
+        "AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"	   	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                	"ability_datadriven"
+        "AbilityTextureName"       	"custom_game/ability_shushan_luxiao011"
+    	"AbilityCastAnimation"     	"ACT_DOTA_CAST_ABILITY_1"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "1000"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.3"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+        	"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLuxiao.lua"
+				"Target"			"TARGET"
+				"Function"			"OnLuxiao011SpellStart"
+			}
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_shushan_luxiao011_pause"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.LuXiao.A011.Cast"
+				"Target" 		"CASTER"
+			}
+        }
+
+        "Modifiers"
+        {
+			"modifier_shushan_luxiao011_pause"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    }
+    }
+
+    "ability_shushan_luxiao012"
+    {
+    	"ID"	"5030"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_luxiao012"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_2"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.3"
+        "AbilityCooldown"           "5"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLuxiao.lua"
+				"Target"			"TARGET"
+				"Function"			"OnLuxiao012SpellStart"
+			}
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_ability_shushan_luxiao012"
+			}
+        }
+        "Modifiers"
+		{
+        	"modifier_ability_shushan_luxiao012"
+			{
+				"IsHidden"			"0"
+				"Duration"			"3.5"
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+    }
+
+    "ability_shushan_luxiao013"
+	{
+		"ID"	"5031"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_luxiao013"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"Modifiers"
+		{
+			"modifier_ability_luxiao_013_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"50"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilityLuxiao.lua"
+								"Function"		"OnLuxiao013AttackStart"
+							}
+							"FireSound"
+							{
+								"EffectName"	"ShuShanAbility.LuXiao.A013"
+								"Target" 		"CASTER"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	"ability_shushan_luxiao014"
+    {
+    	"ID"	"5032"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_luxiao014"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_2_END"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "15"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityLuxiao.lua"
+				"Target"			"CASTER"
+				"Function"			"OnLuxiao014SpellStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"ShuShanAbility.LuXiao.A014"
+				"Target" 		"CASTER"
+			}
+        }
+
+        "Modifiers"
+        {
+        	"modifier_ability_shushan_luxiao014"
+        	{
+        		"Passive"			"1"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        
+        		"OnAttackLanded"
+        		{
+        			"Random"
+        			{
+        				"Chance"			"20"
+        				"OnSuccess"
+        				{
+        					"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/abilities/abilityLuxiao.lua"
+								"Function"			"OnLuxiao014SpellStartForJueXing"
+							}
+        				}
+        			}
+        		}
+        	}
+        }
+    }
+
+    "ability_shushan_huankong011"
+    {
+    	"ID"	"5033"
+    	"BaseClass"                	"ability_lua"
+    	"AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_POINT"
+    	"AbilityCastRange"			"800"
+    	"AbilityCastPoint"			"0.1"
+    	"AbilityCooldown"			"6.0"
+    	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+    	"ScriptFile"                "abilities/lua/huankong011.lua"
+    	"AbilityTextureName"		"custom_game/ability_shushan_huankong011"
+    	"MaxLevel"					"1"
+
+    	"precache"
+		{
+			"particle"		"particles/avalon/abilities/ability_shushan_huankong011/ability_shushan_huankong011.vpcf"
+		}
+
+    	"AbilitySpecial"
+    	{
+    		"01"
+    		{
+    			"var_type"			"FIELD_FLOAT"
+    			"stun_duration"		"1.0"
+    		}
+    	}
+    }
+
+    "ability_shushan_huankong012"
+    {
+    	"ID"	"5034"
+    	"BaseClass"                	"ability_datadriven"
+    	"AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    	"AbilityTextureName"		"custom_game/ability_shushan_huankong012"
+
+    	"precache"
+    	{
+    		"particle"  "particles/avalon/abilities/ability_shushan_huankong012/ability_shushan_huankong012.vpcf"
+    	}
+
+    	"Modifiers"
+    	{
+    		"modifier_ability_shushan_huankong012"
+    		{
+    			"Passive"			"1"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+    	
+    			"OnAttackLanded"
+    			{
+    				"Random"
+    				{
+    					"Chance"			"%chance"
+    					"OnSuccess"
+    					{
+    						"RunScript"
+				    		{
+				    			"ScriptFile"	"abilities/abilityHuanKong.lua"
+				    			"Function"		"HuanKong012_Effect"
+				    			"Target"		"TARGET"
+				    		}
+
+    						"ActOnTargets"
+                            {
+                                "Target"
+                                {
+                                    "Center"      "TARGET"
+                                    "Radius"      "%radius"
+                                    "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                                    "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                                }
+                                "Action"    
+                                {
+                                    "RunScript"
+				                    {
+				                        "ScriptFile"    "abilities/common.lua"
+				                        "Function"      "DealDamage"
+				                    }
+                                }
+                            }
+    					}
+    				}
+    			}
+    		}
+    	}
+
+    	"AbilitySpecial"
+    	{
+    		"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"chance"			"20"
+    		}
+    		"02"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"300"
+    		}
+    	}
+    }
+
+    "ability_shushan_huankong013"
+    {
+    	"ID"	"5035"
+    	"BaseClass"                	"ability_datadriven"
+    	"AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_POINT"
+    	"AbilityCastRange"			"700"
+    	"AbilityCastPoint"			"0.1"
+    	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+    	"AOERadius"					"600"
+    	"AbilityTextureName"		"custom_game/ability_shushan_huankong013"
+    	"AbilityCooldown"			"10.0"
+
+    	"precache"
+    	{
+    		"particle"  "particles/avalon/abilities/ability_shushan_huankong013/ability_shushan_huankong013.vpcf"
+    		"particle"  "particles/avalon/abilities/ability_shushan_huankong013/ability_shushan_huankong013_end.vpcf"
+    	}
+
+    	"OnSpellStart"
+    	{
+    		"RunScript"
+    		{
+    			"ScriptFile"	"abilities/abilityHuanKong.lua"
+    			"Function"		"HuanKong013"
+    			"Target"		"POINT"
+    			"Radius"		"%radius"
+    		}
+    		"FireSound"
+    		{
+    			"EffectName"	"ShuShanAbility.HuanKong.A013"
+    			"Target" 		"CASTER"
+    		}
+    		"DelayedAction"
+    		{
+    			"Delay"     "1"
+    			"Action"    
+    			{
+    				"CreateThinker"
+		    		{
+		    			"ModifierName"	"modifier_ability_shushan_huankong013"
+		    			"Target" 		"POINT"
+		    		}
+    			}
+    		}
+    	}
+
+    	"Modifiers"
+    	{
+    		"modifier_ability_shushan_huankong013"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+    			"Duration"			"%duration"
+
+    			"Aura"          "modifier_ability_shushan_huankong013_damage"
+		        "Aura_Radius"   "%radius"
+		        "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		        "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+
+		        "OnCreated"
+		        {
+		        	"RunScript"
+		    		{
+		    			"ScriptFile"	"abilities/abilityHuanKong.lua"
+		    			"Function"		"HuanKong013_Effect"
+		    			"Target"		"TARGET"
+		    		}
+		        	"FireSound"
+		        	{
+		        		"EffectName"	"Hero_Warlock.Upheaval"
+		        		"Target" 		"TARGET"
+		        	}
+		        }
+    		}
+
+    		"modifier_ability_shushan_huankong013_damage"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+
+    			"Properties"
+    			{
+    			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+    			}
+
+	    		"ThinkInterval"  "0.2"
+    			"OnIntervalThink"
+    			{
+    				"RunScript"
+	                {
+	                    "ScriptFile"    "abilities/common.lua"
+	                    "Function"      "DealDamage"
+	                }
+    			}
+    		}
+    	}
+
+    	"AbilitySpecial"
+    	{
+    		"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"600"
+    		}
+    		"02"
+    		{
+    			"var_type"			"FIELD_FLOAT"
+    			"duration"			"5.0"
+    		}
+    		"03"
+    		{
+    			"var_type"			"FIELD_FLOAT"
+    			"bonus_movement_speed"	"-25"
+    		}
+    	}
+    }
+
+    "ability_shushan_huankong014"
+    {
+    	"ID"	"5036"
+    	"BaseClass"                	"ability_datadriven"
+    	"AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"	   	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    	"AbilityCastRange"			"700"
+    	"AbilityCastPoint"			"0.1"
+    	"AbilityCooldown"			"20.0"
+    	"AbilityTextureName"		"custom_game/ability_shushan_huankong014"
+    	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+    	"OnSpellStart"
+    	{
+    		"RunScript"
+    		{
+    			"ScriptFile"	"abilities/abilityHuanKong.lua"
+    			"Function"		"HuanKong014"
+    			"Duration"		"%duration"
+    			"Radius"		"%radius"
+    		}
+    	}
+
+    	"Modifiers"
+    	{
+    		"modifier_ability_shushan_huankong014_master"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+
+    			"Properties"
+    			{
+    				"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL" "1"
+    			    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL" "1" 
+    			    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"	"1"
+    			    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-2000"
+    			}
+
+    			"States"
+    			{
+    				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+    		}
+
+    		"modifier_ability_shushan_huankong014"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+
+    			"States"
+    			{
+    				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+    	
+    			"Aura"          "modifier_ability_shushan_huankong014_damage"
+		        "Aura_Radius"   "%radius"
+		        "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		        "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+    		}
+
+    		"modifier_ability_shushan_huankong014_damage"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+
+	    		"ThinkInterval"  "0.2"
+    			"OnIntervalThink"
+    			{
+    				"RunScript"
+	                {
+	                    "ScriptFile"    "abilities/abilityHuanKong.lua"
+	                    "Function"      "HuanKong014_Attack"
+	                }
+    			}
+    		}
+
+    		"modifier_ability_shushan_huankong014_juexin"
+    		{
+    			"Passive"			"1"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+    		
+    			"OnAttackLanded"
+    			{
+    				"Random"
+    				{
+    					"Chance"			"20"
+    					"OnSuccess"
+    					{
+    						"RunScript"
+			                {
+			                    "ScriptFile"    "abilities/abilityHuanKong.lua"
+			                    "Function"      "HuanKong014_ForJueXing"
+			                    "Duration"		"%juexin_duration"
+    							"Radius"		"%radius"
+			                }
+    					}
+    				}
+    			}
+    		}
+    	}
+
+    	"AbilitySpecial"
+    	{
+    		"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"600"
+    		}
+    		"02"
+    		{
+    			"var_type"			"FIELD_FLOAT"
+    			"duration"			"3.8"
+    		}
+    		"03"
+    		{
+    			"var_type"			"FIELD_FLOAT"
+    			"juexin_duration"	"1.8"
+    		}
+    	}
+    }
+
+    "ability_shushan_moluo011"
+    {
+    	"ID"	"5037"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_moluo011"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_1"
+		"AbilityType"			   "DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "1000"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "10"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+        	"ApplyModifier"
+			{
+				"ModifierName"		"modifier_ability_shushan_moluo011_master"
+				"Target" 			"CASTER"
+			}
+        	"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Target"			"TARGET"
+				"Function"			"OnMoluo011SpellStart"
+				"count"				"%count"
+				"radius"			"%radius"
+			}
+        }
+
+        "Modifiers"
+        {
+			"modifier_ability_shushan_moluo011_master"
+    		{
+    			"Passive"			"0"
+    			"IsHidden"			"1"
+    			"IsDebuff"			"0"
+
+    			"Properties"
+    			{
+    				"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL" "1"
+    			    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL" "1" 
+    			    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"	"1"
+    			    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-2000"
+    			}
+
+    			"States"
+    			{
+    				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+    				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+    		}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+	    	"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"count"				"12"
+    		}
+    		"02"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"1000"
+    		}
+	    }
+    }
+
+    "ability_shushan_moluo012"
+	{
+		"ID"	"5038"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_moluo012"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"2"
+
+		"Modifiers"
+		{
+			"modifier_ability_moluo_012_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilityMoluo.lua"
+								"Function"		"OnMoluo012AttackStart"
+							}
+						}
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"50 100"
+			}
+		}
+	}
+
+	"ability_shushan_moluo013"
+	{
+		"ID"	"5039"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_moluo013"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCooldown"			"10"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"		"CASTER"
+				"ScriptFile"	"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"		"OnMoluo013SpellStart"
+				"radius"		"%radius"
+			}
+		}
+		"Modifiers"
+		{
+		}
+		"AbilitySpecial"
+		{	
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"400"
+    		}
+		}
+	}
+
+	"ability_shushan_moluo014"
+	{
+		"ID"	"5040"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_moluo014"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"			"1.5"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCooldown"			"40"
+		"AbilityType"				"DOTA_ABILITY_TYPE_HIDDEN"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"2"
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"		"OnMoluo014PhaseStart"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_shushan_moluo014_action"
+				"Target" 			"CASTER"
+			}
+			"RunScript"
+			{
+				"Target"		"CASTER"
+				"ScriptFile"	"scripts/vscripts/abilities/abilityMoluo.lua"
+				"Function"		"OnMoluo014SpellStart"
+			}
+		}
+		"Modifiers"
+		{	
+			"modifier_shushan_moluo014_action"
+			{
+				"Duration"			"20.0"
+				"RemoveOnDeath"     "0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS"	"cast4"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_shushan_moluo014"
+						"Percent"		"%total_outdamage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/abilities/abilityMoluo.lua"
+						"Function"		"OnMoluo014Destroy"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_shushan_moluo014"
+						"Percent"		"0"
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{	
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"total_outdamage"	"100 200"
+    		}
+		}
+	}
+
+	"ability_hsj_lixinning011"
+    {
+    	"ID"	"5040"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning011"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_1"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"2"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "15"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_ability_lixinning_011_modifier"
+				"Target" 			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_ability_lixinning_011_avoid_modifier"
+				"Target" 			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilitylixinning.lua"
+				"Function"          "OnLixinning011SpellStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ability_lixinning_011_modifier"
+			{
+				"Duration"			"%duration"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_hsj_lixinning011"
+						"Percent"		"%total_outdamage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_hsj_lixinning011"
+						"Percent"		"0"
+					}
+				}
+			}
+			"modifier_ability_lixinning_011_avoid_modifier"
+			{
+				"Duration"			"%duration_avoid"
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_AVOID_CONSTANT"				"%avoid_constant"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"0 15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"total_outdamage"	"0 50"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration_avoid"	"0 5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"avoid_constant"	"0 100"
+			}
+		}	
+    }
+
+    "ability_hsj_lixinning012"
+    {
+    	"ID"	"5041"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning012"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_2"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+		"AOERadius"             	"%radius"
+        "AbilityCastRange"          "600"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilitylixinning.lua"
+				"Function"          "OnLixinning012SpellStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"300"
+    		}
+		}	
+    }
+
+    "ability_hsj_lixinning013"
+	{
+		"ID"	"5042"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_hsj_lixinning013"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"Modifiers"
+		{
+			"modifier_ability_hsj_lixinning013_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilitylixinning.lua"
+								"Function"		"OnLixinning013AttackStart"
+							}
+						}
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS"	"cast4"
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"50"
+			}
+		}
+	}
+
+    "ability_hsj_lixinning014"
+    {
+    	"ID"	"5043"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_lixinning014"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_4"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "15"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+        "AbilityCastRange"          "600"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilitylixinning.lua"
+				"Function"          "OnLixinning014SpellStart"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_ability_hsj_lixinning014_action"
+				"Target" 			"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ability_hsj_lixinning014_action"
+			{
+				"Duration"		"3.0"
+
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+		}
+	
+    }
+
+    "ability_shushan_mengyan011"
+    {
+    	"ID"	"5044"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_shushan_mengyan011"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_1"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"2"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+        "AbilityCastRange"          "1000"
+
+		"precache"
+		{
+			"particle"				""
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMengyan.lua"
+				"Function"          "OnMengyan011SpellStart"
+				"Target"			"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_shushan_mengyan011_pause"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+			"modifier_shushan_mengyan011_action"
+			{
+    			"Properties"
+				{
+					"MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS"	"kaidao"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_shushan_mengyan011"
+						"Percent"		"%total_outdamage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_shushan_mengyan011"
+						"Percent"		"0"
+					}
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"total_outdamage"	"150 250"
+    		}
+		}	
+    }
+
+    "ability_shushan_mengyan012"
+	{
+		"ID"	"5045"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_mengyan012"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+		"Modifiers"
+		{
+			"modifier_ability_mengyan_012_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"Target"		"CASTER"
+								"ScriptFile"	"scripts/vscripts/abilities/abilityMengyan.lua"
+								"Function"		"OnMengyan012AttackStart"
+								"stun_duration"		"%stun_duration"
+							}
+						}
+					}
+				}
+			}
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chance"			"50"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stun_duration"		"1.0"
+			}
+		}
+	}
+
+	"ability_shushan_mengyan013"
+    {
+    	"ID"	"5046"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_shushan_mengyan013"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_3"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"2"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMengyan.lua"
+				"Function"          "OnMengyan013SpellStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ability_shushan_mengyan013_action"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+		}	
+    }
+
+    "ability_shushan_mengyan014"
+    {
+    	"ID"	"5047"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_shushan_mengyan014"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_4"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "15"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+        "AbilityCastRange"          "150"
+
+		"precache"
+		{
+			"particle"				""
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMengyan.lua"
+				"Function"          "OnMengyan014SpellStart"
+				"Target"			"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_shushan_mengyan014_pause"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+			"modifier_shushan_mengyan014_target_pause"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+		}	
+    }
+
+    "ability_hsj_humei011"
+    {
+    	"ID"	"5048"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_humei011"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_1"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5.0"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+		"AOERadius"             	"%radius"
+        "AbilityCastRange"          "600"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei011SpellStart"
+				"Target"			"POINT"
+				"radius"			"%radius"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_shushan_humei011_frozen"
+			{
+				"Duration"			"1.0"
+
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+
+			"modifier_ability_humei_011_passive"
+			{
+				"Passive"		"1"
+				"EffectName"	"particles/heroes/humei/ability_humei_011_hand.vpcf"
+				"EffectAttachType"	"attach_attack1"
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"500"
+    		}
+		}	
+    }
+
+    "ability_hsj_humei012"
+    {
+    	"ID"	"5049"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_hsj_humei012"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_2"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5.0"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+		"AOERadius"             	"%radius"
+        "AbilityCastRange"          "1000"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei012SpellStart"
+				"Target"			"POINT"
+				"radius"			"%radius"
+			}
+		}
+
+		"Modifiers"
+		{
+			
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"radius"			"120"
+    		}
+		}	
+    }
+
+    "ability_hsj_humei013"
+	{
+		"ID"	"5050"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_hsj_humei013"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCooldown"			"1"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"2"
+
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_ability_humei_013"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_ability_humei_013_damage"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_ability_humei_013"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ability_humei_013_damage"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"true"
+
+			"RunScript"					
+	    	{
+				"ScriptFile"			"scripts/vscripts/abilities/abilityHumei.lua"
+			    "Function"		  		"OnHumei013ProjectileHit"
+		    }
+		    "ApplyModifier"
+		    {
+		    	"ModifierName"	"modifier_ability_humei_013_slow"
+		    	"Target" 		"TARGET"
+		    	"Duration"		"3"
+		    }
+		}
+
+		"Modifiers"
+		{
+			"modifier_ability_humei_013"
+			{
+				"IsHidden"			"0"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/abilities/abilityHumei.lua"
+						"Function"		"OnHumeiAttackStart"
+					}
+				}
+
+			}
+
+			"modifier_ability_humei_013_slow"
+			{
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-30" 
+				}
+			}
+
+			"modifier_ability_humei_013_damage"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_hsj_humei013"
+						"Percent"		"%total_outdamage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/common.lua"
+						"Function"		"TotalDamageOutgoingPercentage"
+						"Name"			"ability_hsj_humei013"
+						"Percent"		"0"
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+    		{
+    			"var_type"			"FIELD_INTEGER"
+    			"total_outdamage"	"25 125"
+    		}
+		}
+	}
+
+    "ability_hsj_humei014"
+    {
+    	"ID"	"5051"
+		"AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_hsj_humei014"
+    	"AbilityCastAnimation"     "Act_DOTA_CAST_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityCastRange"          "900"
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "30"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"AbilityChannelTime"		"3.0"
+		"MaxLevel"				  	"10"
+
+		"precache"
+		{
+			"particle"					"particles/thd2/heroes/marisa/marisa_04_spark.vpcf"
+			"particle"					"particles/thd2/heroes/marisa/marisa_04_spark_wind_b.vpcf"
+			"particle"					"particles/heroes/marisa/marisa_04_spark_circle.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_04.vpcf"
+			"particle"					"particles/heroes/humei/ability_humei_04_spark_wind_b.vpcf"
+		}
+
+        "OnSpellStart"
+        {    
+        	"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Cast"
+				"Target" 			"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Beam"
+				"Target" 			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei014SpellStart"
+				"Caster"            "CASTER"
+				"Target"            "POINT"
+			}
+			
+            "CreateThinker"
+			{
+				"ModifierName"		"modifier_thdots_humei014_think_interval"
+				"Target"			"POINT"
+			}
+        }
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"Target"		    "CASTER"
+				"ModifierName"		"modifier_thdots_humei014_think_interval"
+			}
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei014SpellRemove"
+				"Caster"            "CASTER"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+				"Function"          "OnHumei014SpellRemove"
+				"Caster"            "CASTER"
+			}
+		}
+        "Modifiers"
+        {
+			"modifier_thdots_humei014_think_interval"
+			{
+				"Duration"          "3.1"
+				"ThinkInterval"     "0.1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SunRay.Loop"
+						"Target" 			"TARGET"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SunRay.Stop"
+						"Target" 			"TARGET"
+					}
+				}
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "scripts/vscripts/abilities/abilityHumei.lua"
+						"Function"          "OnHumei014SpellThink"
+						"Caster"            "CASTER"
+						"Target"            "TARGET"
+						"DamageWidth"       "%damage_width"
+						"DamageLenth"       "%damage_lenth"
+					}
+				}
+			}
+        }
+	
+	
+	    "AbilitySpecial"
+	    {
+			"01"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"damage_width"			   	 	"300"  
+		    }
+			"02"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"damage_lenth"			    	"900"  
+		    }
+	    }
+    }
+
+    "ability_shushan_muyue011"
+    {
+    	"ID"	"5052"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_shushan_muyue011"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_1"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "10.0"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+        "AbilityCastRange"          "1000"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMuyue.lua"
+				"Function"          "OnMuyue011SpellStart"
+				"Target"			"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_shushan_muyue011_target"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+			"modifier_shushan_muyue011_pause"
+			{
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+			"modifier_shushan_muyue011_wall"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS"	"wall"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" 	"30"
+				}
+
+				"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+		}	
+    }
+
+    "ability_shushan_muyue012"
+	{
+		"ID"	"5053"
+		"BaseClass"					"ability_datadriven"
+		"AbilityTextureName"		"custom_game/ability_shushan_muyue012"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"2"
+
+		"Modifiers"
+		{
+			"modifier_ability_muyue_012_passive"
+			{
+				"Passive"			"1"
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/abilities/abilityMuyue.lua"
+						"Function"		"OnMuyue012AttackStart"
+						"chance"		"%chance"
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+	  	    {
+	    		"var_type"						"FIELD_FLOAT"
+	    		"chance"			   	 		"40 100"  
+		    }
+		}	
+	}
+
+	"ability_shushan_muyue013"
+    {
+    	"ID"	"5054"
+		"AbilityBehavior"   	    "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"           	    "ability_datadriven"
+		"AbilityTextureName"	    "custom_game/ability_shushan_muyue013"
+		"AbilityCastAnimation"      "Act_DOTA_CAST_ABILITY_3"
+		
+		// Stats
+		//----------------------------------------------------------------
+		"MaxLevel"				  	"1"
+		"AbilityManaCost"           "0"
+		"AbilityCastPoint"          "0.1"
+		"AbilityCooldown"           "5.0"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PHYSICAL"
+        "AbilityCastRange"          "1000"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/abilities/abilityMuyue.lua"
+				"Function"          "OnMuyue013SpellStart"
+				"Target"			"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+		}	
+    }
+
+    "ability_shushan_muyue014"
+    {
+    	"ID"	"5055"
+        "AbilityBehavior"          "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"	   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "BaseClass"                "ability_datadriven"
+        "AbilityTextureName"       "custom_game/ability_shushan_muyue014"
+    	"AbilityCastAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+
+        // Stats 
+        //----------------------------------------------------------------
+        "AbilityManaCost"           "0"
+        "AbilityCastPoint"          "0.1"
+        "AbilityCooldown"           "30"
+        "AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		"MaxLevel"				  	"1"
+
+        "OnSpellStart"
+        {    
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/abilities/abilityMuyue.lua"
+				"Target"			"CASTER"
+				"Function"			"OnMuyue014SpellStart"
+			}
+        }
+
+        "Modifiers"
+        {
+        	"modifier_ability_shushan_muyue014"
+        	{
+        		"Duration"				"3.0"
+        		"StatusEffectName"		"particles/heroes/muyue/ability_muyue_014_status_b.vpcf"
+
+        		"States"
+    			{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+    			}
+        	}
+        }
+    }
+}

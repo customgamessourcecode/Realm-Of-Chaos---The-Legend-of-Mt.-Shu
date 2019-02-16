@@ -1,0 +1,118 @@
+// Units File
+
+#base "units/npc_task.kv"
+#base "units/npc_creature.kv"
+#base "units/hero_model.kv"
+#base "units/npcs.kv"
+#base "units/hsj.kv"
+#base "units/fake_units.kv"
+
+"DOTAUnits"
+{
+	"avalon_dummy"	
+	{
+		"Model"						"models/items/wards/esl_wardchest_radling_ward/esl_wardchest_radling_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"Level"						"1"
+		"ModelScale" 				"0.1"
+		"ArmorPhysical"				"99"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"	
+		"HasInventory"				"1"
+
+		"StatusHealth"				"99999"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+	}
+
+	// 基地
+	"shushuan_base_fort"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/shushan_base_fort/shushan_base_fort.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"MinimapIcon"				"minimap_ancient"
+		"MinimapIconSize"			"400"
+		"HealthBarOffset"			"400"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"18"		// Physical protection.
+		"MagicalResistance"				"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0"			// Speed of attack.
+		"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BUILDING"			// Hull type used for navigation/locomotion.
+		"RingRadius"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"0"			// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"4250"		// Base health.
+		"StatusHealthRegen"			"3"			// Health regeneration rate.
+		"StatusMana"				"875"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"2600"		// Range of vision during day light.
+		"VisionNighttimeRange"		"2600"		// Range of vision at night time.
+	}
+}

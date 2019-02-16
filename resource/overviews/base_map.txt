@@ -1,0 +1,8 @@
+base_map
+{
+	material materials/overviews/base_map.vmat
+	pos_x -12740
+	pos_y 12096
+	scale 24.582
+}
+

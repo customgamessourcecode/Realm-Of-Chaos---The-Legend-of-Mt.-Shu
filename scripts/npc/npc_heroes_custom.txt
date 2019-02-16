@@ -1,0 +1,621 @@
+// Dota Heroes File
+// NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{
+	"npc_dota_hero_juggernaut"
+	{
+		"override_hero"				"npc_dota_hero_juggernaut"			// Hero to override
+		"Model"						"models/tianchen/tianchen.vmdl"
+		"Ability1"					"ability_shushan_tianchen011"				// Ability 1
+		"Ability2"					"ability_shushan_tianchen012"
+		"Ability3"					"ability_shushan_tianchen013"
+		"Ability4"					"ability_shushan_tianchen015"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_sword"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_crystal_maiden"
+	{
+		"override_hero"				"npc_dota_hero_crystal_maiden"			// Hero to override
+		"Model"						"models/lingcai/lingcai.vmdl"
+		"ProjectileModel"			"particles/neutral_fx/thunderlizard_base_attack.vpcf"
+		"Ability1"					"ability_shushan_lingcai021"				// Ability 1
+		"Ability2"					"ability_shushan_lingcai022"
+		"Ability3"					"ability_shushan_lingcai023"
+		"Ability4"					"ability_shushan_lingcai024"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"HealthBarOffset"			"220"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_caster"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_phantom_lancer"
+	{
+		"override_hero"				"npc_dota_hero_phantom_lancer"			// Hero to override
+		"Model"						"models/luxiao/luxiao.vmdl"
+		"Ability1"					"ability_shushan_luxiao011"				// Ability 1
+		"Ability2"					"ability_shushan_luxiao012"
+		"Ability3"					"ability_shushan_luxiao013"
+		"Ability4"					"ability_shushan_luxiao014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_lancer"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"320"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_phantom_assassin"
+	{
+		"override_hero"				"npc_dota_hero_phantom_assassin"			// Hero to override
+		"Model"						"models/juexin/juexin.vmdl"
+		"ModelScale"				"0.7"
+		"Ability1"					"ability_shushan_juexin011"				// Ability 1
+		"Ability2"					"ability_shushan_juexin012"
+		"Ability3"					"ability_shushan_juexin013"
+		"Ability4"					"ability_shushan_juexin014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_knife"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"320"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_centaur"
+	{
+		"override_hero"				"npc_dota_hero_centaur"			// Hero to override
+		"Model"						"models/huankong/huankong.vmdl"
+		"Ability1"					"ability_shushan_huankong011"				// Ability 1
+		"Ability2"					"ability_shushan_huankong012"
+		"Ability3"					"ability_shushan_huankong013"
+		"Ability4"					"ability_shushan_huankong014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_blade"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"320"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+
+	"npc_dota_hero_legion_commander"
+	{
+		"override_hero"				"npc_dota_hero_legion_commander"			// Hero to override
+		"Model"						"models/moluo/moluo.vmdl"
+		"ModelScale"				"0.8"
+		"Ability1"					"ability_shushan_moluo011"				// Ability 1
+		"Ability2"					"ability_shushan_moluo012"
+		"Ability3"					"ability_shushan_moluo013"
+		"Ability4"					"ability_shushan_moluo014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_blade"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_slark"
+	{
+		"override_hero"				"npc_dota_hero_slark"			// Hero to override
+		"Model"						"models/yunlian/yunlian.vmdl"
+		"Ability1"					"ability_hsj_lixinning011"				// Ability 1
+		"Ability2"					"ability_hsj_lixinning012"
+		"Ability3"					"ability_hsj_lixinning013"
+		"Ability4"					"ability_hsj_lixinning014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_sword"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+
+	"npc_dota_hero_spectre"
+	{
+		"override_hero"				"npc_dota_hero_spectre"			// Hero to override
+		"Model"						"models/new_hero/mengyan/mengyan.vmdl"
+		"ModelScale"				"0.8"
+		"Ability1"					"ability_shushan_mengyan011"				// Ability 1
+		"Ability2"					"ability_shushan_mengyan012"
+		"Ability3"					"ability_shushan_mengyan013"
+		"Ability4"					"ability_shushan_mengyan014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_sword"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+
+	"npc_dota_hero_lina"
+	{
+		"override_hero"				"npc_dota_hero_lina"			// Hero to override
+		"Model"						"models/humei/humei.vmdl"
+		"ProjectileModel"			"particles/neutral_fx/thunderlizard_base_attack.vpcf"
+		"Ability1"					"ability_hsj_humei011"				// Ability 1
+		"Ability2"					"ability_hsj_humei012"
+		"Ability3"					"ability_hsj_humei013"
+		"Ability4"					"ability_hsj_humei014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"HealthBarOffset"			"220"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_caster"
+		// 物理护甲
+		"AttackDamageMin"	"50"
+		// 最大攻击力
+		"AttackDamageMax"	"50"
+		// 最小攻击力
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"400"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+	"npc_dota_hero_templar_assassin"
+	{
+		"override_hero"				"npc_dota_hero_templar_assassin"			// Hero to override
+		"Model"						"models/new_hero/muyue/muyue.vmdl"
+		"ModelScale"				"0.7"
+		"Ability1"					"ability_shushan_muyue011"				// Ability 1
+		"Ability2"					"ability_shushan_muyue012"
+		"Ability3"					"ability_shushan_muyue013"
+		"Ability4"					"ability_shushan_muyue014"
+		"Ability5"					"ability_shushan_null_daoshu"
+		"Ability6"					"ability_shushan_null_xinfa"
+		"Ability7"					"custom_item_spell_system_1"
+		"Ability8"					"custom_item_spell_system_2"
+		"Ability9"					"custom_item_spell_system_3"
+		"Ability10"					"custom_item_spell_system_4"
+		"Ability11"					"custom_item_spell_system_5"
+		"Ability12"					"custom_item_spell_system_6"
+		"Ability13"					"ability_shushan_teleport_to_fort"
+		"Ability14"					"ability_shushan_teleport"
+		"Ability15"					"ability_shushan_jump"
+		"Ability16"					"ability_shushan_evade"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"DisableWearables"			"1"
+		"AttackRate"		"1.400000"
+		"AttackAnimationPoint"		"0.330000"
+		"ArmorPhysical"	"0"
+		"UnitLabel"					"shushan_knife"
+		// 物理护甲
+		"AttackDamageMin"			"50"
+		// 最大攻击力
+		"AttackDamageMax"			"50"
+		// 最小攻击力
+		"ProjectileModel"			"particles/heroes/muyue/muyue_base_attack.vpcf"
+		"AttackRange"				"600"
+		"AttributeBaseStrength"	"15"
+		// 基础力量
+		"AttributeStrengthGain"	"2.0"
+		// 每级增加的力量，力量成长
+		"AttributeBaseAgility"	"15"
+		// 基础敏捷
+		"AttributeAgilityGain"	"2.0"
+		// 每级增加的敏捷，敏捷成长
+		"AttributeBaseIntelligence"	"15"
+		// 基础智力
+		"AttributeIntelligenceGain"	"2.0"
+		// 每级增加的智力，智力成长
+		"MovementSpeed"	"320"
+		// 基础移动速度
+		"MovementTurnRate"	"1.2"
+		// 转身速度
+		"StatusHealth"	"500"
+		// 基础生命值
+		"StatusHealthRegen"	"0.0"
+		// 基础生命恢复
+		"StatusMana"	"50"
+		// 基础魔法值
+		"StatusManaRegen"	"0.0"
+		// 基础魔法恢复
+		"VisionDaytimeRange"	"1800"
+		// 白天视野大小
+		"VisionNighttimeRange"	"1800"
+		// 晚上视野大小
+	}
+}

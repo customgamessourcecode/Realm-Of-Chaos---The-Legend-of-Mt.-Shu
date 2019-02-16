@@ -1,0 +1,2 @@
+
+--@Class CDOTA_Buff

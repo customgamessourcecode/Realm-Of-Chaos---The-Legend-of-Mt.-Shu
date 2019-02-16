@@ -1,0 +1,156 @@
+"AddonInfo"
+{
+	maps			"base_map"
+	"base_map"
+	{
+		"MaxPlayers"                    "5"
+	}
+	"IsPlayable"	"1"
+	"Default_Keys"
+    {
+    	"01"
+		{
+			"Key"		"Q"
+			"Command"	"CustomKey_Q"
+			"Name"		"CustomKey_Q"
+		}
+		"02"
+		{
+			"Key"		"W"
+			"Command"	"CustomKey_W"
+			"Name"		"CustomKey_W"
+		}
+		"03"
+		{
+			"Key"		"E"
+			"Command"	"CustomKey_E"
+			"Name"		"CustomKey_E"
+		}
+		"04"
+		{
+			"Key"		"R"
+			"Command"	"CustomKey_R"
+			"Name"		"CustomKey_R"
+		}
+		"05"
+		{
+			"Key"		"D"
+			"Command"	"CustomKey_D"
+			"Name"		"CustomKey_D"
+		}
+		"06"
+		{
+			"Key"		"F"
+			"Command"	"CustomKey_F"
+			"Name"		"CustomKey_F"
+		}
+		"07"
+		{
+			"Key"		"4"
+			"Command"	"CustomKey_4"
+			"Name"		"CustomKey_4"
+		}
+		"08"
+		{
+			"Key"		"5"
+			"Command"	"CustomKey_5"
+			"Name"		"CustomKey_5"
+		}
+		"09"
+		{
+			"Key"		"6"
+			"Command"	"CustomKey_6"
+			"Name"		"CustomKey_6"
+		}
+		"10"
+		{
+			"Key"		"7"
+			"Command"	"CustomKey_7"
+			"Name"		"CustomKey_7"
+		}
+		"11"
+		{
+			"Key"		"8"
+			"Command"	"CustomKey_8"
+			"Name"		"CustomKey_8"
+		}
+		"12"
+		{
+			"Key"		"9"
+			"Command"	"CustomKey_9"
+			"Name"		"CustomKey_9"
+		}
+		"13"
+		{
+			"Key"		"T"
+			"Command"	"CustomKey_T"
+			"Name"		"CustomKey_T"
+		}
+		"14"
+		{
+			"Key"		"UPARROW"
+			"Command"	"CustomKey_UPARROW"
+			"Name"		"CustomKey_UPARROW"
+		}
+		"15"
+		{
+			"Key"		"LEFTARROW"
+			"Command"	"CustomKey_LEFTARROW"
+			"Name"		"CustomKey_LEFTARROW"
+		}
+		"16"
+		{
+			"Key"		"RIGHTARROW"
+			"Command"	"CustomKey_RIGHTARROW"
+			"Name"		"CustomKey_RIGHTARROW"
+		}
+		"17"
+		{
+			"Key"		"F2"
+			"Command"	"CustomKey_F2"
+			"Name"		"CustomKey_F2"
+		}
+		"18"
+		{
+			"Key"		"F3"
+			"Command"	"CustomKey_F3"
+			"Name"		"CustomKey_F3"
+		}
+		"19"
+		{
+			"Key"		"F5"
+			"Command"	"CustomKey_F5"
+			"Name"		"CustomKey_F5"
+		}
+		"21"
+		{
+			"Key"		"SPACE"
+			"Command"	"CustomKey_SPACE"
+			"Name"		"CustomKey_SPACE"
+		}
+		"22"
+		{
+			"Key"		"SHIFT"
+			"Command"	"CustomKey_SHIFT"
+			"Name"		"CustomKey_SHIFT"
+		}
+		"23"
+		{
+			"Key"		"F1"
+			"Command"	"CustomKey_F1"
+			"Name"		"CustomKey_F1"
+		}
+		"24"
+		{
+			"Key"		"B"
+			"Command"	"CustomKey_B"
+			"Name"		"CustomKey_B"
+		}
+		"25"
+		{
+			"Key"		"G"
+			"Command"	"CustomKey_G"
+			"Name"		"CustomKey_G"
+		}
+    }
+}

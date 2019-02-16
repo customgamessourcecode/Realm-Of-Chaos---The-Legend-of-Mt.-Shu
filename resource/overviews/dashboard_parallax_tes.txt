@@ -1,0 +1,8 @@
+dashboard_parallax_tes
+{
+	material materials/overviews/dashboard_parallax_tes.vmat
+	pos_x -1024
+	pos_y 1024
+	scale 32
+}
+

@@ -1,0 +1,2642 @@
+"DOTAAbilities"
+{
+    // 精英怪 - 技能1
+    "creature_elite_ability01"
+    {
+        "ID"    "5100"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "4"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "2000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "TrackingProjectile"
+            {
+                "Target"                "TARGET"
+                "EffectName"            "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+                "Dodgeable"             "0"
+                "ProvidesVision"        "1"
+                "VisionRadius"          "300"
+                "MoveSpeed"             "900"
+                "SourceAttachment"      "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "CreatureEliteAbility01"
+            }
+            "Stun"
+            {
+                "Duration"      "%duration"
+                "Target"        "TARGET"
+            }
+            "FireSound"
+            {
+                "EffectName"        "Hero_Sven.StormBoltImpact"
+                "Target"            "TARGET"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "3.0"
+            }
+        }
+    }
+
+    // 精英怪 - 技能2
+    "creature_elite_ability02"
+    {
+        "ID"    "5101"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "4"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "2000"
+
+        "precache"
+        {
+            "particle"  "particles/econ/items/centaur/centaur_ti6_gold/centaur_ti6_warstomp_gold.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "CreatureEliteAbility02"
+                "Radius"            "%radius"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "%radius"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO"
+                }
+            }
+            "Stun"
+            {
+                "Duration"      "%duration"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "%radius"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO"
+                }
+            }
+            "FireSound"
+            {
+                "EffectName"        "Hero_Centaur.HoofStomp"
+                "Target"            "CASTER"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "3.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "1000"
+            }
+        }
+    }
+
+    // 精英怪 - 技能3
+    "creature_elite_ability03"
+    {
+        "ID"    "5102"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetType"          "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitTargetFlags"         "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitTargetTeam"          "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetFlags"         "DOTA_UNIT_TARGET_FLAG_NONE"
+        "AbilityUnitDamageType"          "DAMAGE_TYPE_MAGICAL"
+        "AbilityCooldown"                "5.0"
+        "AbilityManaCost"                "0"
+        "AbilityDamage"                  "2000"
+        "AbilityCastRange"               "800"
+        "AbilityCastPoint"               "1.0"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_09_boss_wuzushushi_ability01"
+                "Target"          "TARGET"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_09_boss_wuzushushi_ability01"
+            {
+                "Passive"            "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+                "EffectName"        "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+                "EffectAttachType"  "follow_origin"
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/attacking_boss.lua"
+                        "Function"          "CreatureEliteAbility01"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "duration"        "5.0"
+            }
+        }
+    }
+
+    // 精英怪 - 技能4
+    "creature_elite_ability04"
+    {
+        "ID"    "5103"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1600"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "4"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "4000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_elite/creature_elite_ability04.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "LinearProjectile"
+            {
+                "Target"            "POINT"
+                "EffectName"        "particles/avalon/abilities/creature_elite/creature_elite_ability04.vpcf"
+                "MoveSpeed"         "900"
+                "StartRadius"       "256"
+                "EndRadius"         "256"
+                "HasFrontalCone"    "0"
+                "FixedDistance"     "2000"
+                "TargetTeams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "TargetTypes"       "DOTA_UNIT_TARGET_HERO"
+                "TargetFlags"       "DOTA_UNIT_TARGET_FLAG_NONE"                        
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+            }
+            "FireSound"
+            {
+                "EffectName"        "Hero_Magnataur.ShockWave.Particle"
+                "Target"            "CASTER"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"       "0"
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "CreatureEliteAbility01"
+            }
+        }
+    }
+
+	"creature_04_boss_ability01"
+    {
+        "ID"    "5104"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"  
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1500"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "10000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature04BOSS_Ability01"
+                "Target"            "POINT"
+            }
+            "FireSound"
+            {
+                "EffectName"        "Ability.Powershot"
+                "Target"            "CASTER"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"    "0"
+
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "200"
+            }
+        }
+    }
+
+    "creature_04_boss_ability02"
+    {
+        "ID"    "5105"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "10000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"    "Hero_Windrunner.ShackleshotCast"
+                "Target"        "CASTER"
+            }
+            "TrackingProjectile"
+            {
+                "Target"                "TARGET"
+                "EffectName"            "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf"
+                "Dodgeable"             "1"
+                "ProvidesVision"        "1"
+                "VisionRadius"          "500"
+                "MoveSpeed"             "700"
+                "SourceAttachment"      "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "120"
+            }
+        }
+    }
+
+    "creature_04_boss_ability03"
+    {
+        "ID"    "5106"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "10000"
+
+        "precache"
+        {
+            "particle"  "particles/econ/items/windrunner/windrunner_ti6/windrunner_spell_powershot_ti6.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature04BOSS_Ability03"
+                "Count"             "%count"
+                "Distance"          "%radius"
+                "Speed"             "%speed"
+            }
+            "FireSound"
+            {
+                "EffectName"        "Hero_Windrunner.Powershot.FalconBow"
+                "Target"            "CASTER"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"    "0"
+
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "15"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "1500"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "1800"
+            }
+        }
+    }
+
+    "creature_08_boss_ability01"
+    {
+        "ID"    "5107"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "20000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_08_boss/ability01/creature_08_boss_ability01.vpcf"
+            "particle"  "particles/avalon/abilities/creature_08_boss/ability01/creature_08_boss_ability01_end.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature08BOSS_Ability01"
+                "Count"             "%count"
+                "Interval"          "%interval"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "2000"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_08_boss_ability01"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "EffectName"            "particles/avalon/abilities/creature_08_boss/ability01/creature_08_boss_ability01.vpcf"
+                "EffectAttachType"      "follow_origin"
+        
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "%radius"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "%stun_duration"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_creature_08_boss_ability01_end"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_08_boss_ability01_end"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+        
+                "EffectName"            "particles/avalon/abilities/creature_08_boss/ability01/creature_08_boss_ability01_end.vpcf"
+                "EffectAttachType"      "follow_origin"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "1"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "interval"              "0.70"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "stun_duration"         "2.0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "128"
+            }
+        }
+    }
+
+    "creature_08_boss_ability02"
+    {
+        "ID"    "5108"
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                    "abilities/lua/creature_08_boss_ability02.lua"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "40000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+            "particle"  "particles/units/heroes/hero_ember_spirit/ember_spirit_hit.vpcf"
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "speed"               "1500"
+            }
+        }
+    }
+
+    "creature_08_boss_ability03"
+    {
+        "ID"    "5109"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "40000"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature08BOSS_Ability03"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "600"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "max_count"           "3"
+            }
+        }
+    }
+
+    "creature_12_boss_ability01"
+    {
+        "ID"    "5110"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCastRange"              "1000"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "40000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"        "hero_Crystal.freezingField.explosion"
+                "Target"            "CASTER"
+            }
+            "TrackingProjectile"
+            {
+                "Target"                "TARGET"
+                "EffectName"            "particles/avalon/abilities/creature_12_boss/ability01/creature_12_boss_ability01.vpcf"
+                "Dodgeable"             "1"
+                "ProvidesVision"        "1"
+                "VisionRadius"          "500"
+                "MoveSpeed"             "200"
+                "SourceAttachment"      "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_creature_12_boss_ability01_ice_effect"
+                "Target"            "TARGET"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_12_boss_ability01_ice_effect"
+            {
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "Duration"            "%duration"
+                "TextureName"         "crystal_maiden_crystal_nova"
+
+                "EffectName"          "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+                "EffectAttachType"    "PATTACH_CENTER_FOLLOW"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FROZEN"         "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "5.0"
+            }
+        }
+    }
+
+    "creature_12_boss_ability02"
+    {
+        "ID"    "5111"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "40000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_12_boss/ability02/creature_12_boss_ability02.vpcf"
+            "particle"  "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature12BOSS_Ability02"
+                "Count"             "%count"
+                "Interval"          "%create_interval"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "2000"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_12_boss_ability02"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "EffectName"            "particles/avalon/abilities/creature_12_boss/ability02/creature_12_boss_ability02.vpcf"
+                "EffectAttachType"      "follow_origin"
+        
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "%radius"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                            "ApplyModifier"
+                            {
+                                "ModifierName"      "modifier_creature_12_boss_ability02_ice_effect"
+                                "Target"            "TARGET"
+                                "Duration"          "%duration"
+                            }
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_creature_12_boss_ability02_end"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_12_boss_ability02_end"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+        
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "TARGET"
+                        "ControlPoints"
+                        {
+                            "01"    "%radius %radius %radius"
+                            "03"    "%radius 0 0"
+                        }
+                    }
+                    "FireSound"
+                    {
+                        "EffectName"     "Hero_Crystal.CrystalNova.Yulsaria"
+                        "Target"         "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_12_boss_ability02_ice_effect"
+            {
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "Duration"            "%duration"
+                "TextureName"         "crystal_maiden_crystal_nova"
+
+                "EffectName"          "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+                "EffectAttachType"    "PATTACH_CENTER_FOLLOW"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FROZEN"         "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "3"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "create_interval"       "1.0"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "128"
+            }
+        }
+    }
+
+    "creature_12_boss_ability03"
+    {
+        "ID"    "5112"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "60000"
+
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"        "hero_Crystal.freezingField.explosion"
+                "Target"            "CASTER"
+            }
+            "ActOnTargets"
+            {
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "1500"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            
+                "Action"    
+                {
+                    "TrackingProjectile"
+                    {
+                        "Target"                "TARGET"
+                        "EffectName"            "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+                        "Dodgeable"             "1"
+                        "ProvidesVision"        "1"
+                        "VisionRadius"          "500"
+                        "MoveSpeed"             "200"
+                        "SourceAttachment"      "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+                    }
+                }
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_creature_12_boss_ability01_ice_effect"
+                "Target"            "TARGET"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_12_boss_ability01_ice_effect"
+            {
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "Duration"            "%duration"
+                "TextureName"         "crystal_maiden_crystal_nova"
+
+                "EffectName"          "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+                "EffectAttachType"    "PATTACH_CENTER_FOLLOW"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FROZEN"         "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "5.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "1500"
+            }
+        }
+    }
+
+    "creature_16_boss_ability01"
+    {
+        "ID"    "5113"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCastRange"              "1800"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "60000"
+
+        "precache"
+        {
+            "particle"  "particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_bubbles_fxset.vpcf"
+            "particle"  "particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_splash_fxset.vpcf"
+            "particle"  "particles/avalon/abilities/creature_16_boss/ability01/creature_16_boss_ability01.vpcf"
+        }
+
+        "OnAbilityPhaseStart"
+        {
+            "CreateThinker"
+            {
+                "ModifierName"    "modifier_creature_16_boss_ability01"
+                "Target"          "POINT"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"    "0"
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_16_boss_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "1"
+        
+                "EffectName"          "particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_bubbles_fxset.vpcf"
+                "EffectAttachType"    "follow_origin"
+        
+                "OnDestroy"
+                {
+                    "CreateThinker"
+                    {
+                        "ModifierName"    "modifier_creature_16_boss_ability01_damage"
+                        "Target"          "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_16_boss_ability01_damage"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "3"
+
+                "EffectName"          "particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_splash_fxset.vpcf"
+                "EffectAttachType"    "follow_origin"
+
+                "OnCreated"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "%damage_radius"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                        }
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/attacking_boss.lua"
+                        "Function"        "Creature16BOSS_Ability01"
+                        "Speed"           "%speed"
+                        "Distance"        "%distance"
+                        "Count"           "%count"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1800"
+            }
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage_radius"       "225"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "8"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "600"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "distance"              "1800"
+            }
+        }
+    }
+
+    "creature_16_boss_ability02"
+    {
+        "ID"    "5114"
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                    "abilities/lua/creature_16_boss_ability02.lua"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "10000"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "count"               "16"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "speed"               "400"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "distance"            "1000"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage_distance"     "100"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1000"
+            }
+        }
+    }
+
+    "creature_16_boss_ability03"
+    {
+        "ID"    "5115"
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                    "abilities/lua/creature_16_boss_ability03.lua"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "3"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "10000"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "count"               "16"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "speed"               "400"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "distance"            "1000"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage_distance"     "100"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1000"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "interval"            "1"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "max_times"           "5"
+            }
+        }
+    }
+
+    "creature_20_boss_ability01"
+    {
+        "ID"    "5116"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "6.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "100000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_20_boss/ability01/creature_20_boss_ability01ring.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_creature_20_boss_ability01_caster"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+            "CreateThinker"
+            {
+                "ModifierName"    "modifier_creature_20_boss_ability01"
+                "Target"          "CASTER"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_20_boss_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "%duration"
+
+                "EffectName"          "particles/avalon/abilities/creature_20_boss/ability01/creature_20_boss_ability01ring.vpcf"
+                "EffectAttachType"    "follow_origin"
+        
+                "Aura"              "modifier_creature_20_boss_ability01_damage"
+                "Aura_Radius"       "1000"
+                "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_NONE"
+            }
+
+            "modifier_creature_20_boss_ability01_caster"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+            }
+
+            "modifier_creature_20_boss_ability01_damage"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/attacking_boss.lua"
+                        "Function"      "Creature20BOSS_Ability01_Damage"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "duration"            "10.0"
+            }
+        }
+    }
+
+    "creature_20_boss_ability02"
+    {
+        "ID"    "5117"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCastRange"              "1700"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "80000"
+
+        "precache"
+        {
+            "particle"  "particles/econ/items/centaur/centaur_ti6/centaur_ti6_warstomp.vpcf"
+        }
+
+        "OnAbilityPhaseStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_creature_20_boss_ability02"
+                "Target"          "CASTER"
+                "Duration"        "0.6"
+            }
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature20BOSS_Ability02"
+                "Target"            "POINT"
+                "Radius"            "%radius"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_20_boss_ability02"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+        
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS" "duel_kill" 
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1000"
+            }
+        }
+    }
+
+    "creature_20_boss_ability03"
+    {
+        "ID"    "5118"
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                    "abilities/lua/creature_20_boss_ability03.lua"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "precache"
+        {
+            "particle"  "particles/heroes/moluo/ability_moluo01_explosion_vip.vpcf"
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "speed"               "1500"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "heal_pct"            "20"
+            }
+        }
+    }
+
+    "creature_24_boss_ability01"
+    {
+        "ID"    "5119"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_24_boss/ability02/creature_24_boss_ability02_immortal1.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "11.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature24BOSS_Ability01"
+                "Duration"          "%duration"
+                "Count"             "%count"
+                "Radius"            "%radius"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "10.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "count"             "5"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "400"
+            }
+        }
+    }
+
+    "creature_24_boss_ability02"
+    {
+        "ID"    "5120"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "6.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "100000"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature24BOSS_Ability02"
+                "Duration"          "%duration"
+                "Radius"            "%radius"
+                "HealPercent"       "%heal_pct"
+                "StunDuration"      "%stun_duration"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "5.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "150"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "heal_pct"          "25"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "stun_duration"     "2.0"
+            }
+        }
+    }
+
+    "creature_24_boss_ability03"
+    {
+        "ID"    "5121"
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                    "abilities/lua/creature_24_boss_ability03.lua"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "6.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "120000"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1000"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "max_times"           "3"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "stun_duration"     "3.0"
+            }
+        }
+    }
+
+    "creature_28_boss_ability01"
+    {
+        "ID"    "5122"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "6.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "150000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature28BOSS_Ability01_2"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_28_boss_ability01"
+            {
+                "Passive"               "1"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                
+                "OnKill"
+                {
+                    "FireSound"
+                    {
+                        "EffectName"    "Ability.Powershot"
+                        "Target"         "CASTER"
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/attacking_boss.lua"
+                        "Function"          "Creature28BOSS_Ability01"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_28_boss_ability01_damage"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+            
+                "EffectName"            "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+                "EffectAttachType"      "follow_origin"
+            
+                "OnCreated"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "150"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"            "TARGET"
+                                "Type"              "DAMAGE_TYPE_MAGICAL"
+                                "Damage"            "%AbilityDamage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "3"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                            
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "450"
+            }
+        }
+    }
+
+    "creature_28_boss_ability02"
+    {
+        "ID"    "5123"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "2"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "150000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_28_boss/ability02/creature_28_boss_ability02_glow.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature28BOSS_Ability02"
+                "Count"             "%count"
+                "Interval"          "%interval"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "2000"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_28_boss_ability02"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "EffectName"            "particles/avalon/abilities/creature_28_boss/ability02/creature_28_boss_ability02_glow.vpcf"
+                "EffectAttachType"      "follow_origin"
+        
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "%radius"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "%stun_duration"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_creature_28_boss_ability02_end"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_28_boss_ability02_end"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+        
+                "EffectName"            "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+                "EffectAttachType"      "follow_origin"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "1"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "interval"              "1.00"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "stun_duration"         "3.0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "128"
+            }
+        }
+    }
+
+    "creature_28_boss_ability03"
+    {
+        "ID"    "5124"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "2"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "100000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature28BOSS_Ability03"
+                "Count"             "%count"
+                "Distance"          "%radius"
+                "Speed"             "%speed"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"    "0"
+
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "count"                 "25"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "1500"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "700"
+            }
+        }
+    }
+
+    "creature_28_boss_ability04"
+    {
+        "ID"    "5125"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "16"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_28_boss/ability04/creature_28_boss_ability04_ring.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature28BOSS_Ability04"
+                "Duration"          "%duration"
+                "Radius"            "%radius"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_28_boss_ability04"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "%duration"
+                "OverrideAnimation"   "ACT_DOTA_TELEPORT"
+
+                "EffectName"          "particles/avalon/abilities/creature_28_boss/ability04/creature_28_boss_ability04_ring.vpcf"
+                "EffectAttachType"    "follow_origin"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_SILENCED"       "MODIFIER_STATE_VALUE_ENABLED"
+                }
+        
+                "Aura"              "modifier_creature_28_boss_ability04_kill"
+                "Aura_Radius"       "1000"
+                "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_NONE"
+            }
+
+            "modifier_creature_28_boss_ability04_kill"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/attacking_boss.lua"
+                        "Function"          "Creature28BOSS_Ability04Kill"
+                    }
+                }
+            }
+
+            "modifier_creature_28_boss_ability04_damage"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1"
+        
+                "EffectName"            "particles/avalon/abilities/creature_28_boss/ability02/creature_28_boss_ability02_glow.vpcf"
+                "EffectAttachType"      "follow_origin"
+        
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "128"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_creature_28_boss_ability04_damage_end"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_28_boss_ability04_damage_end"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+        
+                "EffectName"            "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+                "EffectAttachType"      "follow_origin"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "radius"            "1000.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "10.0"
+            }
+        }
+    }
+
+    "creature_32_boss_ability01"
+    {
+        "ID"    "5126"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "4"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon_bosses/creature_032_projectile.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "OnCreature032_01ProjectileOnHit"
+                "Target"            "POINT"
+                "MoveSpeed"         "1500"
+                "Acceleration1"     "-200"
+                "Acceleration2"     "100"
+            }
+        }
+    }
+
+    "creature_32_boss_ability02"
+    {
+        "ID"    "5127"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "AbilityTextureName"            "necrolyte_death_pulse"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "3"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_32_boss/ability02/creature_32_boss_ability02_enemy.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ActOnTargets"
+            {
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "%radius"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            
+                "Action"    
+                {
+                    "TrackingProjectile"
+                    {
+                        "Target"                "TARGET"
+                        "EffectName"            "particles/avalon/abilities/creature_32_boss/ability02/creature_32_boss_ability02_enemy.vpcf"
+                        "Dodgeable"             "1"
+                        "ProvidesVision"        "1"
+                        "VisionRadius"          "500"
+                        "MoveSpeed"             "500"
+                        "SourceAttachment"      "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+                    }
+                }
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_creature_32_boss_ability02"
+                "Target"            "TARGET"
+                "Duration"          "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_32_boss_ability02"
+            {
+                "Passive"               "0"
+                "IsHidden"              "0"
+                "IsDebuff"              "1"
+        
+                "OnDestroy"
+                {
+                    "Damage"
+                    {
+                        "Target"        "TARGET"
+                        "Type"          "DAMAGE_TYPE_MAGICAL"
+                        "Damage"        "%AbilityDamage"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "2000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "5.0"
+            }
+        }
+    }
+
+    "creature_32_boss_ability03"
+    {
+        "ID"    "5128"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "AbilityTextureName"            "necrolyte/apostle_of_decay_icons/necrolyte_sadist_large"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "2"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_32_boss/ability03/creature_32_boss_ability03.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature32BOSS_Ability03Start"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_creature_32_boss_ability03_stun"
+                "Target"            "CASTER"
+                "Duration"          "1.4"
+            }
+            "DelayedAction"
+            {
+                "Delay"     "1.4"
+                "Action"    
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/attacking_boss.lua"
+                        "Function"          "Creature32BOSS_Ability03Effect"
+                    }
+                }
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_32_boss_ability03_stun"
+            {
+                "Passive"            "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+        
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
+
+    "creature_32_boss_ability04"
+    {
+        "ID"    "5129"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "1.5"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "2"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_32_boss/ability04/creature_32_boss_ability04.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature32BOSS_Ability04"
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "2000"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO"
+                    "Flags"         "DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+                }
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"    "0"
+
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+        }
+    }
+
+    "creature_32_boss_ability05"
+    {
+        "ID"    "5130"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "15"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/creature_32_boss/ability05/creature_32_boss_ability05_pre.vpcf"
+            "particle"  "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/attacking_boss.lua"
+                "Function"          "Creature32BOSS_Ability05"
+                "Duration"          "%duration"
+                "Radius"            "%radius"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_creature_32_boss_ability05"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "%duration"
+                "OverrideAnimation"   "ACT_DOTA_TELEPORT"
+
+                "EffectName"          "particles/avalon/abilities/creature_32_boss/ability05/creature_32_boss_ability05_ring.vpcf"
+                "EffectAttachType"    "follow_origin"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL" "1"
+                    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL" "1"
+                    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE" "1"
+                }
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_SILENCED"       "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_ATTACK_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_MAGIC_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+                }
+        
+                "Aura"              "modifier_creature_32_boss_ability05_kill"
+                "Aura_Radius"       "1000"
+                "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_NONE"
+            }
+
+            "modifier_creature_32_boss_ability05_kill"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/attacking_boss.lua"
+                        "Function"          "Creature28BOSS_Ability04Kill"
+                    }
+                }
+            }
+
+            "modifier_creature_32_boss_ability05_damage"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/avalon/abilities/creature_32_boss/ability05/creature_32_boss_ability05_pre.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "TARGET"
+                        "ControlPoints"
+                        {
+                            "01"    "%damage_radius 1.5 %damage_radius"
+                        }
+                    }
+                }
+        
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "128"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/attacking_boss.lua"
+                                "Function"          "Creature32BOSS_Ability05Damage"
+                            }
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_creature_32_boss_ability05_damage_end"
+                        "Target"            "TARGET"
+                    }
+                }
+            }
+
+            "modifier_creature_32_boss_ability05_damage_end"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "1.5"
+        
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "TARGET"
+                        "ControlPoints"
+                        {
+                            "01"    "%damage_radius %damage_radius %damage_radius"
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "radius"            "1000.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "10.0"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "damage_radius"     "256.0"
+            }
+        }
+    }
+}

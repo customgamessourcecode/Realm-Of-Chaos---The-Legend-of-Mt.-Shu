@@ -1,0 +1,212 @@
+"Quests"
+{
+	"quest_guide_0001"	//引导任务-其一
+	{
+		"AcceptNPC"						"npc_task_fortune_teller"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_fortune_teller"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_kezhanlaoban"
+				"Quest"			"quest_songxin_01"
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$difficulty<=1"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_songxin_01"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+			"2"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_songxin_02"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+			"3"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_songxin_03"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"150"
+				"Gold"					"100"
+				"yuanhui"				"1"
+			}
+		}
+	}
+
+	"quest_guide_0002"	//引导任务-其二
+	{
+		"AcceptNPC"						"npc_task_fortune_teller"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_fortune_teller"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_furen"
+				"Quest"			"quest_shared_jiminggoudao"
+				"Suffixes"
+				{
+					"1"		"_good"
+					"2"		"_bad"
+					"3"		"_none"
+				}
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_guide_0001"		"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_shared_jiminggoudao"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"150"
+				"Gold"					"100"
+				"yuanhui"				"1"
+			}
+		}
+	}
+
+	"quest_guide_0003"	//引导任务-其三
+	{
+		"AcceptNPC"						"npc_task_fortune_teller"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_fortune_teller"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"2"
+			{
+				"Function"		"ShuShanQuest_Guide_AddComposeItem"
+				"ItemName"		"item_0129"
+			}
+			"3"
+			{
+				"Function"		"ShuShanQuest_Guide_AddComposeItem"
+				"ItemName"		"item_0130"
+			}
+			"4"
+			{
+				"Function"		"ShuShanQuest_Guide_AddComposeItem"
+				"ItemName"		"item_0131"
+			}
+			"5"
+			{
+				"Function"		"ShuShanQuest_Guide_AddComposeItem"
+				"ItemName"		"item_0076"
+			}
+			"6"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget2"
+				"NPC"			"npc_task_kezhanlaoban"
+				"Quest"			"quest_wuzisouji"
+			}
+			"7"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget2"
+				"NPC"			"npc_task_yufu"
+				"Quest"			"quest_zhiwangbuyu"
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_guide_0002"		"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_zhiwangbuyu"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+			"2"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"submit_quest"
+				"Quest"					"quest_wuzisouji"
+				"MaxCount"				"1"
+				"Count"					"0"
+			}
+			"3"
+			{
+				"Type"					"CUSTOM" 				//任务类型：与NPC对话
+				"Function"				"hero_levelup"
+				"MaxLevel"				"15"
+				"Level"					"0"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"150"
+				"Gold"					"100"
+				"yuanhui"				"1"
+			}
+		}
+	}
+}

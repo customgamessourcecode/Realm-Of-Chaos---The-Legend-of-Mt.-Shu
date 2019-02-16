@@ -1,0 +1,262 @@
+// DSP Effects
+// 0 : "Normal (off)"
+// 1 : "Generic"
+// 2 : "Metal Small"
+// 3 : "Metal Medium"
+// 4 : "Metal Large"
+// 5 : "Tunnel Small"
+// 6 : "Tunnel Medium"
+// 7 : "Tunnel Large"
+// 8 : "Chamber Small"
+// 9 : "Chamber Medium"
+// 10: "Chamber Large"
+// 11: "Bright Small"
+// 12: "Bright Medium"
+// 13: "Bright Large"
+// 14: "Water 1"
+// 15: "Water 2"
+// 16: "Water 3"
+// 17: "Concrete Small"
+// 18: "Concrete Medium"
+// 19: "Concrete Large"
+// 20: "Big 1"
+// 21: "Big 2"
+// 22: "Big 3"
+// 23: "Cavern Small"
+// 24: "Cavern Medium"
+// 25: "Cavern Large"
+// 26: "Weirdo 1"
+// 27: "Weirdo 2"
+// 28: "Weirdo 3"
+
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f	75dB
+//	ATTN_IDLE		2.0f	60dB
+//	ATTN_STATIC		1.25f	66dB
+//	ATTN_RICOCHET	1.5f	65dB
+//	ATTN_GUNFIRE	0.27f	140dB
+
+//	SNDLVL_84dB		= 50,	// 3.9
+//	SNDLVL_84dB		= 55,	// 3.0
+//	SNDLVL_IDLE		= 60,	// 2.0
+//	SNDLVL_TALKING	= 60,	// 2.0
+//	SNDLVL_84dB		= 60,	// 2.0
+//	SNDLVL_84dB		= 65,	// 1.5
+//	SNDLVL_STATIC	= 66,	// 1.25
+//	SNDLVL_84dB		= 70,	// 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_84dB		= 75,	// 0.8
+//	SNDLVL_84dB		= 80,	// 0.7
+//	SNDLVL_84dB		= 85,	// 0.6
+//	SNDLVL_84dB		= 90,	// 0.5
+//	SNDLVL_84dB		= 95,
+//	SNDLVL_84dB	= 100,	// 0.4
+//	SNDLVL_84dB	= 105,
+//	SNDLVL_84dB	= 120,
+//	SNDLVL_84dB	= 130,
+//	SNDLVL_GUNFIRE	= 140,	// 0.27
+//	SNDLVL_84dB	= 140,	// 0.2
+//	SNDLVL_84dB	= 150,	// 0.2
+
+
+
+////////////////////////////////////
+////////quest_01/////////////////////
+////////////////////////////////////
+
+"backgroundmusic_bai_hua_gu"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/bai_hua_gu.vsnd"
+	}
+}
+
+"backgroundmusic_fei_huang_he_gu"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/fei_huang_he_gu.vsnd"
+	}
+}
+
+"backgroundmusic_ji_feng_ya"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/ji_feng_ya.vsnd"
+	}
+}
+
+"backgroundmusic_jiu_long_zhai"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".2"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/jiu_long_zhai.vsnd"
+	}
+
+	"playlooping"
+	{
+		"volume"	".5"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/breeze02.vsnd"
+	}
+
+	"playlooping"
+	{
+		"volume"	".6"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/diretide/diretide_wolf_01.vsnd"
+		"origin"	"2730.83,-39.8799,320;"
+	}
+
+	"playlooping"
+	{
+		"volume"	".6"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/raven_01.vsnd"
+		"origin"	"3996.79,545.973,321;"
+	}
+}
+
+"backgroundmusic_lang_xue"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/lang_xue.vsnd"
+	}
+}
+
+"backgroundmusic_shi_he_pan"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/shi_he_pan.vsnd"
+	}
+}
+
+"backgroundmusic_shu_shan"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/shu_shan.vsnd"
+	}
+}
+
+"backgroundmusic_qian_nian_xue_shan1"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/qian_nian_xue_shan1.vsnd"
+	}
+}
+
+"backgroundmusic_qian_nian_xue_shan2"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{ 
+		"volume"	".80"
+		"pitch"		"100"
+		"wave"		"sounds/avalon/bgm/qian_nian_xue_shan2.vsnd"
+	}
+}
+
+
+"quest_01_demo_sound_test"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/breeze02.vsnd"
+	}
+
+	"playlooping"
+	{
+		"volume"	".18"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/breeze03.vsnd"
+		"origin"	" -1216, 0, 192;"
+	}
+
+	"playlooping"
+	{
+		"volume"	".5"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/raven_01.vsnd"
+	}
+}
+
+"quest_02_demo_sound_test"
+{
+	"dsp"	"0"
+	"fadetime" "1"
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/breeze02.vsnd"
+	}
+
+	"playlooping"
+	{
+		"volume"	".18"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/breeze03.vsnd"
+		"origin"	" -1216, 0, 192;"
+	}
+
+	"playlooping"
+	{
+		"volume"	".5"
+		"pitch"		"100"
+		"wave"		"sounds/ambient/soundscapes/raven_01.vsnd"
+	}
+}

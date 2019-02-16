@@ -1,0 +1,56 @@
+"DOTAAbilities"
+{
+	"avalon_fort_upgrade"
+	{
+        "ID"    "5400"
+		"BaseClass"                	"ability_datadriven"
+		"AbilityBehavior"          	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"			"1"
+        "MaxLevel"					"1"
+
+        "OnSpellStart"
+        {
+        	"RunScript"
+        	{
+        		"ScriptFile"	"abilities/fort.lua"
+        		"Function"		"OnUpgrade"
+        		"health_bonus"	"2000"
+        	}
+        }
+
+        "Modifiers"
+        {
+        	"modifier_avalon_fort_upgrade"
+        	{
+        		"Passive"			"0"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        
+        		"Properties"
+        		{
+        		    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 	"50"
+        		    "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"10"
+        		}
+        	}
+        }
+	}
+
+    "avalon_fort_stop_attacking"
+    {
+        "ID"    "5401"
+        "BaseClass"                 "ability_datadriven"
+        "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"           "1"
+        "MaxLevel"                  "1"
+        "AbilityCooldown"           "1000"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"    "abilities/fort.lua"
+                "Function"      "OnStop"
+            }
+        }
+    }
+}

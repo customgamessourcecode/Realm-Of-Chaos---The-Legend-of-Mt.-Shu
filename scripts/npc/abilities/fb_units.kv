@@ -1,0 +1,4302 @@
+"DOTAAbilities"
+{
+    "shushan_fb_boss_common"
+    {
+        "ID"    "5500"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+            "modifier_shushan_fb_unit_common"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "Aura"          "modifier_shushan_fb_unit_common_to_enemy"
+                "Aura_Radius"   "300"
+                "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+
+                "ThinkInterval"  "4.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/boss.lua"
+                        "Function"          "ShuShanFBUnitCommon"
+                    }
+                }
+            }
+
+            "modifier_shushan_fb_unit_common_to_enemy"
+            {
+                "Passive"            "0"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+                "Priority"           "MODIFIER_PRIORITY_ULTRA"
+
+                "States"
+                {
+                    "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_DISABLED"
+                }
+            }
+
+            "modifier_shushan_fb_unit_common_move_speed"
+            {
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "1000" 
+                }
+
+                "OnAttack"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"    "modifier_shushan_fb_unit_common_move_speed"
+                        "Target"          "CASTER"
+                    }
+                }
+            }
+        }
+    }
+
+	"fb_01_boss_elang_ability01"
+    {
+        "ID"    "5501"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+            "modifier_fb_01_boss_elang_ability01_crit"
+            {
+                "IsHidden"                  "1"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_mult"
+                }
+                "OnAttackLanded"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_01_boss_elang_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                }
+            }
+            "modifier_fb_01_boss_elang_ability01_crit_chance"
+            {
+                "Passive"                   "1"
+                "IsHidden"                  "1"
+                "OnAttackStart"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_01_boss_elang_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                    "Random"
+                    {
+                        "Chance"            "%crit_chance"
+                        "OnSuccess"
+                        {
+                            "ApplyModifier"
+                            {
+                                "ModifierName" "modifier_fb_01_boss_elang_ability01_crit"
+                                "Target"    "CASTER"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "crit_chance"         "20"
+            }
+            "02"
+            {
+                "var_type"           "FIELD_FLOAT"
+                "crit_mult"          "200"
+            }
+        }
+    }
+
+    "fb_01_boss_linghuayao_ability01"
+    {
+        "ID"    "5502"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "OnSpellStart"
+        {
+            "SpawnUnit"
+            {
+                "UnitName"        "LV1_fb_01_huayao"
+                "Target"          "CASTER"
+                "Duration"        "5"
+                "UnitCount"       "4"
+                "UnitLimit"       "16"
+                "GrantsGold"      "1"
+                "GrantsXP"        "1"
+                "SpawnRadius"     "100"
+            }
+        }
+    }
+
+    "fb_02_boss_shuiyaotoumu_ability01"
+    {
+        "ID"    "5503"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "1"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_tidehunter/tidehunter_gush.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityDuration"               "4.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "3000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "OnSpellStart"
+        {
+            "TrackingProjectile"
+            {
+                "Target"               "TARGET"
+                "EffectName"            "particles/units/heroes/hero_tidehunter/tidehunter_gush.vpcf"
+                "Dodgeable"            "1"
+                "ProvidesVision"        "1"
+                "VisionRadius"        "300"
+                "MoveSpeed"            "%projectile_speed"
+                "SourceAttachment"    "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"           "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_02_boss_shuiyaotoumu_ability01"
+                "Target"            "TARGET"
+                "Duration"        "3"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_02_boss_shuiyaotoumu_ability01"
+            {
+                "Passive"            "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed" 
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%negative_armor"
+                }
+            }
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "projectile_speed"  "2500"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "movement_speed"    "-40"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "negative_armor"    "-3"
+            }
+        }
+    }
+
+    "fb_03_boss_jiulongzhaisidangjia_ability01"
+    {
+        "ID"    "5504"
+        "BaseClass"                     "skeleton_king_hellfire_blast"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "3000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // Applies two modifiers
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "blast_speed"           "1000"
+            }
+            
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "blast_stun_duration"   "2.0"
+            }
+            
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "tooltip_slow_duration" "2"
+            }
+            
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "blast_slow"            "-20"
+            }
+            
+            "05"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "blast_dot_duration"    "4"
+            }
+            
+            "06"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "blast_dot_damage"      "20"
+            }
+        }
+    }
+
+    "fb_03_boss_jiulongzhaisandangjia_ability01"
+    {
+        "ID"    "5505"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+            "modifier_fb_03_boss_jiulongzhaisandangjia_ability01_crit"
+            {
+                "IsHidden"                  "1"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_mult"
+                }
+                "OnAttackLanded"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_03_boss_jiulongzhaisandangjia_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                }
+            }
+            "modifier_fb_03_boss_jiulongzhaisandangjia_ability01_crit_chance"
+            {
+                "Passive"                   "1"
+                "IsHidden"                  "1"
+                "OnAttackStart"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_03_boss_jiulongzhaisandangjia_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                    "Random"
+                    {
+                        "Chance"            "%crit_chance"
+                        "OnSuccess"
+                        {
+                            "ApplyModifier"
+                            {
+                                "ModifierName" "modifier_fb_03_boss_jiulongzhaisandangjia_ability01_crit"
+                                "Target"    "CASTER"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "crit_chance"         "20"
+            }
+            "02"
+            {
+                "var_type"           "FIELD_FLOAT"
+                "crit_mult"          "400"
+            }
+        }
+    }
+
+    "fb_03_boss_jiulongzhaierdangjia_ability01"
+    {
+        "ID"    "5506"
+        "BaseClass"                      "night_stalker_void"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        
+        // Unit Targeting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        "AbilityCooldown"               "8"
+        "AbilityManaCost"               "80"
+        "AbilityDamage"                 "4500"
+            
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // applies 2 modifiers
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration_day"          "2.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration_night"        "2.0"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "movespeed_slow"        "-50"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "attackspeed_slow"      "-50"
+            }
+        }
+    }
+
+    "fb_03_boss_jiulongzhaizhaizhu_ability01"
+    {
+        "ID"    "5507"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityDamage"                     "4500"
+        "AbilityCooldown"                   "3.0"
+
+        "Modifiers"
+        {
+            "modifier_fb_03_boss_jiulongzhaizhaizhu_ability01"
+            {
+                "Passive"           "1"
+                "IsHidden"          "1"
+
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_attack1"
+                            "CASTER"    "attach_attack1"
+                            "CASTER"    "attach_attack1"
+                            "CASTER"    "attach_attack1"
+                            "CASTER"    "attach_attack1"
+                        }
+                    }
+                }
+
+                 "OnAttackLanded"
+                 {
+                    "FireSound"
+                    {
+                        "EffectName"    "FBUnitAbilities.fb_03_boss_jiulongzhaizhaizhu_ability01"
+                        "Target"        "TARGET"
+                    }
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"    "CASTER"
+                            "Radius"    "800"
+                            "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                     
+                        "Action"
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                        }
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"       "abilities/boss.lua"
+                        "Function"         "fb_03_boss_jiulongzhaizhaizhu_ability01"
+                    }
+                 }
+            }
+        }
+    }
+
+    "fb_04_boss_shanyaotoumu_ability01"
+    {
+        "ID"    "5508"
+        "BaseClass"                     "meepo_earthbind"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "1"
+        
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "220"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "857"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "tooltip_range"         "500"
+            }
+        }
+    }
+
+    "fb_05_boss_fengxiaojvshou_ability01"
+    {
+        "ID"    "5509"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "MaxLevel"                      "1"
+        "AbilityCastAnimation"          "ACT_DOTA_NIAN_PIN_START"
+        
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCooldown"               "10.0"
+        "AbilityManaCost"               "0"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_05_boss_fengxiaojvshou_ability01"
+                "Target"          "CASTER"
+                "Duration"        "0.1"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_05_boss_fengxiaojvshou_ability01"
+            {
+                "Passive"            "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+        
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "CASTER"
+                        "ControlPoints"
+                        {
+                            "01"    "%radius 0 0"
+                        }
+                    }
+                    "FireSound"
+                    {
+                        "EffectName"        "Hero_Centaur.HoofStomp"
+                        "Target"            "CASTER"
+                    }
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "CASTER"
+                            "Radius"        "%radius"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%stomp_damage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "%stun_duration"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "radius"                        "800"
+            }
+            "02"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "stun_duration"                 "2.0"
+            }
+            "03"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "stomp_damage"                  "10000"
+            }
+        }
+    }
+
+    "fb_06_boss_xiedaoren_ability01"
+    {
+        "ID"    "5510"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                      "1"
+    }
+
+    "fb_07_boss_bingyanshou_ability01"
+    {
+        "ID"    "5511"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_07_boss_bingyanshou_ability01"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_07_boss_bingyanshou_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+        
+                "EffectName"          "particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+                "EffectAttachType"    "follow_overhead"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "duration"        "10.0"
+            }
+            "02"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "bonus_armor"     "50.0"
+            }
+        }
+    }
+
+    "fb_07_boss_bingdaomojun_ability01"
+    {
+        "ID"    "5512"
+        "BaseClass"                     "crystal_maiden_crystal_nova"
+        "MaxLevel"                      "1"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_BASIC"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "425"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "movespeed_slow"    "-20"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "attackspeed_slow"  "-20"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "4.5"
+            }
+            "05"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "vision_duration"   "6.0"
+            }
+            "06"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "nova_damage"           "18000"
+            }
+        }
+    }
+
+    "fb_08_boss_yanshuangshou_ability01"
+    {
+        "ID"    "5513"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityDamage"                     "2000"
+
+        "Modifiers"
+        {
+            "modifier_fb_08_boss_yanshuangshou_ability01"
+            {
+                "Passive"            "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "Damage"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "500"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Type"            "DAMAGE_TYPE_MAGICAL"
+                        "Damage"          "%AbilityDamage"
+                    }
+                }
+            }
+        }
+    }
+
+    "fb_08_boss_yanliemojun_ability01"
+    {
+        "ID"    "5514"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+        "AbilityDamage"                  "4000"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_08_boss_yanliemojun_ability01"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_08_boss_yanliemojun_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "CASTER"
+                        "ControlPoints"
+                        {
+                            "01"    "500 500 500"
+                            "02"    "500 500 500"
+                        }
+                    }
+                }
+
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "Damage"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "500"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Type"            "DAMAGE_TYPE_MAGICAL"
+                        "Damage"          "%AbilityDamage"
+                    }
+                    "Heal"
+                    {
+                        "Target"        "CASTER"
+                        "HealAmount"    "%AbilityDamage"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "duration"        "10.0"
+            }
+        }
+    }
+
+    "fb_07_boss_hunmobingyanzhenjun_ability01"
+    {
+        "ID"    "5515"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                      "1"
+        "AbilityCastPoint"              "1.0"
+        "AbilityCooldown"               "6.0"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_07_boss_hunmobingyanzhenjun_ability01/fb_07_boss_hunmobingyanzhenjun_ability01.vpcf"
+             "particle"  "particles/avalon/abilities/fb_07_boss_hunmobingyanzhenjun_ability01/fb_07_boss_hunmobingyanzhenjun_ability01_for_fire.vpcf"
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_animation"
+            {
+                "Passive"             "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_OVERRIDE_ANIMATION" "1532"
+                }
+
+                "ThinkInterval"  "6.0"
+                "OnIntervalThink"
+                {
+                    "ApplyModifier"
+                    {
+                        "ModifierName"    "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_delay_cast"
+                        "Target"          "CASTER"
+                    }
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_delay_cast"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                "Duration"            "1"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/boss.lua"
+                        "Function"      "fb_07_boss_hunmobingyanzhenjun_ability01_precast"
+                    }
+                }
+
+                "ThinkInterval"  "0.65"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/boss.lua"
+                        "Function"      "fb_07_boss_hunmobingyanzhenjun_ability01_particle"
+                    }
+                }
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/boss.lua"
+                        "Function"      "fb_07_boss_hunmobingyanzhenjun_ability01"
+                    }
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_ice"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                // "OnAttackLanded"
+                // {
+                //     "RunScript"
+                //     {
+                //         "ScriptFile"      "abilities/boss.lua"
+                //         "Function"        "fb_07_boss_hunmobingyanzhenjun_ability01_attack_for_ice"
+                //     }
+                // }
+
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_quas_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                        }
+                    }
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_quas_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                        }
+                    }
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_quas_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                        }
+                    }
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            "ApplyModifier"
+                            {
+                                "ModifierName"    "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_ice_effect"
+                                "Target"          "TARGET"
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_ice_effect"
+            {
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "Duration"            "%frozen_duration"
+                "TextureName"         "crystal_maiden_crystal_nova"
+
+                "EffectName"          "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+                "EffectAttachType"    "PATTACH_CENTER_FOLLOW"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FROZEN"         "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_ice_debuff"
+            {
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "TextureName"         "crystal_maiden_crystal_nova"
+
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "Damage"
+                    {
+                        "Target"          "TARGET"
+                        "Type"            "DAMAGE_TYPE_MAGICAL"
+                        "Damage"          "%frozen_damage"
+                    }
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_fire"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                // "OnAttackLanded"
+                // {
+                //     "RunScript"
+                //     {
+                //         "ScriptFile"      "abilities/boss.lua"
+                //         "Function"        "fb_07_boss_hunmobingyanzhenjun_ability01_attack_for_fire"
+                //         "Damage"          "%fire_damage"
+                //     }
+                // }
+
+                "OnCreated"
+                {
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_exort_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                            "CASTER"    "attach_orb1"
+                        }
+                    }
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_exort_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                            "CASTER"    "attach_orb2"
+                        }
+                    }
+                    "AttachEffect"
+                    {
+                        "EffectName"        "particles/econ/items/invoker/invoker_apex/invoker_apex_exort_orb.vpcf"
+                        "EffectAttachType"  "PATTACH_POINT_FOLLOW"
+                        "Target"            "CASTER"
+                        "ControlPointEntities"
+                        {
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                            "CASTER"    "attach_orb3"
+                        }
+                    }
+
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            // "ApplyModifier"
+                            // {
+                            //     "ModifierName"    "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_fire_debuff"
+                            //     "Target"          "TARGET"
+                            // }
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%fire_damage"
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_fb_07_boss_hunmobingyanzhenjun_ability01_fire_debuff"
+            {
+                "Passive"             "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+                "TextureName"         "brewmaster_fire_permanent_immolation"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "1000"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "frozen_duration"     "5"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "frozen_damage"       "1000"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "fire_damage"         "30000"
+            }
+        }
+    }
+
+    "fb_09_boss_wuzushushi_ability01"
+    {
+        "ID"    "5516"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetType"          "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitTargetFlags"         "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitTargetTeam"          "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetFlags"         "DOTA_UNIT_TARGET_FLAG_NONE"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+        "AbilityDamage"                  "10000"
+        "AbilityCastRange"               "800"
+        "AbilityCastPoint"               "1.0"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_09_boss_wuzushushi_ability01"
+                "Target"          "TARGET"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_09_boss_wuzushushi_ability01"
+            {
+                "Passive"            "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+                "EffectName"        "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+                "EffectAttachType"  "follow_origin"
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "Damage"
+                    {
+                        "Target"          "TARGET"
+                        "Type"            "DAMAGE_TYPE_MAGICAL"
+                        "Damage"          "%AbilityDamage"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "duration"        "5.0"
+            }
+        }
+    }
+
+    "fb_09_boss_wuzulishi_ability01"
+    {
+        "ID"    "5517"
+        "BaseClass"                     "beastmaster_primal_roar"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_BASIC"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"     
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "FightRecapLevel"               "2"
+
+        "HasScepterUpgrade"         "1"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"       
+        
+        // Cast Range
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "600"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.6"   // Applies multiple modifiers
+
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"                  "3.0"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"                    "10000"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "side_damage"               "10000"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage_radius"             "300"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_movement_speed_pct"   "-50"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_attack_speed_pct"     "-50"
+            }
+            "07"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "push_distance"             "300"
+            }
+            "08"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "push_duration"             "0.6"
+            }
+            "09"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "slow_duration"             "2.0"
+            }
+            "10"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "cast_range_scepter"        "950"
+            }
+            "11"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "cooldown_scepter"          "45.0"
+            }
+            "12"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movement_speed"            "0"
+            }
+            "13"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "movement_speed_duration"           "0.0"
+            }
+        }
+    }
+
+    "fb_09_boss_wuzuzhanjiang_ability01"
+    {
+        "ID"    "5518"
+        "BaseClass"                     "beastmaster_wild_axes"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"  
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "FightRecapLevel"               "1"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1300"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"       
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"                    "140"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spread"                    "353"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "range"                     "1300"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "axe_damage"                "20000"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"                      "0"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage_amp"                "0"
+            }
+
+        }
+    }
+
+    "fb_09_boss_xingtian_ability01"
+    {
+        "ID"    "5519"
+        "BaseClass"                     "faceless_void_time_lock"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportBonus"       "25"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "1.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration_creep"        "2.0"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "chance_pct"            "20"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "bonus_damage"          "16000"
+            }
+        }
+    }
+
+    "fb_08_boss_huolinjvshou_ability01"
+    {
+        "ID"    "5520"
+        "BaseClass"                     "dragon_knight_breathe_fire"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"                  
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"       
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_DragonKnight.BreathFire"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "500"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "20000"
+        
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+        }
+        
+        // Special  
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "start_radius"          "150"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "end_radius"            "250"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "range"                 "650"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "1050"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "reduction"             "0"
+            }
+            "06"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "11"
+            }
+        }
+    }
+
+    "fb_07_boss_bingjiaojvshou_ability01"
+    {
+        "ID"    "5521"
+        "BaseClass"                     "crystal_maiden_frostbite"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_BASIC"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "hero_Crystal.frostbite"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "525"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // Applies multiple modifiers
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_per_second_tooltip"         "3500"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "hero_damage_tooltip"           "20000"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "creep_duration"    "2.0"
+            }
+            "05"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "creep_damage_tooltip"  "20000"
+            }
+            "06"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "damage"            "20000"
+            }
+        }
+    }
+
+    "fb_14_boss_shuijiaojvshou_ability01"
+    {
+        "ID"    "5522"
+        "BaseClass"             "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Ability.GushCast"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityDuration"               "4.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "25000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "OnSpellStart"
+        {
+            "TrackingProjectile"
+            {
+                "Target"               "TARGET"
+                "EffectName"            "particles/units/heroes/hero_tidehunter/tidehunter_gush.vpcf"
+                "Dodgeable"            "1"
+                "ProvidesVision"        "1"
+                "VisionRadius"        "300"
+                "MoveSpeed"            "%projectile_speed"
+                "SourceAttachment"    "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"           "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_14_boss_shuijiaojvshou_ability01"
+                "Target"            "TARGET"
+                "Duration"        "3"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_14_boss_shuijiaojvshou_ability01"
+            {
+                "Passive"            "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed" 
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%negative_armor"
+                }
+            }
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "projectile_speed"  "2500"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "movement_speed"    "0"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "negative_armor"        "100"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "speed_scepter"     "1500"
+            }
+            "05"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "aoe_scepter"       "240"
+            }
+            "06"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "cooldown_scepter"      "7"
+            }
+            "07"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "cast_range_scepter"        "1800"
+            }
+        }
+    }
+
+    "fb_06_boss_tulingjvshou_ability01"
+    {
+        "ID"    "5523"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityCooldown"                   "10.0"
+        "AbilityManaCost"                   "0"
+        "MaxLevel"                          "1"
+
+        "precache"
+        {
+            "particle"  "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_leap_impact.vpcf"
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_06_boss_tulingjvshou_ability01"
+            {
+                "Passive"            "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+        
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/boss.lua"
+                                "Function"          "fb_06_boss_tulingjvshou_ability01"
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_fb_06_boss_tulingjvshou_ability01_effect"
+            {
+                "Duration"          "1"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+
+                "OnDestroy"
+                {
+                    "FireEffect"
+                    {
+                        "EffectName"        "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_leap_impact.vpcf"
+                        "EffectAttachType"  "follow_origin"
+                        "Target"            "CASTER"
+                    }
+                    "FireSound"
+                    {
+                        "EffectName"    "Hero_EarthShaker.Totem"
+                        "Target"        "TARGET"
+                    }
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%damage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"    "%duration"
+                                "Target"      "TARGET"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "375"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "duration"            "1.0"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage"              "10000"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "chance"              "20"
+            }
+        }
+    }
+
+    "fb_15_boss_mutunjvshou_ability01"
+    {
+        "ID"    "5524"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Ability.GushCast"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "700"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityDuration"               "3.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "15000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_fb_15_boss_mutunjvshou_ability01"
+                "Target"          "TARGET"
+                "Duration"        "%AbilityDuration"
+            }
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "FireSound"
+            {
+                "EffectName"     "Hero_Treant.Overgrowth.Cast"
+                "Target"         "TARGET"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_15_boss_mutunjvshou_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "0"
+                "EffectName"          "particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf"
+                "EffectAttachType"    "follow_origin"
+                
+                "States"
+                {
+                    "MODIFIER_STATE_ROOTED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
+
+    "fb_16_boss_shishanlaoyao_ability01"
+    {
+        "ID"    "5525"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_PHYSICAL"  
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_ElderTitan.EchoStomp"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "0.0"
+        "AbilityCooldown"               "10"
+        "AbilityChannelTime"            "1.0"
+        "AbilityManaCost"               "0"
+        "AbilityCastRange"              "500"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf"
+        }
+
+        "OnChannelSucceeded"
+        {
+            "AttachEffect"
+            {
+                "EffectName"        "particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf"
+                "EffectAttachType"  "follow_origin"
+                "Target"            "CASTER"
+            }
+            "FireSound"
+            {
+                "EffectName"        "Hero_ElderTitan.EchoStomp"
+                "Target"            "CASTER"
+            }
+            "ActOnTargets"
+            {
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "%radius"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            
+                "Action"    
+                {
+                    "Stun"
+                    {
+                        "Duration"      "%sleep_duration"
+                        "Target"        "TARGET"
+                    }
+                    "Damage"
+                    {
+                        "Target"        "TARGET"
+                        "Type"          "DAMAGE_TYPE_MAGICAL"
+                        "Damage"        "%stomp_damage"
+                    }
+                }
+            }
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "cast_time"                     "1.7"
+            }
+            "02"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "radius"                        "500"
+            }
+            "03"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "sleep_duration"                "2.0"
+            }
+            "04"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "stomp_damage"                  "30000"
+            }
+            "05"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "initial_stun_duration"                 "0.8"
+            }
+            "06"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "animation_rate"                    "0.0"
+            }
+        }
+    }
+
+    "fb_16_boss_shishanlaozhu_ability01"
+    {
+        "ID"    "5526"
+        "BaseClass"                     "abyssal_underlord_firestorm"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        
+        "AbilityCastRange"              "800"
+        "AbilityCastPoint"              "1.0"
+        "FightRecapLevel"               "1"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"                    "800"
+            }
+            "02"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "wave_duration"                 "4.0"
+            }       
+            "03"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "wave_count"                    "6"
+            }
+            "04"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "wave_damage"                   "20000"
+            }
+            "05"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "wave_interval"                 "1.0"
+            }
+            "06"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "burn_damage"                   "0.75 1.5 2.25 3"
+                "CalculateSpellDamageTooltip"           "0"
+            }
+            "07"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "burn_interval"                 "1.0"
+            }
+            "08"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "burn_duration"                 "2.0"
+            }
+            "09"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "first_wave_delay"              "0.0"
+            }
+            "10"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "building_damage"               "33"
+            }
+        }
+    }
+
+    "fb_14_boss_yaozujingyinghuwei_ability01"
+    {
+        "ID"    "5527"
+        "BaseClass"                     "slardar_slithereen_crush"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"  
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Slardar.Slithereen_Crush"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityDuration"               "3.5"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "40000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // Applies multiple modifiers
+
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "crush_radius"              "350"
+            }
+            "02"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "crush_extra_slow"              "0"
+            }
+            "03"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "crush_attack_slow_tooltip"     "0"
+            }
+            "04"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "crush_extra_slow_duration"     "0.0"
+            }
+            "05"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "stun_duration"                 "3.5"
+            }
+        }
+    }
+
+    "fb_14_boss_yaoshejingyinghuwei_ability01"
+    {
+        "ID"    "5528"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_NagaSiren.Riptide.Cast"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_siren/naga_siren_riptide.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+        
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "40000"
+
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"     "Hero_NagaSiren.Riptide.Cast"
+                "Target"         "CASTER"
+            }
+            "FireEffect"
+            {
+                "EffectName"        "particles/units/heroes/hero_siren/naga_siren_riptide.vpcf"
+                "EffectAttachType"  "follow_origin"
+                "Target"            "CASTER"
+                "ControlPoints"
+                {
+                    "01"    "%radius %radius %radius"
+                }
+            }
+            "ActOnTargets"
+            {
+                "Target"
+                {
+                    "Center"      "CASTER"
+                    "Radius"      "%radius"
+                    "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                }
+            
+                "Action"    
+                {
+                    "ApplyModifier"
+                    {
+                        "ModifierName"    "modifier_fb_14_boss_yaoshejingyinghuwei_ability01"
+                        "Target"          "TARGET"
+                        "Duration"        "%duration"
+                    }
+                    "Damage"
+                    {
+                        "Target"        "TARGET"
+                        "Type"          "DAMAGE_TYPE_MAGICAL"
+                        "Damage"        "%AbilityDamage"
+                    }
+                }
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_14_boss_yaoshejingyinghuwei_ability01"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "1"
+                
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+                }
+            }
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "armor_reduction"           "-17" // -50
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"                    "700"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"                  "3.5"
+            }
+        }
+    }
+
+    "fb_14_boss_yaozuzhanglao_ability01"
+    {
+        "ID"    "5529"
+        "BaseClass"                     "kunkka_torrent"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Ability.Torrent"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "600"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "40000"
+    
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // applies 2 modifiers
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"                    "600"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movespeed_bonus"           "-35"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "slow_duration"             "1.75"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "stun_duration"             "1.6"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "delay"                     "0.0"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "torrent_damage"            "40000"
+            }
+        }
+    }
+
+    "fb_14_boss_nvwahuanying_ability01"
+    {
+        "ID"    "5530"
+        "BaseClass"                     "tidehunter_ravage"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "AbilitySound"                  "Ability.Ravage"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "60000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "1000"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "speed"             "775"
+            }
+            "03"
+            {   
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "2.0"
+            }
+        }
+    }
+
+    "fb_12_boss_heiwuchang_ability01"
+    {
+        "ID"    "5531"
+        "BaseClass"                     "spectre_spectral_dagger"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_NO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Spectre.DaggerCast"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_spectre/spectre_spectral_dagger.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.0"   // Modifier has no support value
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "damage"                "40000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "bonus_movespeed"       "1"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "dagger_path_duration"  "12.0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "hero_path_duration"    "7.0"
+            }
+            "05"    
+            {
+                "var_type"              "FIELD_FLOAT"
+                "buff_persistence"      "4.0"
+            }
+            "08"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "dagger_radius"         "125"
+            }
+            "09"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "path_radius"           "175"
+            }
+            "10"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "vision_radius"         "200"
+            }
+            "11"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "800"
+            }
+            "12"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "dagger_grace_period"   "2.0"
+            }
+        }
+    }
+
+    "fb_12_boss_baiwuchang_ability01"
+    {
+        "ID"    "5532"
+        "BaseClass"                     "lich_frost_nova"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Ability.FrostNova"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "600"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+        "AbilityDuration"               "4.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "40000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.3"   // Primarily about the damage
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {           
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "200"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "slow_movement_speed"   "-30"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "slow_attack_speed"     "0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "aoe_damage"            "40000"
+            }
+        }
+    }
+
+    "fb_13_boss_cuifujun_ability01"
+    {
+        "ID"    "5533"
+        "BaseClass"                     "bane_brain_sap"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"      
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Bane.BrainSap"
+        "HasScepterUpgrade"         "1"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCastRange"              "600"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "brain_sap_damage"              "20000"
+            }
+            "02"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "tooltip_brain_sap_heal_amt"    "20000"
+            }
+            "03"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "cooldown_scepter"              "1.0"
+            }
+        }
+    }
+
+    "fb_13_boss_zhongkui_ability01"
+    {
+        "ID"    "5534"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+            "modifier_fb_13_boss_zhongkui_ability01_crit"
+            {
+                "IsHidden"                  "1"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_mult"
+                }
+                "OnAttackLanded"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_13_boss_zhongkui_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                }
+            }
+            "modifier_fb_13_boss_zhongkui_ability01_crit_chance"
+            {
+                "Passive"                   "1"
+                "IsHidden"                  "1"
+                "OnAttackStart"
+                {
+                    "RemoveModifier"
+                    {
+                        "ModifierName"      "modifier_fb_13_boss_zhongkui_ability01_crit"
+                        "Target"            "CASTER"
+                    }
+                    "Random"
+                    {
+                        "Chance"            "%crit_chance"
+                        "OnSuccess"
+                        {
+                            "ApplyModifier"
+                            {
+                                "ModifierName" "modifier_fb_13_boss_zhongkui_ability01_crit"
+                                "Target"    "CASTER"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "crit_chance"         "20"
+            }
+            "02"
+            {
+                "var_type"           "FIELD_FLOAT"
+                "crit_mult"          "400"
+            }
+        }
+    }
+
+    "fb_13_boss_yanwang_ability01"
+    {
+        "ID"    "5535"
+        "BaseClass"                     "abaddon_aphotic_shield"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"    
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Abaddon.AphoticShield.Cast"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "500"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+        
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "5.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "damage_absorb"         "60000"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "675"
+            }
+        }
+    }
+
+    "fb_18_boss_tianqiongshenjiang_ability01"
+    {
+        "ID"    "5536"
+        "BaseClass"                     "dragon_knight_dragon_tail"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_DragonKnight.DragonTail.Target"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "500"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+    
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "60000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+        
+        // Special  
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "stun_duration"         "3.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "dragon_cast_range"     "400"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "projectile_speed"      "1600"
+            }
+        }
+    }
+
+    "fb_18_boss_tianqiongshenguan_ability01"
+    {
+        "ID"    "5537"
+        "BaseClass"                     "tinker_laser"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "HasScepterUpgrade"         "1"
+        "AbilitySound"                  "Hero_Tinker.Laser"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "900"
+        "AbilityCastPoint"              "1"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.3"   // Primarily about the damageo
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "miss_rate"             "100"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration_hero"         "3.0"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration_creep"        "6.0 "
+            }   
+            "04"    
+            {
+                "var_type"              "FIELD_INTEGER"
+                "laser_damage"          "20000"
+            }   
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "cast_range_tooltip"    "650"
+            }
+            "06"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "cast_range_scepter"    "650"
+            }
+        }
+    }
+
+    "fb_18_boss_tianqiongzhenwudadi_ability01"
+    {
+        "ID"    "5538"
+        "BaseClass"                     "magnataur_reverse_polarity"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "AbilitySound"                  "Hero_Magnataur.ReversePolarity.Cast"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+        "AbilityCooldown"               "10"
+        "AbilityManaCost"               "0"
+        "AbilityCastRange"              "1000"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // Applies multiple modifiers
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "pull_radius"           "1000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "polarity_damage"       "100000"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "hero_stun_duration"    "3.5"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "pull_duration"         "0.0 0.0 0.0"
+            }
+        }
+    }
+
+    "fb_19_boss_fengshi_ability01"
+    {
+        "ID"    "5539"
+        "BaseClass"                     "lina_dragon_slave"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Lina.DragonSlave"
+    
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1075"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+        "AbilityDuration"               "0.6875 0.6875 0.6875 0.6875"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "120000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "dragon_slave_speed"        "1200"
+            }
+            
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "dragon_slave_width_initial"    "275"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "dragon_slave_width_end"        "200"
+            }
+            
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "dragon_slave_distance"         "1075"
+            }
+        }
+    }
+
+    "fb_19_boss_baji_ability01"
+    {
+        "ID"    "5540"
+        "BaseClass"                     "sven_storm_bolt"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Sven.StormBoltImpact"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
+        }
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "800"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "120000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "bolt_speed"            "1200"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "bolt_stun_duration"    "3.0"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "bolt_aoe"          "255"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "vision_radius"     "225"
+            }
+        }
+    }
+
+    "fb_19_boss_cangyin_ability01"
+    {
+        "ID"    "5541"
+        "BaseClass"                     "windrunner_powershot"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Ability.Powershot"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2600"
+        "AbilityCastPoint"              "0.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityChannelTime"            "1.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "140000"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "damage_reduction"      "0.2"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "arrow_width"           "125"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "arrow_range"           "2600"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "arrow_speed"           "3000.0"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "tree_width"            "75"
+            }
+            "06"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "vision_radius"         "400"
+            }
+            "07"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "vision_duration"       "3.34"
+            }
+        }
+    }
+
+    "fb_19_boss_jiuxiao_ability01"
+    {
+        "ID"    "5542"
+        "BaseClass"                     "beastmaster_primal_roar"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_BASIC"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"     
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "FightRecapLevel"               "2"
+
+        "HasScepterUpgrade"         "1"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"       
+        
+        // Cast Range
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "800"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.6"   // Applies multiple modifiers
+
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"                  "3.0"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"                    "140000"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "side_damage"               "140000"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage_radius"             "300"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_movement_speed_pct"   "-50"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_attack_speed_pct"     "-50"
+            }
+            "07"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "push_distance"             "300"
+            }
+            "08"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "push_duration"             "0.6"
+            }
+            "09"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "slow_duration"             "2.0"
+            }
+            "10"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "cast_range_scepter"        "950"
+            }
+            "11"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "cooldown_scepter"          "45.0"
+            }
+            "12"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movement_speed"            "0"
+            }
+            "13"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "movement_speed_duration"           "0.0"
+            }
+        }
+    }
+
+    "fb_19_boss_dihen_ability01"
+    {
+        "ID"    "5543"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_19_boss_dihen/fb_19_boss_dihen_ability01.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/boss.lua"
+                "Function"          "FB19BOSS_DiHen_Ability01"
+                "Radius"            "%radius"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_19_boss_dihen_ability01_damage"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+            
+                "EffectName"            "particles/avalon/abilities/fb_19_boss_dihen/fb_19_boss_dihen_ability01.vpcf"
+                "EffectAttachType"      "follow_origin"
+            
+                "OnCreated"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "150"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"            "TARGET"
+                                "Type"              "DAMAGE_TYPE_MAGICAL"
+                                "Damage"            "%AbilityDamage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "2"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "700"
+            }
+        }
+    }
+
+    "fb_19_boss_dihen_ability02"
+    {
+        "ID"    "5544"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_fb_19_boss_dihen_ability02_caster"
+                "Target"            "CASTER"
+                "Duration"          "5"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_19_boss_dihen_ability02_caster"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+
+                "ThinkInterval"  "0.4"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/boss.lua"
+                        "Function"          "FB19BOSS_DiHen_Ability02_Random"
+                        "Target"
+                        {
+                            "Center"        "CASTER"
+                            "Radius"        "1000"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO"
+                            "Random"        "1"
+                        }
+                    }
+                    "CreateThinker"
+                    {
+                        "ModifierName"      "modifier_fb_19_boss_dihen_ability02_damage"
+                        
+                    }
+                }
+            }
+            "modifier_fb_19_boss_dihen_ability02_damage"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+                "Duration"              "2.0"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/boss.lua"
+                        "Function"          "FB19BOSS_DiHen_Ability02"
+                    }
+                }
+            
+                "OnDestroy"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"        "TARGET"
+                            "Radius"        "150"
+                            "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "Damage"
+                            {
+                                "Target"            "TARGET"
+                                "Type"              "DAMAGE_TYPE_MAGICAL"
+                                "Damage"            "%AbilityDamage"
+                            }
+                            "Stun"
+                            {
+                                "Duration"      "2"
+                                "Target"        "TARGET"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "1500"
+            }
+        }
+    }
+
+    "fb_19_boss_dihen_ability03"
+    {
+        "ID"    "5545"
+        "BaseClass"                      "ability_lua"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+        "AbilityDamage"                  "200000"
+        "ScriptFile"                     "abilities/lua/fb_19_boss_dihen_ability03.lua"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_19_boss_dihen/fb_19_boss_dihen_ability03_master.vpcf"
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "max_times"           "1"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "stun_duration"       "2.0"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "radius"              "1000.0"
+            }
+        }
+    }
+
+    "fb_19_boss_dihen_ability04"
+    {
+        "ID"    "5546"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "OnCreated"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/boss.lua"
+                "Function"          "FB19BOSS_DiHen_Ability04"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability01"
+    {
+        "ID"    "5547"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NONE"
+        "AbilityCastAnimation"          "ACT_DOTA_IDLE"
+        "MaxLevel"                      "1"
+        
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "0.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                "Function"          "FB20fushuizhifengAbility01"
+                "Target"            "POINT"
+                "Radius"            "%radius"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_20_boss_fushuizhifeng_ability01"
+            {
+                "Passive"             "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+                
+                "ThinkInterval"  "10.0"
+                "OnIntervalThink"
+                {
+                    "ApplyModifier"
+                    {
+                        "ModifierName"    "modifier_spectre_spectral_dagger_path_phased"
+                        "Target"          "CASTER"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "1000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability02"
+    {
+        "ID"    "5548"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NONE"
+        "AbilityCastAnimation"          "ACT_DOTA_IDLE"
+        "MaxLevel"                      "1"
+        
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "2000"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "AbilityDamage"                 "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability02_fire.vpcf"
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability02.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "LinearProjectile"
+            {
+                "EffectName"        "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability02_fire.vpcf"
+                "MoveSpeed"         "1000"
+                "StartRadius"       "50"
+                "EndRadius"         "500"
+                "FixedDistance"     "2000"
+                "TargetTeams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                "TargetTypes"       "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                "TargetFlags"       "DOTA_UNIT_TARGET_FLAG_NONE"
+                "HasFrontalCone"    "0"
+                "ProvidesVision"    "1"
+                "VisionRadius"      "300"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "DeleteOnHit"               "0"
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_fb_20_boss_fushuizhifeng_fire_debuff"
+                "Target"            "TARGET"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "500"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability03"
+    {
+        "ID"    "5549"
+        "BaseClass"                 "ability_lua"
+        "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+        "AbilityCastRange"          "2000"
+        "AbilityCastPoint"          "1.0"
+        "AbilityCooldown"           "10.0"
+        "AbilityCastAnimation"      "ACT_DOTA_OVERRIDE_ABILITY_3"
+        "ScriptFile"                "abilities/lua/fb_20_boss_fushuizhifeng_ability03.lua"
+        "MaxLevel"                  "1"
+
+        "AbilityDamage"             "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability03.vpcf"
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "128"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability04"
+    {
+        "ID"    "5550"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "AbilityDamage"             "200000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability04_launch.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "ActOnTargets"
+            {
+                "Target"
+                {
+                    "Center"        "CASTER"
+                    "Radius"        "2000"
+                    "Teams"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                    "Types"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                }
+            
+                "Action"    
+                {
+                    "TrackingProjectile"
+                    {
+                        "Target"            "TARGET"
+                        "EffectName"        "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability04_launch.vpcf"
+                        "Dodgeable"         "0"
+                        "ProvidesVision"    "1"
+                        "VisionRadius"      "300"
+                        "MoveSpeed"         "400"
+                        "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+                    }
+                }
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "Damage"
+            {
+                "Target"        "TARGET"
+                "Type"          "DAMAGE_TYPE_MAGICAL"
+                "Damage"        "%AbilityDamage"
+            }
+            "ApplyModifier"
+            {
+                "ModifierName"      "modifier_fb_20_boss_fushuizhifeng_fire_debuff"
+                "Target"            "TARGET"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability05"
+    {
+        "ID"    "5551"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "0.0"
+        "AbilityCooldown"                "15.0"
+        "AbilityManaCost"                "0"
+        "AbilityCastAnimation"           "ACT_DOTA_CAST_ABILITY_2"
+
+        "AbilityDamage"             "20000"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability05.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                "Function"          "FB20fushuizhifengAbility05"
+                "Duration"          "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_20_boss_fushuizhifeng_ability05"
+            {
+                "Passive"               "0"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+
+                "States"
+                {
+                    "MODIFIER_STATE_UNSELECTABLE"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+        
+                "ThinkInterval"  "0.1"
+                "OnIntervalThink"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "CASTER"
+                            "Radius"      "4000"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                    
+                        "Action"    
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                                "Function"          "FB20fushuizhifengAbility05Damage"
+                            }
+                        }
+                    }
+                }
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                        "Function"          "FB20fushuizhifengAbility05_Destroy"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "5.0"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability06"
+    {
+        "ID"    "5552"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "0.0"
+        "AbilityCooldown"                "15.0"
+        "AbilityManaCost"                "0"
+        "AbilityCastAnimation"           "ACT_DOTA_CAST_ABILITY_2"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                "Function"          "FB20fushuizhifengAbility06"
+                "Duration"          "%duration"
+                "Count"             "5"
+                "Radius"            "360"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "5.0"
+            }
+        }
+    }
+
+    "fb_20_boss_fushuizhifeng_ability07"
+    {
+        "ID"    "5553"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "0.0"
+        "AbilityCooldown"                "30.0"
+        "AbilityManaCost"                "0"
+        "AbilityCastAnimation"           "ACT_DOTA_CAST_ABILITY_2"
+
+        "precache"
+        {
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability07_point.vpcf"
+            "particle"  "particles/avalon/abilities/fb_boss_fushuizhifeng/fb_20_boss_fushuizhifeng_ability07_target.vpcf"
+        }
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                "Function"          "FB20fushuizhifengAbility07"
+            }
+        }
+
+        "OnProjectileHitUnit"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/fb_fushuizhifeng.lua"
+                "Function"          "FB20fushuizhifengAbility07_Hit"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_fb_20_boss_fushuizhifeng_ability07"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "States"
+                {
+                    "MODIFIER_STATE_UNSELECTABLE"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_STUNNED"             "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_SILENCED"            "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_ROOTED"              "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_DISARMED"            "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_INVULNERABLE"        "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "10.0"
+            }
+        }
+    }
+
+    "fb_09_boss_chiyouhuanying_ability01"
+    {
+        "ID"    "5554"
+        "BaseClass"                     "chaos_knight_chaos_bolt"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_ChaosKnight.ChaosBolt.Cast"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "chaos_bolt_speed"      "1000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "stun_min"              "5"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "stun_max"              "5"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "damage_min"            "100000"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "damage_max"            "100000"
+            }
+        }
+    }
+
+    "fb_05_boss_shanfengguaizhanglao_ability01"
+    {
+        "ID"    "5555"
+        "BaseClass"                     "zuus_lightning_bolt"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Zuus.LightningBolt"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+
+        // Damage.
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityDamage"                 "8000"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.1"   // just a ministun
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+        }
+
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "true_sight_radius"     "750"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "sight_radius_day"      "750"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "sight_radius_night"    "750"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "sight_duration"        "4.5"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "spread_aoe"    "325"
+            }
+        }
+    }
+
+    "fb_07_boss_xuanbingmohun_ability01"
+    {
+        "ID"    "5556"
+        "BaseClass"                     "ancient_apparition_cold_feet"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Ancient_Apparition.ColdFeetCast"
+    
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10"
+        "AbilityDuration"               "4.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityModifierSupportValue"   "0.5"   // Does two modifiers 
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "damage"                "50000"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "break_distance"        "740"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "stun_duration"         "5.0"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "cast_range_tooltip"    "700"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "charge_restore_time"   "10"
+            }
+        }
+    }
+
+    "fb_07_boss_xuejixiong_ability01"
+    {
+        "ID"    "5557"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                      "1"
+
+        "AbilityDamage"                 "1000"
+
+        "Modifiers"
+        {
+            "modifier_fb_07_boss_xuejixiong_ability01"
+            {
+                "Passive"               "1"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "20"
+                        "OnSuccess"
+                        {
+                            "Stun"
+                            {
+                                "Duration"      "1"
+                                "Target"        "TARGET"
+                            }
+                            "Damage"
+                            {
+                                "Target"        "TARGET"
+                                "Type"          "DAMAGE_TYPE_MAGICAL"
+                                "Damage"        "%AbilityDamage"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "fb_09_boss_xiefo_ability01"
+    {
+        "ID"    "5558"
+        "BaseClass"                     "ember_spirit_searing_chains"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_EmberSpirit.SearingChains.Target"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1200"
+        "AbilityCastPoint"              "1.0"
+        
+        // Time     
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "10.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "0"
+
+        "precache"
+        {
+            "particle"  "particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "duration"                      "3.0"
+            }
+            
+            "02"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "radius"                        "1200"
+            }   
+            
+            "03"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "chains_damage"                 "8000"
+            }               
+            "04"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "total_damage_tooltip"          "8000"
+            }
+            "05"
+            {
+                "var_type"                      "FIELD_FLOAT"
+                "tick_interval"                 "1.0"
+            }
+            "06"
+            {
+                "var_type"                      "FIELD_INTEGER"
+                "unit_count"                    "5"
+            }
+        }
+    }
+
+    "fb_06_boss_toudanyaoguai_ability01"
+    {
+        "ID"    "5559"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                      "1"
+
+        "Modifiers"
+        {
+            "modifier_fb_06_boss_toudanyaoguai_ability01"
+            {
+                "Passive"               "1"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/common.lua"
+                        "Function"          "HealHP"
+                        "HealPercent"       "1"
+                    }
+                }
+            }
+        }
+    }
+
+    "fb_09_boss_jiulidajiang_ability01"
+    {
+        "ID"    "5560"
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                      "1"
+
+        "Modifiers"
+        {
+            "modifier_fb_09_boss_jiulidajiang_ability01"
+            {
+                "Passive"               "1"
+                "IsHidden"              "1"
+                "IsDebuff"              "0"
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/common.lua"
+                        "Function"          "HealHP"
+                        "HealPercent"       "2"
+                    }
+                }
+            }
+        }
+    }
+
+    "fb_13_boss_dizangwang_ability01"
+    {
+        "ID"    "5561"
+        "BaseClass"                      "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "AbilityCastPoint"               "1.0"
+        "AbilityCooldown"                "10.0"
+        "AbilityManaCost"                "0"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/boss.lua"
+                "Function"          "FB13BOSS_Dizangwang_Ability01"
+            }
+        }
+    }
+}

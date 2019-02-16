@@ -1,0 +1,3040 @@
+
+//#base "exmple.kv"
+#base "quest_special_hunting.kv"
+#base "guide_quests.kv"
+
+"Quests"
+{
+	"quest_songxin_01"	//送信 - 其一
+	{
+		"AcceptNPC"						"npc_task_kezhanlaoban"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_fushucuncunzhang"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fushucuncunzhang"
+				"Quest"			"quest_songxin_02"
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_fushucuncunzhang"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"150"
+				"yuanhui"				"1"
+				"EWeapon"				"1"
+				"item_0001"			"1"
+				"item_0002"			"1"
+				"item_0003"			"1"
+			}
+		}
+	}
+
+	"quest_songxin_02"	//送信 - 其二
+	{
+		"AcceptNPC"						"npc_task_fushucuncunzhang"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_kezhanlaoban"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_kezhanlaoban"
+				"Quest"			"quest_songxin_03"
+			}
+		}
+		
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_songxin_01"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_kezhanlaoban"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"150"
+				"yuanhui"				"1"
+			}
+		}
+	}
+
+	"quest_songxin_03"	//送信 - 其三
+	{
+		"AcceptNPC"						"npc_task_kezhanlaoban"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_fushucuncunzhang"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+
+		"OnAccepted"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fushucuncunzhang"
+				"Quest"			"quest_songxin_03"
+				"IsSumited"		"1"
+			}
+		}
+
+		"OnSubmited"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fortune_teller"
+				"Quest"			"quest_guide_0001"
+				"IsSumited"		"1"
+			}
+		}
+		
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_songxin_02"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_fushucuncunzhang"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"150"
+				"yuanhui"				"1"
+				"item_0034"				"1"
+			}
+		}
+	}
+
+	"quest_wuzisouji"	//物资搜集
+	{
+		"AcceptNPC"						"npc_task_kezhanlaoban"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0007" 			//收集的物品
+				"MaxCount"				"-1" 					//收集的个数
+				"SubmitRewards"									//提交物品获得奖励
+				{
+					"RequireCount"		"1"						//达到提交数量才给予奖励，默认提交一个物品给予一次奖励
+					"Fixed" 										//固定奖励
+					{
+						"Gold"			"20"
+						"EXP"			"20"
+					}
+				}
+			}
+		}
+	}
+
+	"quest_shared_shiqvbaicao_good"	//拾取百草 - 善举
+	{
+		"AcceptNPC"						"npc_task_fushengtanglaoban"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shiqvbaicao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0004" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"150"
+				"Gold"					"100"
+				"merits"				"20"
+				"yuanhui"				"1"
+				"item_0011"			"1"
+			}
+		}
+	}
+
+	"quest_shared_shiqvbaicao_bad"	//拾取百草 - 恶举
+	{
+		"AcceptNPC"						"npc_task_fushengtanglaoban"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shiqvbaicao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0024" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"150"
+				"karma"					"20"
+				"yuanhui"				"1"
+				"item_0012"				"1"
+			}
+		}
+	}
+
+	"quest_shared_shiqvbaicao_none"	//拾取百草 - 无为
+	{
+		"AcceptNPC"						"npc_task_fushengtanglaoban"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shiqvbaicao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0005" 			//收集的物品
+				"MaxCount"				"10" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"300"
+				"Gold"					"200"
+				"yuanhui"				"2"
+			}
+		}
+	}
+
+	"quest_shared_qvchulanghuan_good"	//去除狼患 - 善举
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qvchulanghuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0006" 			//收集的物品
+				"MaxCount"				"10" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"150"
+				"merits"				"20"
+				"yuanhui"				"1"
+				"item_0018"			"1"
+			}
+		}
+	}
+
+	"quest_shared_qvchulanghuan_bad"	//去除狼患 - 恶举
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qvchulanghuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_liehu"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"300"
+				"Gold"					"200"
+				"karma"					"20"
+				"yuanhui"				"1"
+				"item_0018"				"1"
+			}
+		}
+	}
+
+	"quest_shared_qvchulanghuan_none"	//去除狼患 - 无为
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qvchulanghuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0097" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"400"
+				"Gold"					"250"
+				"yuanhui"				"2"
+				"item_0019"				"1"
+			}
+		}
+	}
+
+	"quest_shared_jiejiunvtong_good"	//解救女童 - 善举
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiejiunvtong"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qvchulanghuan"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV1_fb_01_boss_elang" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"300"
+				"Gold"					"200"
+				"merits"				"40"
+				"yuanhui"				"1"
+				"DWeapon"				"1"
+				"item_0019"			"1"
+			}
+		}
+	}
+
+	"quest_shared_jiejiunvtong_bad"	//解救女童 - 恶举
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiejiunvtong"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qvchulanghuan"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV1_fb_01_boss_elang" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"400"
+				"Gold"					"300"
+				"karma"					"40"
+				"yuanhui"				"1"
+				"DWeapon"				"1"
+				"item_0077"			"1"
+			}
+		}
+	}
+
+	"quest_shared_jiejiunvtong_none"	//解救女童 - 无为
+	{
+		"AcceptNPC"						"npc_task_liehu"		//接受任务和提交任务的NPC
+		"SubmitNPC"						"npc_task_daomenzhenren"
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiejiunvtong"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qvchulanghuan"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_daomenzhenren"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"600"
+				"Gold"					"400"
+				"yuanhui"				"2"
+				"DWeapon"				"1"
+			}
+		}
+	}
+
+	"quest_shared_qingchushhuizhai_01_good"	//清除水寨 - 其一 善举
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_01"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV2_fb_03_jiulongzhailouluo" 	//击杀单位
+				"MaxCount"				"5" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"100"
+				"Gold"					"50"
+				"merits"				"5"
+			}
+
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0038"			"1"
+				}
+				"02"
+				{
+					"item_0045"			"1"
+				}
+				"03"
+				{
+					"item_0039"			"1"
+				}
+				"04"
+				{
+					"item_0042"			"1"
+				}
+			}
+		}
+	}
+
+	"quest_shared_qingchushhuizhai_01_bad"	//清除水寨 - 其一 恶举
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_01"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_tiexuetangtangzhu"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"100"
+				"Gold"					"50"
+				"karma"					"5"
+			}
+
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0038"			"1"
+				}
+				"02"
+				{
+					"item_0045"			"1"
+				}
+				"03"
+				{
+					"item_0039"			"1"
+				}
+				"04"
+				{
+					"item_0042"			"1"
+				}
+			}
+		}
+	}
+
+	"quest_shared_qingchushhuizhai_01_none"	//清除水寨 - 其一 无为
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_01"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0041" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"600"
+				"Gold"					"300"
+				"yuanhui"				"3"
+			}
+
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0038"			"1"
+				}
+				"02"
+				{
+					"item_0045"			"1"
+				}
+				"03"
+				{
+					"item_0039"			"1"
+				}
+				"04"
+				{
+					"item_0042"			"1"
+				}
+			}
+		}
+	}
+
+
+	"quest_shared_qingchushhuizhai_02_good"	//清除水寨 - 其二 善举
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_02"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qingchushhuizhai_01_good"		"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV2_fb_03_boss_jiulongzhaizhaizhu" 	//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"600"
+				"Gold"					"500"
+				"merits"				"50"
+				"yuanhui"				"3"
+				"item_0063"			"1"
+			}
+		}
+	}
+
+	"quest_shared_qingchushhuizhai_02_bad"	//清除水寨 - 其二 恶举
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_02"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qingchushhuizhai_01_good"		"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 						//任务类型：击杀单位
+				"Target"				"LV2_fb_03_boss_jiulongzhaizhaizhu" 	//击杀单位
+				"MaxCount"				"1" 								//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"800"
+				"Gold"					"700"
+				"karma"					"50"
+				"yuanhui"				"3"
+				"item_0064"			"1"
+			}
+		}
+	}
+
+	"quest_shared_qingchushhuizhai_02_none"	//清除水寨 - 其二 无为
+	{
+		"AcceptNPC"						"npc_task_tiexuetangtangzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushhuizhai_02"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_qingchushhuizhai_01_good"		"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0065" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1200"
+				"Gold"					"1100"
+				"yuanhui"				"4"
+				"item_0064"			"1"
+			}
+		}
+	}
+
+	"quest_tianjianzhixing_01" //天剑之行 - 其一
+	{
+		"AcceptNPC"							"npc_task_daomenzhenren"		//接受任务和提交任务的NPC
+		"IsMainQuest"						"0"
+		"IsRepeat"							"1" 							//任务可以无限接受
+		"Precondition" 														//任务条件
+		{
+			"PreQuests" 													//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0088" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0089" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0090" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0091" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 接受任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1000"
+				"Gold"					"1000"
+				"yuanhui"				"5"
+				"item_0059"				"1"
+				"item_0046"				"1"
+				"item_0036"				"1"
+				"item_0043"				"1"
+			}
+		}
+	}
+
+	"quest_tianjianzhixing_02" //天剑之行 - 其二
+	{
+		"AcceptNPC"							"npc_task_shushankanmendizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"						"0"
+		"IsRepeat"							"1" 							//任务可以无限接受
+		"Precondition" 														//任务条件
+		{
+			"PreQuests" 													//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_tianjianzhixing_01"			"1"
+			}
+		}
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0059" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"200"
+				"yuanhui"				"1"
+			}
+		}
+	}
+
+	"quest_shared_tianjianzhixing_03_good"	//天剑之行 - 其三 善举
+	{
+		"AcceptNPC"						"npc_task_shushanzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_tianjianzhixing"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_tianjianzhixing_02"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV4_fb_05_boss_fengxiaojvshou" 	//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1200"
+				"Gold"					"800"
+				"merits"				"60"
+				"yuanhui"				"5"
+				"yujian"				"1"
+				"learn_teleport"		"0"
+			}
+		}
+	}
+
+	"quest_shared_tianjianzhixing_03_bad"	//天剑之行 - 其三 恶举
+	{
+		"AcceptNPC"						"npc_task_shushanzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_tianjianzhixing"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_tianjianzhixing_02"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_liandandizi"
+				"FindRewards"
+				{
+					"Fixed"
+					{
+						"item_0103"		"1"
+					}
+				}
+			}
+			"2"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV4_fb_05_boss_fengxiaojvshou" 	//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1500"
+				"Gold"					"1000"
+				"karma"					"60"
+				"yuanhui"				"5"
+				"learn_teleport"		"0"
+			}
+		}
+	}
+
+	"quest_shared_tianjianzhixing_03_none"	//天剑之行 - 其三 无为
+	{
+		"AcceptNPC"						"npc_task_shushanzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_tianjianzhixing"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_tianjianzhixing_02"			"1"
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV4_fb_05_boss_fengxiaojvshou" 	//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"2000"
+				"Gold"					"1200"
+				"karma"					"60"
+				"yuanhui"				"8"
+				"yujian"				"1"
+				"learn_teleport"		"0"
+			}
+		}
+	}
+
+	"quest_shared_shizhenmibao_01_good"	//石阵秘宝 - 其一 善举
+	{
+		"AcceptNPC"						"npc_task_shenmiren"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shizhenmibao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=4"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 			//任务类型：自定义
+				"Function"				"custom_item_0104"			//方法名
+				"Target"				"npc_task_shenmizhita"
+				"MaxCount"				"1"
+				"Count"					"0"
+				"TextArgs"
+				{
+					"Item"				"item_0104"
+					"Target"			"npc_task_shenmizhita"
+				}
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"item_0104"					"1"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"400"
+				"Gold"					"300"
+				"merits"				"100"
+				"yuanhui"				"2"
+				"CWeapon"				"1"
+			}
+		}
+	}
+
+	"quest_shared_shizhenmibao_01_bad"	//石阵秘宝 - 其一 恶举
+	{
+		"AcceptNPC"						"npc_task_shenmiren"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shizhenmibao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=4"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 			//任务类型：自定义
+				"Function"				"sell_items"			//方法名
+				"Target"				"item_0104"
+				"MaxCount"				"1"
+				"Count"					"0"
+				"TextArgs"
+				{
+					"Item"				"item_0104"
+				}
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"item_0104"					"1"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"500"
+				"Gold"					"400"
+				"karma"					"100"
+				"yuanhui"				"2"
+			}
+		}
+	}
+
+	"quest_shared_shizhenmibao_01_none"	//石阵秘宝 - 其一 无为
+	{
+		"AcceptNPC"						"npc_task_shenmiren"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_shizhenmibao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=4"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_shenmiren"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1000"
+				"Gold"					"800"
+				"yuanhui"				"4"
+			}
+		}
+	}
+
+	"quest_shared_caishiwabao_01_good"	//采石挖宝 - 其一 善举
+	{
+		"AcceptNPC"						"npc_task_shushandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_caishiwabao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0073" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"800"
+				"Gold"					"700"
+				"merits"				"50"
+				"yuanhui"				"3"
+				"item_0072"			"1"
+			}
+		}
+	}
+
+	"quest_shared_caishiwabao_01_bad"	//采石挖宝 - 其一 恶举
+	{
+		"AcceptNPC"						"npc_task_shushandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_caishiwabao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0073" 						//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1000"
+				"Gold"					"800"
+				"karma"					"50"
+				"yuanhui"				"3"
+				"item_0073"				"1"
+			}
+		}
+	}
+
+	"quest_shared_caishiwabao_01_none"	//采石挖宝 - 其一 无为
+	{
+		"AcceptNPC"						"npc_task_shushandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_caishiwabao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_shushanzhangmen"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1500"
+				"Gold"					"1200"
+				"yuanhui"				"4"
+			}
+		}
+	}
+
+	"quest_shared_sucaisouji_good"	//素材搜集 善举
+	{
+		"AcceptNPC"						"npc_task_liandandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_sucaisouji"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0005" 			//收集的物品
+				"MaxCount"				"5" 					//收集的个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0008" 			//收集的物品
+				"MaxCount"				"5" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"800"
+				"Gold"					"700"
+				"merits"				"50"
+				"yuanhui"				"2"
+				"item_0060"			"1"
+			}
+		}
+	}
+
+	"quest_shared_sucaisouji_bad"	//素材搜集 恶举
+	{
+		"AcceptNPC"						"npc_task_liandandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_sucaisouji"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0005" 			//收集的物品
+				"MaxCount"				"5" 					//收集的个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0008" 			//收集的物品
+				"MaxCount"				"5" 					//收集的个数
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Chance" 										//概率奖励
+			{
+				"Limit"					"1" 				//一次最多奖励个数
+				"1"
+				{
+					"Chance"			"50" 				//奖励概率，去掉此项则几率为0
+					"item_0060"			"1" 				//物品名称     物品个数 （物品名称必须[item_]前缀）
+				}
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1000"
+				"Gold"					"900"
+				"karma"					"50"
+				"yuanhui"				"2"
+				"item_0060"			"1"
+			}
+		}
+	}
+
+	"quest_shared_sucaisouji_none"	//素材搜集 无为
+	{
+		"AcceptNPC"						"npc_task_liandandizi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_sucaisouji"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 			//任务类型：收集物品
+				"Target"				"npc_task_liandandizi" 			//收集的物品
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1300"
+				"Gold"					"1000"
+				"yuanhui"				"4"
+			}
+		}
+	}
+
+	"quest_zhiwangbuyu"	//织网捕鱼
+	{
+		"AcceptNPC"						"npc_task_yufu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{ 
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0105" 			//收集的物品
+				"MaxCount"				"-1" 					//收集的个数
+				"SubmitRewards"									//提交物品获得奖励
+				{
+					"RequireCount"		"1"						//达到提交数量才给予奖励，默认提交一个物品给予一次奖励
+					"Fixed" 										//固定奖励
+					{
+						"Gold"			"5"
+						"EXP"			"20"
+					}
+				}
+			}
+		}
+	}
+
+	"quest_shared_jiminggoudao_good"	//鸡鸣狗盗 善举
+	{
+		"AcceptNPC"						"npc_task_furen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiminggoudao"		//拥有相同共享名称的任务只能接受其中一种
+
+		"OnSubmited"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fortune_teller"
+				"Quest"			"quest_guide_0002"
+				"IsSumited"		"1"
+				"PreQuests"
+				{
+					"quest_guide_0002"	"1"
+				}
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 			
+				"Target"				"npc_task_fanren"
+				"FindRewards"
+				{
+					"Fixed"
+					{
+						"item_0014"					"1"
+					}
+				}
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0014" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"350"
+				"Gold"					"250"
+				"merits"				"40"
+				"yuanhui"				"1"
+				"item_0013"				"1"
+			}
+		}
+	}
+
+	"quest_shared_jiminggoudao_bad"	//鸡鸣狗盗 恶举
+	{
+		"AcceptNPC"						"npc_task_furen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiminggoudao"		//拥有相同共享名称的任务只能接受其中一种
+
+		"OnSubmited"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fortune_teller"
+				"Quest"			"quest_guide_0002"
+				"IsSumited"		"1"
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 			
+				"Target"				"npc_task_fanren"
+				"FindRewards"
+				{
+					"Fixed"
+					{
+						"item_0014"					"1"
+					}
+				}
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"450"
+				"Gold"					"350"
+				"karma"					"40"
+				"yuanhui"				"1"
+				"item_0013"			"1"
+			}
+		}
+	}
+
+	"quest_shared_jiminggoudao_none"	//鸡鸣狗盗 无为
+	{
+		"AcceptNPC"						"npc_task_furen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiminggoudao"		//拥有相同共享名称的任务只能接受其中一种
+
+		"OnSubmited"				//当接受任务失败，触发相应的全局函数，可在utils/quests.lua中填写，参数只有一个keys(含有quest以及其它参数)
+		{
+			"1"
+			{
+				"Function"		"ShuShanQuest_Guide_GoToTarget"
+				"NPC"			"npc_task_fortune_teller"
+				"Quest"			"quest_guide_0002"
+				"IsSumited"		"1"
+			}
+		}
+
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 			
+				"Target"				"npc_task_fanren" 			
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"700"
+				"Gold"					"500"
+				"yuanhui"				"2"
+			}
+		}
+	}
+
+	"quest_shared_qingchushuihuan_good"	//清除水患 善举
+	{
+		"AcceptNPC"						"npc_task_fushucuncunzhang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushuihuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV1_fb_02_shuiyao" 			//击杀单位
+				"MaxCount"				"8" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"80"
+				"Gold"					"60"
+				"merits"				"5"
+				"yuanhui"				"1"
+			}
+
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0021"			"1"
+				}
+				"02"
+				{
+					"item_0017"			"1"
+				}
+				"03"
+				{
+					"item_0015"			"1"
+				}
+			}
+		}
+	}
+
+	"quest_shared_qingchushuihuan_bad"	//清除水患 恶举
+	{
+		"AcceptNPC"						"npc_task_fushucuncunzhang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushuihuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV1_fb_02_shuiyao" 			//击杀单位
+				"MaxCount"				"8" 						//击杀个数
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"Gold"					"100"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"100"
+				"Gold"					"80"
+				"karma"					"5"
+			}
+
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0021"			"1"
+				}
+				"02"
+				{
+					"item_0017"			"1"
+				}
+				"03"
+				{
+					"item_0015"			"1"
+				}
+			}
+		}
+	}
+
+	"quest_shared_qingchushuihuan_none"	//清除水患 无为
+	{
+		"AcceptNPC"						"npc_task_fushucuncunzhang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_qingchushuihuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"CUSTOM" 			//任务类型：自定义
+				"Function"				"custom_item_0009"			//方法名
+				"Target"				"LV1_fb_02_shuiyao"
+				"MaxCount"				"5"
+				"Count"					"0"
+				"TextArgs"
+				{
+					"Item"				"item_0009"
+					"Unit"				"LV1_fb_02_shuiyao"
+				}
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"200"
+				"Gold"					"100"
+			}
+		}
+	}
+
+	"quest_shared_bushachongqun_good"	//捕杀虫群 善举
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bushachongqun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV3_fb_06_huangchong" 			//击杀单位
+				"MaxCount"				"15" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"50"
+				"EXP"					"900"
+				"Gold"					"800"
+			}
+		}
+	}
+
+	"quest_shared_bushachongqun_bad"	//捕杀虫群 恶举
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bushachongqun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV3_fb_06_huangchong" 			//击杀单位
+				"MaxCount"				"15" 						//击杀个数
+			}
+		}
+
+		// 接受任务给予奖励
+		"AcceptRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"Gold"					"500"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"karma"					"50"
+				"EXP"					"1100"
+				"Gold"					"950"
+			}
+		}
+	}
+
+	"quest_shared_bushachongqun_none"	//捕杀虫群 无为
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bushachongqun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0086" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1500"
+				"Gold"					"1500"
+			}
+		}
+	}
+
+	"quest_shared_heguchuanshuo_good"	//河谷传说 善举
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_heguchuanshuo"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_bushachongqun"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV3_fb_06_boss_xiedaoren" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"1400"
+				"Gold"					"1300"
+				"item_0206"				"1"
+			}
+		}
+	}
+
+	"quest_shared_heguchuanshuo_bad"	//河谷传说 恶举
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_heguchuanshuo"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_bushachongqun"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV3_fb_06_boss_xiedaoren" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"karma"					"100"
+				"EXP"					"1450"
+				"Gold"					"1350"
+				"item_0206"				"1"
+			}
+		}
+	}
+
+	"quest_shared_heguchuanshuo_none"	//河谷传说 无为
+	{
+		"AcceptNPC"						"npc_task_hegucunmin"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_heguchuanshuo"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_bushachongqun"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV3_fb_06_boss_xiedaoren" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"1700"
+				"Gold"					"1500"
+				"item_0206"				"1"
+			}
+		}
+	}
+
+	"quest_shared_jiuhuobinglian_good"	//九火冰莲 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggonggongzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jiuhuobinglian"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=40"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0212" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"35"
+				"EXP"					"1000"
+				"Gold"					"900"
+				"item_0207"				"1"
+			}
+		}
+	}
+
+	"quest_shared_bingyanzhenjun_good"	//冰焰真君 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggonggongzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bingyanzhenjun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_bingdaomojun"	"1"
+				"quest_shared_yanliemojun"	"1"
+			}
+			"LogicalFormula"			"$level>=50"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV7_fb_07_boss_hunmobingyanzhenjun" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"70"
+				"EXP"					"3000"
+				"Gold"					"2500"
+				"item_0217"				"1"
+			}
+		}
+	}
+
+	"quest_shared_bingdaomojun_good"	//冰道魔君 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggongzuohufa"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bingdaomojun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV5_fb_07_boss_bingdaomojun" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"50"
+				"EXP"					"2500"
+				"Gold"					"2300"
+				"item_0208"				"1"
+			}
+		}
+	}
+
+	"quest_shared_yanliemojun_good"	//炎烈魔君 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggongyouhufa"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_yanliemojun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV5_fb_08_boss_yanliemojun" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"50"
+				"EXP"					"2500"
+				"Gold"					"2300"
+				"item_0209"				"1"
+			}
+		}
+	}
+
+	"quest_shared_nvwamijing_good"	//女娲秘境 - 其一 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggongdajisi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_nvwamijing"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30 and $difficulty>1"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0210" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0211" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 			//任务类型：收集物品
+				"Target"				"item_0212" 			//收集的物品
+				"MaxCount"				"1" 					//收集的个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"40"
+				"EXP"					"2200"
+				"Gold"					"2100"
+				// "allow_enter_nvwa"		"0"
+			}
+		}
+	}
+
+	"quest_shared_xueshanjiuyuan_good"	//雪山救援 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggongxintu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_xueshanjiuyuan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=20"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_UNIT" 				//任务类型：与NPC对话
+				"Target"				"npc_task_xuanbinggongxintu_wife"
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"40"
+				"EXP"					"2400"
+				"Gold"					"2000"
+				"item_0213"				"1"
+			}
+		}
+	}
+
+	"quest_pomofu"	//破魔符
+	{
+		"AcceptNPC"						"npc_task_lingbaoheshang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=30"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0149" 	    //击杀单位
+				"MaxCount"				"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"item_0210"					"1"
+				"EXP"						"1000"
+				"Gold"						"800"
+				"yuanhui"					"2"
+			}
+		}
+	}
+
+	"quest_shared_liudaoxiongshou_1_good"	//六道凶兽 - 其一 善举
+	{
+		"AcceptNPC"						"npc_task_kunlunzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_liudaoxiongshou_1"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=50"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV4_fb_05_boss_fengxiaojvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"60"
+				"EXP"					"1200"
+				"Gold"					"800"
+				"yuanhui"				"5"
+			}
+		}
+	}
+
+	"quest_shared_liudaoxiongshou_2_good"	//六道凶兽 - 其二 善举
+	{
+		"AcceptNPC"						"npc_task_kunlunzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_liudaoxiongshou_2"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_liudaoxiongshou_1"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV6_fb_08_boss_huolinjvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV6_fb_07_boss_bingjiaojvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"80"
+				"EXP"					"2800"
+				"Gold"					"2400"
+				"yuanhui"				"7"
+			}
+		}
+	}
+
+	"quest_shared_liudaoxiongshou_3_good"	//六道凶兽 - 其三 善举
+	{
+		"AcceptNPC"						"npc_task_kunlunzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_liudaoxiongshou_3"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_liudaoxiongshou_2"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV7_fb_14_boss_shuijiaojvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV7_fb_06_boss_tulingjvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"3500"
+				"Gold"					"3000"
+				"yuanhui"				"8"
+			}
+		}
+	}
+
+	"quest_shared_liudaoxiongshou_4_good"	//六道凶兽 - 其四 善举
+	{
+		"AcceptNPC"						"npc_task_kunlunzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_liudaoxiongshou_4"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_liudaoxiongshou_3"	"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV8_fb_15_boss_mutunjvshou" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"120"
+				"EXP"					"4500"
+				"Gold"					"3500"
+				"yuanhui"				"10"
+				"item_0458"				"1"
+			}
+		}
+	}
+
+	"quest_liudaoyuanhun"	//六道冤魂
+	{
+		"AcceptNPC"						"npc_task_tonglingshi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level>=50"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0241" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0461" 	    //击杀单位
+				"MaxCount"				"30" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"item_0423"					"1"
+				"merits"					"80"
+				"EXP"						"2600"
+				"Gold"						"2300"
+				"yuanhui"					"6"
+			}
+		}
+	}
+
+	"quest_shared_bimozhiyan_good"	//笔墨纸砚 善举
+	{
+		"AcceptNPC"						"npc_task_tonglingshi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_bimozhiyan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=7"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0443" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0444" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0446" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0447" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"4500"
+				"Gold"					"4000"
+				"yuanhui"				"12"
+				"item_0495"				"1"
+			}
+		}
+	}
+
+	"quest_shared_tianxingjian_good"	//天行健 善举
+	{
+		"AcceptNPC"						"npc_task_tiandiqijiang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_tianxingjian"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=7"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0488" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0489" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0490" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0491" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"4500"
+				"Gold"					"4000"
+				"yuanhui"				"12"
+				"item_0494"				"1"
+			}
+		}
+	}
+
+	"quest_shared_juexing"	//觉醒
+	{
+		"AcceptNPC"						"npc_task_shenmiren_luodu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0493" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0492" 	    //击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"120"
+				"EXP"					"5000"
+				"Gold"					"4500"
+				"yuanhui"				"14"
+				"juexin"				"0"
+			}
+		}
+	}
+
+	"quest_shared_shengling_1"	//圣灵融合 - 其一
+	{
+		"AcceptNPC"						"npc_task_wumingtiejiang"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$state>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0440" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0441" 	    		//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0442" 	    		//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0487" 	    		//击杀单位
+				"MaxCount"				"5" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"5000"
+				"Gold"					"4500"
+				"yuanhui"				"10"
+			}
+			"Random" 										//随机奖励（N选1）
+			{
+				"01"
+				{
+					"item_0519"			"3"
+				}
+			}
+		}
+	}
+
+	"quest_shared_shengling_2"	//圣灵融合 - 其二
+	{
+		"AcceptNPC"						"npc_task_shenmiren"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_shengling_1"			"1"
+			}
+			"LogicalFormula"			"$state>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0519" 	   			//击杀单位
+				"MaxCount"				"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"100"
+				"EXP"					"5000"
+				"Gold"					"4500"
+				"yuanhui"				"10"
+			}
+		}
+	}
+
+	"quest_shared_shengling_3"	//圣灵融合 - 其三
+	{
+		"AcceptNPC"						"npc_task_shenmiren"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_shengling_2"			"1"
+			}
+			"LogicalFormula"			"$state>=10"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0458" 	   			//击杀单位
+				"MaxCount"				"3" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"EXP"					"5000"
+				"Gold"					"4500"
+				"yuanhui"				"10"
+				"shengling"				"1"
+			}
+		}
+	}
+
+	"quest_shared_xuanbingmohun_good"	//玄冰魔魂 善举
+	{
+		"AcceptNPC"						"npc_task_xuanbinggonggongzhu"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_xuanbingmohun"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level >= 80"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV10_fb_07_boss_xuanbingmohun" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"70"
+				"EXP"					"3000"
+				"Gold"					"2500"
+				"item_0580"				"1"
+			}
+		}
+	}
+
+	"quest_shared_jinghua_good"	//净化 善举
+	{
+		"AcceptNPC"						"npc_task_chiyouhouyi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_jinghua"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			"$level >= 50"
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"KILL_UNIT" 				//任务类型：击杀单位
+				"Target"				"LV6_fb_09_boss_xiefo" 			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"70"
+				"EXP"					"3000"
+				"Gold"					"2500"
+			}
+		}
+	}
+
+	"quest_shared_ruchan_good"	//入阐 善举
+	{
+		"AcceptNPC"						"npc_task_chiyouhouyi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_ruchan"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_jinghua"		"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0236" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0237" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0238" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0553" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"50"
+				"EXP"					"2500"
+				"Gold"					"2300"
+				"item_0560"				"1"
+				"item_0561"				"1"
+				"item_0562"				"1"
+			}
+		}
+	}
+
+	"quest_shared_rudao_good"	//入道 善举
+	{
+		"AcceptNPC"						"npc_task_chiyouhouyi"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_rudao"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+				"quest_shared_jinghua"		"1"
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0236" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0237" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0238" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0554" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"merits"				"50"
+				"EXP"					"2500"
+				"Gold"					"2300"
+				"item_0563"				"1"
+				"item_0564"				"1"
+				"item_0565"				"1"
+			}
+		}
+	}
+
+	"quest_shared_kaiyi_good"	//开翼 善举
+	{
+		"AcceptNPC"						"npc_task_shushanzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"0" 				//任务可以无限接受
+		"SharedName"					"quest_shared_kaiyi"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0547" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0147" 	   			//击杀单位
+				"MaxCount"				"10" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"kaiyi"					"0"
+			}
+		}
+	}
+
+	"quest_shared_cuilianzhenwutaiji_good"	//淬炼真武太极套装 善举
+	{
+		"AcceptNPC"						"npc_task_shushanzhangmen"		//接受任务和提交任务的NPC
+		"IsMainQuest"					"0"
+		"IsRepeat"						"1" 				//任务可以无限接受
+		"SharedName"					"quest_shared_cuilianzhenwutaiji"		//拥有相同共享名称的任务只能接受其中一种
+		"Precondition" 										//任务条件
+		{
+			"PreQuests" 									//前置任务，需要全部前置任务的完成次数打到指定次数才能接受任务
+			{
+			}
+			"LogicalFormula"			""
+		}
+
+		"SubQuests" 												//子任务，需要完成全部子任务
+		{
+			"1"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0081" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"2"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0143" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"3"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0144" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+			"4"
+			{
+				"Type"					"FIND_ITEM" 				//任务类型：击杀单位
+				"Target"				"item_0145" 	   			//击杀单位
+				"MaxCount"				"1" 						//击杀个数
+			}
+		}
+
+		// 提交任务给予奖励
+		"SubmitRewards"
+		{
+			"Fixed" 										//固定奖励
+			{
+				"item_0570"				"1"
+				"item_0571"				"1"
+				"item_0572"				"1"
+			}
+		}
+	}
+}

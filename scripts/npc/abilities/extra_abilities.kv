@@ -1,0 +1,1542 @@
+"DOTAAbilities"
+{
+	// 昆仑剑法
+	"ability_shushan_kunlunjianfa"
+	{
+        "ID"    "5350"
+		"BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityTextureName"                "custom_game/ability_shushan_kunlunjianfa"
+        "MaxLevel"                          "10"
+
+        "Modifiers"
+        {
+        	"modifier_ability_shushan_kunlunjianfa"
+        	{
+        		"Passive"			"1"
+        		"IsHidden"			"1"
+        		"IsDebuff"			"0"
+        
+        		"OnAttackLanded"
+        		{
+        			"Random"
+        			{
+        				"Chance"			"%chance"
+        				"OnSuccess"
+        				{
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/common.lua"
+                                "Function"      "DealDamage"
+                                "DamagePercent" "%damage_percent"
+                            }
+                            "RunScript"
+                            {
+                                "ScriptFile"      "abilities/extra_abilities.lua"
+                                "Function"        "abilityShushanKunlunjianfaEffect"
+                            }
+        				}
+        			}
+        		}
+        	}
+        }
+
+        "AbilitySpecial"
+        {
+        	"01"
+        	{
+        		"var_type"			"FIELD_INTEGER"
+        		"chance"			"50"
+        	}
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"        "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+	}
+
+    // 蜀山心法
+    "ability_shushan_shushanxinfa"
+    {
+        "ID"    "5351"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "MaxLevel"                          "5"
+        "AbilityCooldown"                   "60.0 40.0 40.0 40.0 20.0"
+        "AbilityManaCost"                   "0"
+        "AbilityTextureName"                "custom_game/ability_shushan_shushanxinfa"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"      "abilities/extra_abilities.lua"
+                "Function"        "abilityShushanXinFa"
+                "LV3Duration"     "%lv3_duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_shushanxinfa"
+            {
+                "Passive"             "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength" 
+                }
+
+                "OnAbilityExecuted"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanXinFa_UseAnyAbility"
+                        "Radius"          "%lv4_radius"
+                    }
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_shushanxinfa_heal"
+            {
+                "Passive"             "0"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanCommonHeal"
+                        "HealthPercent"   "%lv3_heal"
+                        "Level"           "3"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 30 70 130 180"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 50 100 150 200"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 30 70 130 180"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "lv3_duration"        "5.0"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "lv3_heal"            "10.0"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "lv4_radius"          "400"
+            }
+        }
+    }
+
+    // 断水毒功
+    "ability_shushan_duanshuidugong"
+    {
+        "ID"    "5352"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_duanshuidugong"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_duanshuidugong"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "StackBuff"
+                        "ModifierName"  "modifier_ability_shushan_duanshuidugong_effect"
+                        "Target"        "TARGET"
+                        "MaxStackCount" "%max_stack_count"
+                        "Duration"      "%duration"
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanDuanshuidugongEffect"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_duanshuidugong_effect"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "1"
+
+                "ThinkInterval"  "0.1"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "DealDamage"
+                        "DamagePercent" "%damage_percent"
+                        "LinkModifier"  "modifier_ability_shushan_duanshuidugong_effect"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "duration"          "3.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "max_stack_count"   "100"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 暗行刃法
+    "ability_shushan_anxingrenfa"
+    {
+        "ID"    "5365"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_anxingrenfa"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_anxingrenfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "ThinkInterval"  "%poison_duration"
+                "OnIntervalThink"
+                {
+                    "ApplyModifier"
+                    {
+                        "ModifierName"    "modifier_ability_shushan_anxingrenfa_poison"
+                        "Target"          "CASTER"
+                    }
+                }
+
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "ActOnTargets"
+                            {
+                                "Target"
+                                {
+                                    "Center"      "TARGET"
+                                    "Radius"      "%radius"
+                                    "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                                    "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                                }
+                                "Action"    
+                                {
+                                    "RunScript"
+                                    {
+                                        "ScriptFile"    "abilities/common.lua"
+                                        "Function"      "DealDamage"
+                                        "DamagePercent" "%damage_percent"
+                                    }
+                                    "RunScript"
+                                    {
+                                        "ScriptFile"      "abilities/extra_abilities.lua"
+                                        "Function"        "abilityShushanAnxingrenfaEffect"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_anxingrenfa_poison"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/common.lua"
+                        "Function"          "Stun"
+                        "Duration"          "%mini_stun"
+                    }
+                    // "RunScript"
+                    // {
+                    //     "ScriptFile"    "abilities/common.lua"
+                    //     "Function"      "DealDamage"
+                    //     "DamagePercent" "%damage_percent"
+                    //     "DamageIncrease"    "5"
+                    // }
+                    "RemoveModifier"
+                    {
+                        "ModifierName"    "modifier_ability_shushan_anxingrenfa_poison"
+                        "Target"          "CASTER"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "poison_duration"   "5.0"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_FLOAT"
+                "mini_stun"         "2.0"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "chance"            "60"
+            }
+            "04"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "radius"            "300"
+            }
+            "05"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 日轮魔枪
+    "ability_shushan_rilunmoqiang"
+    {
+        "ID"    "5353"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_rilunmoqiang"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_rilunmoqiang"
+            {
+                "Passive"            "1"
+                "IsHidden"            "1"
+                "IsDebuff"            "0"
+
+                "OnAttackStart"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanRilunmoqiangCount"
+                        "Count"           "%count"
+                    }
+                }
+        
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanRilunmoqiang"
+                        "DamagePercent"   "%damage_percent"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "count"             "3"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 贯穿天地
+    "ability_shushan_guanchuantiandi"
+    {
+        "ID"    "5354"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_guanchuantiandi"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_guanchuantiandi"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "OnAttackLanded"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "TARGET"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/common.lua"
+                                "Function"      "DealDamage"
+                                "DamagePercent" "%damage_percent"
+                            }
+                        }
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanGuanchuantiandi"
+                        "ExtraTargetCount"  "%extra_target_count"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"             "FIELD_INTEGER"
+                "extra_target_count"   "2"
+            }
+            "02"
+            {
+                "var_type"             "FIELD_INTEGER"
+                "radius"               "200"
+            }
+            "03"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 殊途同归
+    "ability_shushan_shututonggui"
+    {
+        "ID"    "5355"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"             "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"             "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityCooldown"                   "10.0"
+        "AbilityCastRange"                  "600"
+        "AbilityCastPoint"                  "0.3"
+        "AbilityCastAnimation"              "ACT_DOTA_CAST_ABILITY_2_END"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_shututonggui"
+
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"        "abilities/extra_abilities.lua"
+                "Function"          "abilityShushanShututonggui"
+                "HealthPercent"     "%health_percent"
+            }
+            "RunScript"
+            {
+                "ScriptFile"    "abilities/common.lua"
+                "Function"      "DealDamage"
+                "DamagePercent" "%damage_percent"
+            }
+            "RunScript"
+            {
+                "ScriptFile"      "abilities/extra_abilities.lua"
+                "Function"        "abilityShushanShututongguiEffect"
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_percent"      "50"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 猎门刀决
+    "ability_shushan_liemendaojue"
+    {
+        "ID"    "5356"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "10"
+        "AbilityTextureName"                "custom_game/ability_shushan_liemendaojue"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_liemendaojue"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "OnAttackLanded"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "TARGET"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/common.lua"
+                                "Function"      "DealDamage"
+                                "DamagePercent" "%damage_percent"
+                            }
+                            
+                            "RunScript"
+                            {
+                                "ScriptFile"      "abilities/extra_abilities.lua"
+                                "Function"        "abilityShushanLiemendaojueEffect"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "200"
+            }
+            "02"
+            {
+                "var_type"          "FIELD_INTEGER"
+                "damage_percent"    "0 20 40 60 80 100 120 140 160 180"
+            }
+        }
+    }
+
+    // 玄冰宫心法
+    "ability_shushan_xuanbinggongxinfa"
+    {
+        "ID"    "5357"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_xuanbinggongxinfa"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_xuanbinggongxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "ApplyModifier"
+                            {
+                                "ModifierName"    "modifier_ability_shushan_xuanbinggongxinfa_frozen"
+                                "Target"          "TARGET"
+                                "Duration"        "%frozen_duration"
+                            }
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/extra_abilities.lua"
+                                "Function"          "abilityShushanXuanbinggongxinfa"
+                            }
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/extra_abilities.lua"
+                                "Function"          "abilityShushanCommonHeal"
+                                "HealthPercent"     "%health_percent"
+                                "Level"             "5"
+                            }
+                        }
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+
+                "OnAttacked"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/extra_abilities.lua"
+                                "Function"          "abilityShushanXuanbinggongxinfaForOnAttacked"
+                                "Duration"          "%frozen_duration"
+                            }
+                            "RunScript"
+                            {
+                                "ScriptFile"        "abilities/extra_abilities.lua"
+                                "Function"          "abilityShushanXuanbinggongxinfaForHeal"
+                                "HealthPercent"     "%health_percent"
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_xuanbinggongxinfa_frozen"
+            {
+                "Passive"             "0"
+                "IsHidden"            "0"
+                "IsDebuff"            "1"
+
+                "EffectName"          "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+                "EffectAttachType"    "PATTACH_CENTER_FOLLOW"
+
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FROZEN"         "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 40 85 135 185"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 40 85 135 185"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 40 85 135 185"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_armor"         "0 0 50 50 50"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "chance"              "10.0"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "frozen_duration"     "1.0"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "health_percent"      "10.0"
+            }
+        }
+    }
+
+    // 昆仑心法
+    "ability_shushan_kunlunxinfa"
+    {
+        "ID"    "5358"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"                   "15.0"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_kunlunxinfa"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_ability_shushan_kunlunxinfa_main_effect"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_kunlunxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_kunlunxinfa_main_effect"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+
+                "OnAttackLanded"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "TARGET"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"    
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/extra_abilities.lua"
+                                "Function"      "abilityShushanKunlunxinfaDamage"
+                                "DamagePercent" "%damage_percent"
+                                "DamageIncrease"   "%damage_increase"
+                            }
+                        }
+                    }
+                }
+
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanCommonHeal"
+                        "HealthPercent" "%health_percent"
+                        "Level"         "3"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 30 80 125 168"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 45 95 140 195"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 45 95 140 195"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "200"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "duration"            "5 5 5 10 10"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage_percent"      "20"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_percent"      "4"
+            }
+            "08"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "damage_increase"     "2"
+            }
+        }
+    }
+
+    // 妖神心法
+    "ability_shushan_yaoshenxinfa"
+    {
+        "ID"    "5359"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"                   "20.0"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_yaoshenxinfa"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_ability_shushan_yaoshenxinfa_main_effect"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_yaoshenxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_yaoshenxinfa_main_effect"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "TotalDamageOutgoingPercentage"
+                        "Name"          "ability_shushan_yaoshenxinfa"
+                        "Percent"       "%total_outdamage"
+                    }
+                }
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "TotalDamageOutgoingPercentage"
+                        "Name"          "ability_shushan_yaoshenxinfa"
+                        "Percent"       "0"
+                    }
+                }
+
+                "OnAttackLanded"
+                {
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"      "TARGET"
+                            "Radius"      "%radius"
+                            "Teams"       "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                            "Types"       "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        }
+                        "Action"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/extra_abilities.lua"
+                                "Function"      "abilityShushanYaoshenxinfaDamage"
+                            }
+                        }
+                    }
+                }
+
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanCommonHeal"
+                        "HealthPercent" "%health_percent"
+                        "Level"         "2"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 30 60 120 160"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 30 60 120 160"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 70 120 180 250"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "total_outdamage"     "35 35 35 35 50"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "duration"            "5 5 8 8 8"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "200"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_percent"      "5"
+            }
+        }
+    }
+
+    // 佛门心法
+    "ability_shushan_fomenxinfa"
+    {
+        "ID"    "5360"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityCooldown"                   "90.0 90.0 90.0 60.0 30.0"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_fomenxinfa"
+
+        "OnOwnerDied"
+        {
+            "RunScript"
+            {
+                "ScriptFile"      "abilities/extra_abilities.lua"
+                "Function"        "abilityShushanFomenxinfa"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_fomenxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+        
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_HEALTH_BONUS" "%health_bonus"
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                    "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%health_regen_bonus"
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanFomenxinfaDamage"
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 50 100 150 200"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 30 70 130 180"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 30 70 130 180"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_bonus"        "0 1000"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_regen_bonus"  "0 0 0 0 3"
+            }
+        }
+    }
+
+    // 巫族心法
+    "ability_shushan_wuzuxinfa"
+    {
+        "ID"    "5361"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"                   "12.0"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_wuzuxinfa"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_ability_shushan_wuzuxinfa"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_wuzuxinfa_passive"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_HEALTH_BONUS" "%health_bonus"
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_wuzuxinfa"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed"
+                }
+        
+                "ThinkInterval"  "0.2"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanCommonHeal"
+                        "HealthPercent" "%health_percent"
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanWuzuxinfaDamage"
+                        "Radius"        "%radius"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 60 120 180 240"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 30 70 130 180"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 20 50 100 140"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "duration"            "5.0 5.0 8.0 8.0 8.0"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_percent"      "20"
+            }
+            "06"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "bonus_movement_speed"  "0 0 0 30 30"
+            }
+            "07"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "health_bonus"          "0 0 0 0 20000"
+            }
+            "08"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "400"
+            }
+        }
+    }
+
+    // 三清心法
+    "ability_shushan_sanqingxinfa"
+    {
+        "ID"    "5362"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_sanqingxinfa"
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_sanqingxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                }
+
+                "OnAttackLanded"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_sanqingxinfa_attack"
+            {
+                "Passive"            "1"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+                "RemoveOnDeath"      "0"
+
+                "OnDeath"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanSanqingxinfaOnDeath"
+                    }
+                }
+
+                "OnKill"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"      "abilities/extra_abilities.lua"
+                        "Function"        "abilityShushanSanqingxinfa"
+                        "MaxStackCount"   "%max_stack_count"
+                    }
+                }
+
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/extra_abilities.lua"
+                                "Function"      "abilityShushanSanqingxinfaDamage"
+                                "Radius"        "%radius"
+                            }
+                        }
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_sanqingxinfa_effect"
+            {
+                "Passive"            "0"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+                "RemoveOnDeath"      "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%health_regen_bonus"
+                    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"  "%incoming_damage"
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 50 90 140 190"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 50 90 140 190"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 50 90 140 190"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "max_stack_count"     "100 100 100 100 200"
+            }
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "400"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "health_regen_bonus"  "0 0 0.03 0.03 0.03"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_FLOAT"
+                "incoming_damage"     "0 0 0 -0.1 -0.1"
+            }
+            "08"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "chance"              "20"
+            }
+        }
+    }
+
+    // 天道门心法
+    "ability_shushan_tiandaomenxinfa"
+    {
+        "ID"    "5363"
+        "BaseClass"                         "ability_datadriven"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityCooldown"                   "20.0"
+        "MaxLevel"                          "5"
+        "AbilityTextureName"                "custom_game/ability_shushan_tiandaomenxinfa"
+
+        "OnSpellStart"
+        {
+            "ApplyModifier"
+            {
+                "ModifierName"    "modifier_ability_shushan_tiandaomenxinfa_effect"
+                "Target"          "CASTER"
+                "Duration"        "%duration"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_ability_shushan_tiandaomenxinfa"
+            {
+                "Passive"            "1"
+                "IsHidden"           "1"
+                "IsDebuff"           "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_STATS_AGILITY_BONUS" "%bonus_agility"
+                    "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect" 
+                    "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" "%bonus_strength"
+                    "MODIFIER_PROPERTY_HEALTH_BONUS"        "%health_bonus"
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"        "%armor_bonus"
+                }
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "TotalDamageOutgoingPercentage"
+                        "Name"          "ability_shushan_tiandaomenxinfa"
+                        "Percent"       "%total_outdamage"
+                    }
+                }
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/common.lua"
+                        "Function"      "TotalDamageOutgoingPercentage"
+                        "Name"          "ability_shushan_tiandaomenxinfa"
+                        "Percent"       "0"
+                    }
+                }
+
+                "OnAttackLanded"
+                {
+                    "Random"
+                    {
+                        "Chance"            "%chance"
+                        "OnSuccess"
+                        {
+                            "RunScript"
+                            {
+                                "ScriptFile"    "abilities/extra_abilities.lua"
+                                "Function"      "abilityShushanTiandaomenxinfaDamage"
+                                "Radius"        "%radius"
+                            }
+                        }
+                    }
+                    "RunScript"
+                    {
+                        "ScriptFile"        "abilities/extra_abilities.lua"
+                        "Function"          "abilityShushanCommonHeal"
+                        "HealthPercent"     "4"
+                    }
+                }
+            }
+
+            "modifier_ability_shushan_tiandaomenxinfa_effect"
+            {
+                "Passive"            "0"
+                "IsHidden"           "0"
+                "IsDebuff"           "0"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed"
+                }
+        
+                "ThinkInterval"  "1.0"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities/extra_abilities.lua"
+                        "Function"      "abilityShushanCommonHeal"
+                        "HealthPercent" "%health_percent"
+                    }
+                }
+            }
+        }
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_strength"      "0 40 65 140 200"
+            }
+            "02"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_agility"       "0 60 80 160 210"
+            }
+            "03"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_intellect"     "0 40 65 140 200"
+            }
+            "04"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "total_outdamage"     "20 20 20 20 30"
+            }
+            "05"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "chance"              "20 20 20 50 50"
+            }
+            "06"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "radius"              "400"
+            }
+            "07"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "duration"            "5 5 10 10 10"
+            }
+            "08"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_percent"      "5"
+            }
+            "09"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "bonus_movement_speed"      "0 0 30 30 30"
+            }
+            "10"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "health_bonus"        "0 5000"
+            }
+            "11"
+            {
+                "var_type"            "FIELD_INTEGER"
+                "armor_bonus"         "0 30"
+            }
+        }
+    }
+}
